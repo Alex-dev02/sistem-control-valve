@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../headers/valve.h"
+#include "valve.cc"
 int main() {
     std::cout << "Hello from Valve\n";
 }
