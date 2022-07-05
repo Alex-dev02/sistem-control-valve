@@ -1,3 +1,3 @@
 cmake_minimum_required(VERSION 3.10)
 
-add_executable(Valve main.cpp)
+add_executable(Valve src/main.cc)
