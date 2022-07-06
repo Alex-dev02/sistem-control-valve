@@ -1,6 +1,7 @@
-#include <iostream>
 #include "thermostat.cc"
 
-int main() {
-    std::cout << "Hello from Thermostat\n";
+int main()
+{
+    Thermostat T;
+    T.whoami();
 }

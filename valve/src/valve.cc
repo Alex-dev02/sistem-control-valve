@@ -1,18 +1,25 @@
 #include "../headers/valve.h"
 
-class Valve
+Valve::Valve()
 {
-private:
-    /* data */
-public:
-    Valve(/* args */);
-    ~Valve();
-};
-
-Valve::Valve(/* args */)
-{
+    name_ = "Valve";
+    desc_ = "DescValve.....";
+    flow_level_ = 0.0;
 }
 
-Valve::~Valve()
+Valve::Valve(float flow)
 {
+    name_ = "Valve";
+    desc_ = "DescValve.....";
+    flow_level_ = flow;
+}
+
+float &Valve::getFlowLevel()
+{
+    return flow_level_;
+}
+
+void Valve::setFlowLevel(float lvl)
+{
+    flow_level_ = lvl;
 }
