@@ -22,10 +22,10 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-void Socket::bindSocketToIP() {
-    for(p = servinfo; p != NULL; p = p->ai_next) {
-        if ((sockfd = socket(p->ai_family, p->ai_socktype,
-                p->ai_protocol)) == -1) {
+void Socket::bindSocketToIP(addrinfo *serv_info, int &yes){
+    for(ip = serv_info; ip != NULL; ip = ip->ai_next) {
+        if ((sockfd = socket(ip->ai_family, ip->ai_socktype,
+                ip->ai_protocol)) == -1) {
             perror("server: socket");
             continue;
         }
@@ -36,7 +36,7 @@ void Socket::bindSocketToIP() {
             exit(1);
         }
 
-        if (bind(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
+        if (bind(sockfd, ip->ai_addr, ip->ai_addrlen) == -1) {
             close(sockfd);
             perror("server: bind");
             continue;
@@ -48,7 +48,7 @@ void Socket::bindSocketToIP() {
 
 void Socket::acceptConnectionLoop() {
     while(1) {  // main accept() loop
-        sin_size = sizeof their_addr;
+        socklen_t sin_size = sizeof their_addr;
         new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
         if (new_fd == -1) {
             perror("accept");
@@ -64,8 +64,6 @@ void Socket::acceptConnectionLoop() {
             close(sockfd); // child doesn't need the listener
             if (send(new_fd, "Hello, world!", 13, 0) == -1)
                 perror("send");
-            std::string mesaj = "Al doilea mesaj";
-            send(new_fd, mesaj.c_str(), mesaj.length(), 0);
             close(new_fd);
             exit(0);
         }
@@ -77,24 +75,26 @@ Socket::Socket(std::string PORT, int BACKLOG):
     PORT(PORT),
     BACKLOG(BACKLOG)
  {
-    memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_UNSPEC;
-    hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE; // use my IP
-    try {
-        if ((rv = getaddrinfo(NULL, PORT.c_str(), &hints, &servinfo)) != 0)
-            throw "getaddrinfo: " + std::to_string(*gai_strerror(rv)); 
-    }
-    catch(const std::string error){
-        std::cout << error;
-    }
+    addrinfo sock_addr_info, *serv_info;
+    struct sigaction sa;
+    int serv_err;
+    int yes = 1;
 
-    bindSocketToIP();
+    memset(&sock_addr_info, 0, sizeof sock_addr_info);
+    sock_addr_info.ai_family = AF_UNSPEC; // IPv4 / IPv6
+    sock_addr_info.ai_socktype = SOCK_STREAM;
+    sock_addr_info.ai_flags = AI_PASSIVE; // use my IP
 
-    freeaddrinfo(servinfo); // all done with this structure
+    // get linked list of IPs assigned to host machine
+    if ((serv_err = getaddrinfo(NULL, PORT.c_str(), &sock_addr_info, &serv_info)) != 0)
+        std::cerr << "getaddrinfo: " + std::to_string(*gai_strerror(serv_err)); 
 
-    if (p == NULL)  {
-        fprintf(stderr, "server: failed to bind\n");
+    bindSocketToIP(serv_info, yes);
+
+    freeaddrinfo(serv_info);
+
+    if (ip == NULL) {
+        std::cerr << "server: failed to bind\n";
         exit(1);
     }
 
@@ -111,12 +111,10 @@ Socket::Socket(std::string PORT, int BACKLOG):
         exit(1);
     }
 
-    printf("server: waiting for connections...\n");
+    std::cout << ("server: waiting for connections...\n");
 
     acceptConnectionLoop();
 
 }
 
-Socket::~Socket() {
-    delete p;
-}
+Socket::~Socket() {}

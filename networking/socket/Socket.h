@@ -15,17 +15,13 @@
 class Socket {
     bool server;
     std::string PORT;
-    int BACKLOG;
+    int BACKLOG; // the maximum pending requests
     int sockfd, new_fd;
-    addrinfo hints, *servinfo, *p;
+    addrinfo *ip;
     sockaddr_storage their_addr;
-    socklen_t sin_size;
-    struct sigaction sa;
-    int yes = 1;
     char s[INET6_ADDRSTRLEN];
-    int rv;
 
-    void bindSocketToIP();
+    void bindSocketToIP(addrinfo *serv_info, int &yes);
     void acceptConnectionLoop();
 public:
     Socket(std::string PORT = "4000", int BACKLOG = 10);
