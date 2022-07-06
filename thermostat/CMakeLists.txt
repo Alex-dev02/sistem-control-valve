@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
 
-add_executable(Thermostat src/main.cc)
+add_executable(Thermostat ../../networking/socket/Socket.cc ../../networking/socket/Socket.h  src/main.cc)
 

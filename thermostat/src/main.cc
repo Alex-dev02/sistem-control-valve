@@ -1,6 +1,7 @@
 #include <iostream>
 #include "thermostat.cc"
+#include "../../networking/socket/Socket.h"
 
 int main() {
-    std::cout << "Hello from Thermostat\n";
+    Socket s;
 }
