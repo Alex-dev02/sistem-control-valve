@@ -22,6 +22,8 @@ class Socket {
     sockaddr_storage their_addr;
     char s[INET6_ADDRSTRLEN];
 
+    std::string message;
+
     void bindSocketToIP(addrinfo *serv_info, int &yes);
     void bindClientSocketToIP(addrinfo *serv_info);
     void acceptConnectionLoop();
@@ -32,6 +34,7 @@ public:
         std::string PORT = "4000",
         int BACKLOG = 10,
         std::string server = "",
+        std::string message = "",
         int max_data_size = 256
     );
     ~Socket();
