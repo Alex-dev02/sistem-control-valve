@@ -71,10 +71,7 @@ void Socket::acceptConnectionLoop() {
     }
 }
 
-Socket::Socket(std::string PORT, int BACKLOG):
-    PORT(PORT),
-    BACKLOG(BACKLOG)
- {
+void Socket::createServer() {
     addrinfo sock_addr_info, *serv_info;
     struct sigaction sa;
     int serv_err;
@@ -86,8 +83,10 @@ Socket::Socket(std::string PORT, int BACKLOG):
     sock_addr_info.ai_flags = AI_PASSIVE; // use my IP
 
     // get linked list of IPs assigned to host machine
-    if ((serv_err = getaddrinfo(NULL, PORT.c_str(), &sock_addr_info, &serv_info)) != 0)
+    if ((serv_err = getaddrinfo(NULL, PORT.c_str(), &sock_addr_info, &serv_info)) != 0){
         std::cerr << "getaddrinfo: " + std::to_string(*gai_strerror(serv_err)); 
+        exit(1);
+    }
 
     bindSocketToIP(serv_info, yes);
 
@@ -114,7 +113,72 @@ Socket::Socket(std::string PORT, int BACKLOG):
     std::cout << ("server: waiting for connections...\n");
 
     acceptConnectionLoop();
+    exit(0);
+}
 
+void Socket::bindClientSocketToIP(addrinfo *serv_info) {
+    for (ip = serv_info; ip != NULL; ip = ip->ai_next) {
+        if ((sockfd = socket(ip->ai_family, ip->ai_socktype, ip->ai_protocol)) == -1) {
+            perror("client: socket");
+            continue;
+        }
+
+        if (connect(sockfd, ip->ai_addr, ip->ai_addrlen) == -1) {
+            close(sockfd);
+            perror("client: connect");
+            continue;
+        }
+        break;
+    }
+}
+
+void Socket::createClient() {
+    char buffer[max_data_size];
+    addrinfo sock_addr_info, *serv_info;
+    int serv_err, numbytes;
+
+    memset(&sock_addr_info, 0, sizeof sock_addr_info);
+    sock_addr_info.ai_family = AF_UNSPEC;
+    sock_addr_info.ai_socktype = SOCK_STREAM;
+
+    if ((serv_err = getaddrinfo(server.c_str(), PORT.c_str(), &sock_addr_info, &serv_info)) != 0){
+        std::cerr << "getaddrinfo: " + std::to_string(*gai_strerror(serv_err));
+        exit(1);
+    }
+
+    bindClientSocketToIP(serv_info);
+
+    if (ip == NULL) {
+        std::cerr << "client: failed to connect\n";
+        exit(2);
+    }
+
+    inet_ntop(ip->ai_family, get_in_addr((struct sockaddr *)ip->ai_addr), s, sizeof s);
+    std::cout << "client: connectiong to " << s << '\n';
+    freeaddrinfo(serv_info);
+    if ((numbytes = recv(sockfd, buffer, max_data_size-1, 0)) == -1) {
+        perror("recv");
+        exit(1);
+    }
+
+    buffer[numbytes] = '\0';
+
+    printf("client: received '%s'\n",buffer);
+
+    close(sockfd);
+
+    exit(0);
+}
+
+Socket::Socket(std::string PORT, int BACKLOG, std::string server, int max_data_size):
+    PORT(PORT),
+    BACKLOG(BACKLOG),
+    server(server),
+    max_data_size(max_data_size)
+{
+    if (server == "")
+        createServer();
+    createClient();
 }
 
 Socket::~Socket() {}

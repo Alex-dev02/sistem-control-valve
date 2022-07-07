@@ -3,5 +3,5 @@
 #include "../../networking/socket/Socket.h"
 
 int main() {
-    Socket s;
+    Socket s("4000", 10, "alex-VirtualBox");
 }

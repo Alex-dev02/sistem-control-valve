@@ -1,5 +1,8 @@
 #include <iostream>
+
 #include "valve.cc"
+#include "../../networking/socket/Socket.h"
+
 int main() {
-    std::cout << "Hello from Valve\n";
+    Socket server;    
 }
