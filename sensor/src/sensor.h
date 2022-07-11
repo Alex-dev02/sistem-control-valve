@@ -1,3 +1,4 @@
+#pragma once
 #include "../../component/src/component.cc"
 
 class Sensor: public Component

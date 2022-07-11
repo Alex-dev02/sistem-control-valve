@@ -1,3 +1,4 @@
+#pragma once
 #include "../../component/src/component.cc"
 
 class Valve : public Component
