@@ -27,8 +27,12 @@ void Payload::add_path_vars(std::string http_response) {
             var_name.push_back(http_response[it]);
         else
             var_value.push_back(http_response[it]);
+
+        if (http_response[it] == ' ') {
+            path_vars.emplace(var_name, var_value);
+            break;
+        }
     }
-    path_vars.emplace(var_name, var_value);
 }
 
 Payload::Payload(std::string http_response) {
