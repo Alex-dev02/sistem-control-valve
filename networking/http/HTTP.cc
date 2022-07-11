@@ -27,11 +27,11 @@ std::string HTTP::generateHTTPResponse(
 
 }
 
-std::string HTTP::getHTTPResponse(std::string &path, Payload payload, std::string httpVersion){ 
+std::string HTTP::getHTTPResponse(std::string &path, Payload http_response, std::string httpVersion){ 
     class Router router;
     std::function<std::string(Payload)> handler
         = router.getPathHandler(path);
     if (!handler)
         return generateHTTPResponse(httpVersion, getNotFoundCode(), getContentType());
-    return generateHTTPResponse(httpVersion, getOKCode(), getContentType(), handler(payload));
+    return generateHTTPResponse(httpVersion, getOKCode(), getContentType(), handler(http_response));
 }
