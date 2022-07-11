@@ -7,5 +7,7 @@ add_subdirectory(valve)
 add_subdirectory(sensor)
 add_subdirectory(component)
 add_subdirectory(room)
+add_subdirectory(room_manager)
+add_subdirectory(scheduler)
 
-install(TARGETS Thermostat Valve Sensor Room DESTINATION bin)
+install(TARGETS Thermostat Valve Sensor Room RoomManager Scheduler DESTINATION bin)
