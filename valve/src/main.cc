@@ -4,5 +4,5 @@
 #include "../../networking/socket/Socket.h"
 
 int main() {
-    Socket server;    
+
 }

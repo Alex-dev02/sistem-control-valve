@@ -22,37 +22,53 @@ addrinfo* getValidSocket(addrinfo *linked_list_of_ips, int &sock_fd) {
     return NULL;
 }
 
+void *get_in_addr(struct sockaddr *sa) {
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in*)sa)->sin_addr);
+    }
+
+    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+}
+
+
 void serverAcceptLoop(int sock_fd, int BACKLOG) {
     int new_sock;
+    struct sockaddr_storage their_addr;
+    socklen_t sin_size;
+    char s[INET6_ADDRSTRLEN];
+    char buff[256];
     while (1) {
+        sin_size = sizeof their_addr;
         if(listen(sock_fd, BACKLOG) == -1)
             std::cerr << "Could not listen()\n";
-        sockaddr peer_adr;
-        socklen_t peer_addr_size = sizeof(sockaddr);
-        new_sock = accept(sock_fd, &peer_adr, &peer_addr_size);
+        new_sock = accept(sock_fd, (struct sockaddr *)&their_addr, &sin_size);
         if (new_sock != -1)
             std::cout << "New sock accepted\n";
-        send(new_sock, "Hai salut", 9, 0);
-
+        inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
+        recv(new_sock, buff, 255, 0);
+        std::string mes = "HTTP/1.1 200 OK\r\nHost: 127.0.0.1:4000\r\nContent-Length: 4\r\nContent-Type: text/plain\r\n\r\npong\r\n";
+        int err = send(new_sock, mes.c_str(), mes.length(), 0);
+        if (err = -1)
+            std::cerr << "Failed to send res " << gai_strerror(err) << "\n";
+        close(new_sock);
+        buff[256] = '\0';
+        std::cout << buff;
     }
 }
 
-Socket::Socket(std::string PORT, int BACKLOG, std::string server, std::string message, int max_data_size):
+Socket::Socket(std::string PORT, int BACKLOG):
     PORT(PORT),
-    BACKLOG(BACKLOG),
-    server(server),
-    message(message),
-    max_data_size(max_data_size)
+    BACKLOG(BACKLOG)
 {
+    std::cout << PORT << '\n';
     int sock_fd, new_fd;
 
     // first we have to find an available ip address on the local machine
     // so we set the criteria for our desired ip
     addrinfo hints, *result;
-    memset(&hints, 0, sizeof(addrinfo));
+    memset(&hints, 0, sizeof(hints));
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_UNSPEC; // compatible with IPv4 and IPv6
-    hints.ai_protocol = 0; // whatever protocol
     hints.ai_flags = AI_PASSIVE; // can bind() and accept() connections
 
     // now that we set the criteria, we must get the linked list of available
