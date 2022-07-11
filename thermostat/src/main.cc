@@ -1,6 +1,8 @@
 #include <iostream>
+
 #include "thermostat.cc"
 #include "../../networking/socket/Socket.h"
+#include "../../networking/router/Router.h"
 
 int main(int argc, char *argv[]) {
     
