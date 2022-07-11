@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
 
-add_executable(Thermostat src/main.cc)
+add_executable(Thermostat ../../networking/router/Router.cc ../../networking/router/Router.h src/main.cc)
 
