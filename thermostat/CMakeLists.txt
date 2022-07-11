@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.10)
 
 
 include_directories(include src)
-add_executable(Valve src/main.cc) 
+add_executable(Thermostat src/main.cc) 
