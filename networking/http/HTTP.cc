@@ -7,11 +7,15 @@ std::string HTTP::getNotFoundCode() {
     return "404 Not Found";
 }
 
+std::string HTTP::getOKCode() {
+    return "200 OK";
+}
+
 std::string HTTP::getContentType(std::string type) {
     return "Content-Type: " + type;
 }
 
-std::string HTTP::generateResponse(
+std::string HTTP::generateHTTPResponse(
     std::string httpVersion,
     std::string responseCode,
     std::string contentType,
@@ -23,10 +27,11 @@ std::string HTTP::generateResponse(
 
 }
 
-std::string HTTP::getHTTPResponse(std::string &path, std::string httpVersion){ 
+std::string HTTP::getHTTPResponse(std::string &path, Payload payload, std::string httpVersion){ 
     class Router router;
-    std::function<std::string(std::string)> handler
+    std::function<std::string(Payload)> handler
         = router.getPathHandler(path);
     if (!handler)
-        return generateResponse(httpVersion, getNotFoundCode(), getContentType());
+        return generateHTTPResponse(httpVersion, getNotFoundCode(), getContentType());
+    return generateHTTPResponse(httpVersion, getOKCode(), getContentType(), handler(payload));
 }
