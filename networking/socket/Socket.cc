@@ -46,7 +46,7 @@ void serverAcceptLoop(int sock_fd, int BACKLOG) {
             std::cout << "New sock accepted\n";
         inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
         recv(new_sock, buff, 255, 0);
-        std::string mes = "HTTP/1.1 200 OK\r\nHost: 127.0.0.1:4000\r\nContent-Length: 4\r\nContent-Type: text/plain\r\n\r\npong\r\n";
+        std::string mes = "HTTP/1.1 200 OK\r\nContent-Length: 4\r\nContent-Type: text/plain\r\n\r\npong\r\n";
         int err = send(new_sock, mes.c_str(), mes.length(), 0);
         if (err = -1)
             std::cerr << "Failed to send res " << gai_strerror(err) << "\n";
