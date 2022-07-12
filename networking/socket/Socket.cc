@@ -82,6 +82,8 @@ Socket::Socket(std::string PORT, int BACKLOG):
         exit(1);
     }
 
+    // free *ip?
+
     freeaddrinfo(result);
 
     if (listen(sock_fd, BACKLOG) == -1 ) {
