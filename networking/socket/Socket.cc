@@ -39,7 +39,7 @@ std::string Socket::accept_new_connection() {
     if (new_fd != -1)
         std::cout << "New sock accepted\n";
     inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-    int bytes = recv(new_fd, buff, 255, 0);
+    int bytes = recv(new_fd, buff, 511, 0);
     buff[bytes] = '\0';
     return buff;
 }

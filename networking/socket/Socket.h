@@ -19,9 +19,9 @@ class Socket {
     int BACKLOG;
     int sock_fd;
     int new_fd;
-    char buff[256];
+    char buff[512];
     char s[INET6_ADDRSTRLEN];
-    
+
     addrinfo* getValidSocket(addrinfo *linked_list_of_ips);
 
 public:
