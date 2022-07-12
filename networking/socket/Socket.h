@@ -17,10 +17,16 @@
 class Socket {
     std::string PORT;
     int BACKLOG;
+    int sock_fd;
+    int new_fd;
 public:
     Socket(
         std::string PORT = "4000",
         int BACKLOG = 10
     );
     ~Socket();
+
+    std::string accept_new_connection();
+    void respond_to_request(std::string http_response);
+
 };
