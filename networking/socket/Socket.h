@@ -19,6 +19,11 @@ class Socket {
     int BACKLOG;
     int sock_fd;
     int new_fd;
+    char buff[256];
+    char s[INET6_ADDRSTRLEN];
+    
+    addrinfo* getValidSocket(addrinfo *linked_list_of_ips);
+
 public:
     Socket(
         std::string PORT = "4000",

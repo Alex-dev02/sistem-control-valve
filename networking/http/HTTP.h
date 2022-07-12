@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "Payload.h"
-
 class HTTP {
     static std::string getNotFoundCode();
     static std::string getOKCode();
@@ -14,6 +12,7 @@ class HTTP {
         std::string contentType,
         std::string content = ""
     );
+    static std::string getPath(std::string http_req);
 public:
-    static std::string getHTTPResponse(std::string &path, Payload http_response, std::string httpVersion = "HTTP/1.1");
+    static std::string getHTTPResponse(std::string http_req, std::string httpVersion = "HTTP/1.1");
 };

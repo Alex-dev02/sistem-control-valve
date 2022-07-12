@@ -1,5 +1,6 @@
 #include "HTTP.h"
 #include "../router/Router.h"
+#include "Payload.h"
 
 #include <functional>
 
@@ -27,11 +28,31 @@ std::string HTTP::generateHTTPResponse(
 
 }
 
-std::string HTTP::getHTTPResponse(std::string &path, Payload http_response, std::string httpVersion){ 
+std::string HTTP::getPath(std::string http_req) {
+    std::string path;
+    bool pathB = false;
+    for (int it = 0; it < http_req.length(); it++) {
+        if (pathB == true)
+            path.push_back(http_req[it]);
+
+        if ((http_req[it] == ' ' || http_req[it] == '?') && pathB ) {
+            path.pop_back();
+            break;
+        }
+
+        if (http_req[it] == ' ') {
+            pathB = true;
+        }
+    }
+    return path;
+}
+
+std::string HTTP::getHTTPResponse(std::string http_req, std::string httpVersion){ 
     class Router router;
+    std::string path = getPath(http_req);
     std::function<std::string(Payload)> handler
         = router.getPathHandler(path);
     if (!handler)
         return generateHTTPResponse(httpVersion, getNotFoundCode(), getContentType());
-    return generateHTTPResponse(httpVersion, getOKCode(), getContentType(), handler(http_response));
+    return generateHTTPResponse(httpVersion, getOKCode(), getContentType(), handler(Payload(http_req)));
 }

@@ -16,6 +16,6 @@ class Router {
     static std::unordered_map<std::string, std::function<std::string(Payload)>> routes;
 public:
     Router();
-    static void addPath(std::string &path, std::function<std::string(Payload)>);
+    static void addPath(std::string path, std::function<std::string(Payload)>);
     std::function<std::string(Payload)> getPathHandler(std::string &path);
 };

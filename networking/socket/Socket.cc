@@ -3,7 +3,7 @@
 #include <memory>
 #include <iostream>
 
-addrinfo* getValidSocket(addrinfo *linked_list_of_ips, int &sock_fd) {
+addrinfo* Socket::getValidSocket(addrinfo *linked_list_of_ips) {
     addrinfo *ip;
     int one;
     for (ip = linked_list_of_ips; ip != NULL; ip = ip->ai_next) {
@@ -34,17 +34,13 @@ void *get_in_addr(struct sockaddr *sa) {
 std::string Socket::accept_new_connection() {
     struct sockaddr_storage their_addr;
     socklen_t sin_size = sizeof their_addr;
-    char s[INET6_ADDRSTRLEN];
-    char buff[256];
 
-    if (listen(sock_fd, BACKLOG) == -1)
-        std::cerr << "Could not listen()\n";
     new_fd = accept(sock_fd, (struct sockaddr *)&their_addr, &sin_size);
     if (new_fd != -1)
         std::cout << "New sock accepted\n";
     inet_ntop(their_addr.ss_family, get_in_addr((struct sockaddr *)&their_addr), s, sizeof s);
-    recv(sock_fd, buff, 255, 0);
-    buff[256] = '\0';
+    int bytes = recv(new_fd, buff, 255, 0);
+    buff[bytes] = '\0';
     return buff;
 }
 
@@ -80,13 +76,20 @@ Socket::Socket(std::string PORT, int BACKLOG):
         std::cerr << "getaddrinfo: " << gai_strerror(err) << '\n';
 
     // now that we have the ips in the 'result' var, we must loop through it
-    addrinfo *ip = getValidSocket(result, sock_fd);
+    addrinfo *ip = getValidSocket(result);
     if (ip == NULL){
         std::cerr << "Could not bind\n";
         exit(1);
     }
 
     freeaddrinfo(result);
+
+    if (listen(sock_fd, BACKLOG) == -1 ) {
+        perror("listen");
+        exit(1);
+    }
+
+    std::cout << "server: waiting for connections...\n";
 }
 
 Socket::~Socket() {

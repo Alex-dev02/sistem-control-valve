@@ -6,7 +6,7 @@ Router::Router() {
     // &home being the pointer to a function called "home"
 }
 
-void Router::addPath(std::string &path, std::function<std::string(Payload)> handler) {
+void Router::addPath(std::string path, std::function<std::string(Payload)> handler) {
     routes.emplace(path, handler);
 }
 
