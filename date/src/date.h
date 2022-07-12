@@ -17,5 +17,5 @@ public:
     Date(int,int,int,int);
     Date(int,int,int,int,int);
     //~Date();
-    void FormatDate();
+    bool isValid();
 };
