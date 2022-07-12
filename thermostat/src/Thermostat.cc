@@ -16,14 +16,21 @@ std::string Thermostat::add_valve(Payload payload) {
     return "Valve successfully added!";
 }
 
+std::string Thermostat::set_temperature(Payload payload) {
+
+    return "Temperature changed to " + payload.get_path_var("temp");
+}
+
 Thermostat::Thermostat(std::string PORT, int BACKLOG)
 {
+    
     Router router;
+    Socket server(PORT, BACKLOG);
     // add new paths here
     router.addPath("/", &root);
     router.addPath("/add_valve", &add_valve);
+    router.addPath("/set_temperature", &set_temperature);
 
-    Socket server(PORT, BACKLOG);
     while (true) {
         std::string req = server.accept_new_connection();
         std::cout << '\n' << req << '\n';

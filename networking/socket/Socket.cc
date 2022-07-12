@@ -52,8 +52,14 @@ void Socket::respond_to_request(std::string http_response) {
     close(new_fd);
 }
 
+// de restructurat initializarea socketului
+// pus intr-o functie separata, nu constructor
+// cu argumente (cannonname, port), in caz ca nu apar atunci
+// se foloseste portul default de la initializare
+// sau scoatem portul din clasa si il folosim doar pe cel
+// primit !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-Socket::Socket(std::string PORT, int BACKLOG):
+Socket::Socket(std::string PORT, int BACKLOG, std::string serv_ip):
     PORT(PORT),
     BACKLOG(BACKLOG)
 {
@@ -65,6 +71,8 @@ Socket::Socket(std::string PORT, int BACKLOG):
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_UNSPEC; // compatible with IPv4 and IPv6
     hints.ai_flags = AI_PASSIVE; // can bind() and accept() connections
+    if (serv_ip != "")
+        hints.ai_canonname = (char*)(serv_ip.c_str());
 
     // now that we set the criteria, we must get the linked list of available
     // ips with getaddrinfo()
@@ -92,6 +100,11 @@ Socket::Socket(std::string PORT, int BACKLOG):
     }
 
     std::cout << "server: waiting for connections...\n";
+}
+
+void Socket::send_request_to_server(std::string server_name, std::string PORT, std::string http_req) {
+    Socket server(PORT, 10, server_name);
+    write(server.sock_fd, http_req.c_str(), http_req.length());
 }
 
 Socket::~Socket() {

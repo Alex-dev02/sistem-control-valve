@@ -27,11 +27,12 @@ class Socket {
 public:
     Socket(
         std::string PORT = "4000",
-        int BACKLOG = 10
+        int BACKLOG = 10,
+        std::string ip = ""
     );
     ~Socket();
 
     std::string accept_new_connection();
     void respond_to_request(std::string http_response);
-
+    void send_request_to_server(std::string server_name, std::string PORT, std::string http_req);
 };

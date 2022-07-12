@@ -18,6 +18,7 @@ class Thermostat
 {
     static std::vector<Valve_Address> valves;
     static std::string add_valve(Payload payload);
+    static std::string set_temperature(Payload payload);
 public:
     Thermostat(std::string PORT, int BACKLOG);
 };
