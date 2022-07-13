@@ -1,5 +1,5 @@
 #pragma once
-#include "../../component/src/component.cc"
+#include "../../component/src/component.h"
 
 class Valve : public Component
 {

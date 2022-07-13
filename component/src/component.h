@@ -11,7 +11,7 @@ protected:
 
 public:
     Component();
-    Component(string,string);
+    Component(string, string);
     //~Component();
     void whoami();
 };

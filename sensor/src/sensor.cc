@@ -4,6 +4,11 @@ Sensor::Sensor()
 {
     name_="Sensor";
     desc_="DescSensor...";
-    temp_=-1;      
+    srand(time(NULL));
+    temp_=rand()%35+1;      
 }
 
+float &Sensor::getTemp()
+{
+    return temp_;
+}

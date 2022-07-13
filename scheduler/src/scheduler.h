@@ -5,7 +5,7 @@
 class Scheduler
 {
     private:
-    Date begin;   //todo clasa
+    Date begin;   
     Date end;
 
     public:

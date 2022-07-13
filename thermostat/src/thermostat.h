@@ -1,20 +1,18 @@
 #pragma once
-#include "../../component/src/component.cc"
+#include "../../component/src/component.h"
+#include "../../sensor/src/sensor.h"
 
 class Thermostat : public Component
 {
 private:
     float target_temp_;
-    float current_temp_;
+    Sensor sensor_;
 
 public:
     Thermostat();
     Thermostat(float);
    // ~Thermostat();
-
     float &getCurrentTemp();
-    void setCurrentTemp(float);
-
     float &getTargetTemp();
     void setTargetTemp(float);
 };
