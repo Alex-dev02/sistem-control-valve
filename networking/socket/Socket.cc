@@ -92,9 +92,21 @@ int Socket::get_sock_fd(std::string ip_canonname, std::string PORT, int BACKLOG)
     return valid_sock_fd;
 }
 
-void Socket::send_request_to_server(int sock_to_write, std::string http_req) {
-    write(sock_to_write, http_req.c_str(), http_req.length());
+std::string Socket::send_request_to_server(int sock_to_write, std::string http_req) {
+    int err = write(sock_to_write, http_req.c_str(), http_req.length());
+    if (err < 0) {
+        std::cerr << "Failed to write\n";
+        return "NULL";
+    }
+    char buff[256];
+    int bytes = read(sock_to_write, buff, 255);
+    if (bytes < 0) {
+        std::cerr << "Failed to read\n";
+        return "NULL";
+    }
+    buff[bytes] = '\0';
     close(sock_to_write);
+    return buff;
 }
 
 Socket::Socket() {}

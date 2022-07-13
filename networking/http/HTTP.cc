@@ -22,6 +22,8 @@ std::string HTTP::generateHTTPResponse(
     std::string contentType,
     std::string content)
 {
+
+
     return httpVersion + " " + responseCode
         + "\r\n" + "Content-Length: " + std::to_string(content.length()) +
         + "\r\n" + contentType + "\r\n\r\n" + content; 
@@ -45,6 +47,12 @@ std::string HTTP::getPath(std::string http_req) {
         }
     }
     return path;
+}
+
+bool HTTP::successResponse(std::string http_res) {
+    if (http_res.find("20") != std::string::npos)
+        return true;
+    return false;
 }
 
 std::string HTTP::getHTTPResponse(std::string http_req, std::string httpVersion){ 

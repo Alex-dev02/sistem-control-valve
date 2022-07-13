@@ -29,5 +29,5 @@ public:
     void set_new_fd(int sock_fd);
     std::string accept_new_connection(int sock_fd, int &new_fd);
     void respond_to_request(std::string http_response, int new_fd);
-    void send_request_to_server(int sock_to_write, std::string http_req);
+    std::string send_request_to_server(int sock_to_write, std::string http_req);
 };
