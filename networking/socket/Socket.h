@@ -15,24 +15,20 @@
 #include <signal.h>
 
 class Socket {
-    std::string PORT;
-    int BACKLOG;
-    int sock_fd;
-    int new_fd;
     char buff[512];
     char s[INET6_ADDRSTRLEN];
 
-    addrinfo* getValidSocket(addrinfo *linked_list_of_ips);
+    addrinfo* search_sock_fd(addrinfo *linked_list_of_ips, int &valid_sock_fd);
 
 public:
-    Socket(
-        std::string PORT = "4000",
-        int BACKLOG = 10,
-        std::string ip = ""
-    );
+    Socket();
     ~Socket();
 
-    std::string accept_new_connection();
-    void respond_to_request(std::string http_response);
-    void send_request_to_server(std::string server_name, std::string PORT, std::string http_req);
+
+    int get_sock_fd(std::string ip_canonname, std::string PORT, int BACKLOG);
+    void set_sock_fd(int sock_fd);
+    void set_new_fd(int sock_fd);
+    std::string accept_new_connection(int sock_fd, int &new_fd);
+    void respond_to_request(std::string http_response, int new_fd);
+    void send_request_to_server(int sock_to_write, std::string http_req);
 };
