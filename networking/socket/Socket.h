@@ -17,13 +17,12 @@
 class Socket {
     char buff[512];
     char s[INET6_ADDRSTRLEN];
-
+    
     addrinfo* search_sock_fd(addrinfo *linked_list_of_ips, int &valid_sock_fd);
 
 public:
     Socket();
     ~Socket();
-
 
     int get_sock_fd(std::string ip_canonname, std::string PORT, int BACKLOG);
     void set_sock_fd(int sock_fd);
