@@ -2,9 +2,9 @@
 
 #include "TcpListener.hpp"
 
-TcpListener::TcpListener(std::string m_address, std::string m_port):
-    m_address(m_address),
-    m_port(m_port)
+TcpListener::TcpListener(std::string address, std::string port):
+    m_address(address),
+    m_port(port)
 {}
 
 
@@ -21,6 +21,7 @@ void TcpListener::Stop() {
 addrinfo* TcpListener::GetSockAddresses() {
     addrinfo hints;
     addrinfo *result;
+    
     memset(&hints, 0, sizeof(hints));
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_UNSPEC; // compatible with IPv4 and IPv6
@@ -29,10 +30,15 @@ addrinfo* TcpListener::GetSockAddresses() {
     // now that we set the criteria, we must get the linked list of available
     // ips with getaddrinfo()
 
-    int err = getaddrinfo(m_address.c_str(), m_port.c_str(), &hints, &result);
+    int err = getaddrinfo(
+        m_address.empty() ? NULL : m_address.c_str(), 
+        m_port.c_str(), &hints, &result
+    );
 
-    if (err != 0)
+    if (err != 0) {
         std::cerr << "getaddrinfo: " << gai_strerror(err) << '\n';
+        exit(1);
+    }
 
     return result;
 }
@@ -63,12 +69,4 @@ void TcpListener::SetSockFd(addrinfo* sock_addresses) {
         std::cerr << "Could not listen()\n";
         exit(1);
     }
-}
-
-void *get_in_addr(struct sockaddr *sa) {
-    if (sa->sa_family == AF_INET) {
-        return &(((struct sockaddr_in*)sa)->sin_addr);
-    }
-
-    return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
