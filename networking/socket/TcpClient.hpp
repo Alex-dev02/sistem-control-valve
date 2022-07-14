@@ -5,5 +5,5 @@ public:
     TcpClient();
 
 private:
-    m_sock_fd;
+    int m_sock_fd;
 };

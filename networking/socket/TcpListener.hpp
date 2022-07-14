@@ -20,6 +20,7 @@ class TcpListener {
 public:
     TcpListener(std::string m_address, std::string m_port);
     void Start();
+    void Stop();
     // should return a client
     TcpClient AcceptTcpClient();
 private:

@@ -14,6 +14,10 @@ void TcpListener::Start() {
     freeaddrinfo(sock_addresses);
 }
 
+void TcpListener::Stop() {
+    close(m_sock_fd);
+}
+
 addrinfo* TcpListener::GetSockAddresses() {
     addrinfo hints;
     addrinfo *result;
@@ -25,7 +29,7 @@ addrinfo* TcpListener::GetSockAddresses() {
     // now that we set the criteria, we must get the linked list of available
     // ips with getaddrinfo()
 
-    int err = getaddrinfo(NULL, m_port.c_str(), &hints, &result);
+    int err = getaddrinfo(m_address.c_str(), m_port.c_str(), &hints, &result);
 
     if (err != 0)
         std::cerr << "getaddrinfo: " << gai_strerror(err) << '\n';
