@@ -3,11 +3,11 @@
 
 class Date
 {private:
-    int day_;
-    int month_;
-    int year_;
-    int hour_;
-    int minute_;
+    int m_day;
+    int m_month;
+    int m_year;
+    int m_hour;
+    int m_minute;
 
 public:
     Date();

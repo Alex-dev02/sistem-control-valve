@@ -1,4 +1,4 @@
-#include "sensor.cc"
+#include "sensor.hpp"
 int main()
 {
     Sensor S;

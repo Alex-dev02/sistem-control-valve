@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.10)
 
 
 include_directories(src "../component")
-add_executable(Sensor src/main.cc) 
+add_executable(Sensor src/main.cpp src/sensor.cpp src/sensor.hpp) 

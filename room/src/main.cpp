@@ -1,4 +1,4 @@
-#include "room.cc"
+#include "room.cpp"
 
 int main()
 {

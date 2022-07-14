@@ -1,4 +1,4 @@
-#include "component.cc"
+#include "component.hpp"
 int main()
 {
     Component C;

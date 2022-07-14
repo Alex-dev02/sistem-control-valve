@@ -1,4 +1,4 @@
-#include "date.cc"
+#include "date.hpp"
 
 int main()
 {
@@ -7,5 +7,5 @@ int main()
     std::cout<<D.isValid()<<"\n";
     std::cout<<D2.isValid()<<"\n";
 
-
+return 0;
 }

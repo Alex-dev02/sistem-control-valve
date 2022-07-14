@@ -1,4 +1,4 @@
-#include "valve.cc"
+#include "valve.hpp"
 int main()
 {
     Valve V;

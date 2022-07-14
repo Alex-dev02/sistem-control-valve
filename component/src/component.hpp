@@ -6,12 +6,12 @@ using std::string;
 class Component
 {
 protected:
-    string name_;
-    string desc_;
+    string m_name;
+    string m_desc;
 
 public:
     Component();
     Component(string, string);
     //~Component();
-    void whoami();
+    virtual void whoami();
 };

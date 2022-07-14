@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
 
 
-include_directories(src "../component")
-add_executable(Valve src/main.cc) 
+include_directories("../component" src)
+add_executable(Valve src/main.cpp src/valve.cpp src/valve.hpp) 

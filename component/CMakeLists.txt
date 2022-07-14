@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
 
 include_directories(src)
-add_executable(Component src/main.cc) 
+add_executable(Component src/main.cpp src/component.cpp src/component.hpp) 

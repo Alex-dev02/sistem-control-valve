@@ -1,17 +1,17 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "../../thermostat/src/thermostat.h"
-#include "../../valve/src/valve.h"
+#include "../../thermostat/src/thermostat.hpp"
+#include "../../valve/src/valve.hpp"
 using std::string;
 using std::vector;
 
 class Room
 {
 private:
-    string room_name_;
-    Thermostat thermostat_;
-    vector<Valve> valves_;
+    string m_room_name;
+    Thermostat m_thermostat;
+    vector<Valve> m_valves;
 
 public:
     Room();

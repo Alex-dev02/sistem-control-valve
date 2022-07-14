@@ -1,4 +1,4 @@
-#include "thermostat.cc"
+#include "thermostat.hpp"
 
 int main()
 {
