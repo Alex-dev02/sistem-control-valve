@@ -19,9 +19,9 @@
 class TcpListener {
 public:
     TcpListener(std::string address, std::string port);
+    
     void Start();
     void Stop();
-    // should return a client
     TcpClient AcceptTcpClient();
 private:
     std::string m_address;
@@ -30,4 +30,5 @@ private:
 
     addrinfo* GetSockAddresses();
     void SetSockFd(addrinfo* sock_addresses);  
+    void *get_in_addr(sockaddr *sa); 
 };

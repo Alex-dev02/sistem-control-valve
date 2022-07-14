@@ -70,3 +70,27 @@ void TcpListener::SetSockFd(addrinfo* sock_addresses) {
         exit(1);
     }
 }
+
+void *TcpListener::get_in_addr(sockaddr *sa) {
+    if (sa->sa_family == AF_INET) {
+        return &(((struct sockaddr_in*)sa)->sin_addr);
+    }
+
+    return &(((struct sockaddr_in6*)sa)->sin6_addr);
+}
+
+TcpClient TcpListener::AcceptTcpClient() {
+    sockaddr_storage their_addr;
+    socklen_t sin_size = sizeof their_addr;
+    char s[INET6_ADDRSTRLEN];
+    
+    int new_sock_fd = accept(m_sock_fd, (sockaddr*)&their_addr, &sin_size);
+    if (new_sock_fd == -1) {
+        std::cerr << "accept\n";
+    }
+    
+    inet_ntop(their_addr.ss_family, get_in_addr((sockaddr*)&their_addr), s, sizeof s);
+
+    std::cout << "server: got connection from " << s << '\n';
+    return TcpClient(new_sock_fd);
+}
