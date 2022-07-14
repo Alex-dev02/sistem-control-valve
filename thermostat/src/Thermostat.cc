@@ -24,8 +24,6 @@ std::string Thermostat::set_temperature(Payload payload) {
         std::string res = serv.send_request_to_server(sock_fd, payload.get_raw_http_req());
         if (res != "NULL" && HTTP::successResponse(res))
             successfuly_updated_valves++;
-        // send_request_to_server should return an http response,
-        // that we will interpret afterwords
     }
 
     return "Temperature changed to " + payload.get_path_var("temp")
