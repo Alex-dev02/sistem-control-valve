@@ -61,3 +61,7 @@ void TcpClient::SetSockFd(addrinfo* sock_addresses) {
 int TcpClient::GetStream() {
     return m_sock_fd;
 }
+
+void TcpClient::Close() {
+    close(m_sock_fd);
+}
