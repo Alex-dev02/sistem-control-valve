@@ -4,6 +4,17 @@
 
 #include <iostream>
 
+Thermostat::Thermostat(std::string Pserver_name, std::string port)
+{
+    // Router router;
+    // Socket server;
+    // // add new paths here
+    // router.addPath("/", &root);
+    // router.addPath("/add_valve", &add_valve);
+    // router.addPath("/set_temperature", &set_temperature);
+    
+}
+
 std::string root(Payload payload) {
     return "Home";
 }
@@ -29,24 +40,6 @@ std::string Thermostat::set_temperature(Payload payload) {
     // return "Temperature changed to " + payload.get_path_var("temp")
     //     + " for " + std::to_string(successfuly_updated_valves) + " valves.";
     return "";
-}
-
-Thermostat::Thermostat(std::string PORT, int BACKLOG)
-{
-    // Router router;
-    // Socket server;
-    // // add new paths here
-    // router.addPath("/", &root);
-    // router.addPath("/add_valve", &add_valve);
-    // router.addPath("/set_temperature", &set_temperature);
-    // int new_fd;
-    // int sock = server.get_sock_fd("", PORT, BACKLOG);
-    // std::cout << "Waiting for connections...\n";
-    // while (true) {
-    //     std::string req = server.accept_new_connection(sock, new_fd);
-    //     std::cout << '\n' << req << '\n';
-    //     server.respond_to_request(HTTP::getHTTPResponse(req), new_fd);
-    // }
 }
 
 std::vector<Valve_Address> Thermostat::valves = {};
