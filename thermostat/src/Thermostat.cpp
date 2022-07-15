@@ -1,10 +1,11 @@
 #include "Thermostat.hpp"
 #include "../../networking/http/HTTP.hpp"
 #include "../../networking/router/Router.hpp"
+#include "../../networking/socket/NetworkStream.hpp"
 
 #include <iostream>
 
-Thermostat::Thermostat(std::string Pserver_name, std::string port)
+Thermostat::Thermostat(std::string server_name, std::string port)
 {
     // Router router;
     // Socket server;
@@ -12,7 +13,14 @@ Thermostat::Thermostat(std::string Pserver_name, std::string port)
     // router.addPath("/", &root);
     // router.addPath("/add_valve", &add_valve);
     // router.addPath("/set_temperature", &set_temperature);
-    
+    TcpListener server(server_name, port);
+    server.Start();
+    while (true) {
+        std::cout << "Waiting for a new connection...\n";
+        TcpClient client = server.AcceptTcpClient();
+        NetworkStream stream = client.GetStream();
+        std::cout << stream.Read();
+    }
 }
 
 std::string root(Payload payload) {

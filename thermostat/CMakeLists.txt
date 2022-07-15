@@ -11,6 +11,8 @@ add_executable(Thermostat
 ../networking/http/HTTP.hpp
 ../networking/http/Payload.cpp
 ../networking/http/Payload.hpp
+../networking/socket/NetworkStream.hpp
+../networking/socket/NetworkStream.cpp
 src/Thermostat.cpp
 src/Thermostat.hpp
 src/main.cpp)
