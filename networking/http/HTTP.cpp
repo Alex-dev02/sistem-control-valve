@@ -1,6 +1,6 @@
-#include "HTTP.h"
-#include "../router/Router.h"
-#include "Payload.h"
+#include "HTTP.hpp"
+#include "../router/Router.hpp"
+#include "Payload.hpp"
 
 #include <functional>
 

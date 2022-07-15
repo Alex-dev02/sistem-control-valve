@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <functional>
 
-#include "../http/Payload.h"
+#include "../http/Payload.hpp"
 
 
 // The route handler should return a string, representing the data

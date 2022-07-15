@@ -1,4 +1,4 @@
-#include "Router.h"
+#include "Router.hpp"
 
 Router::Router() {
     // here should go all the available routes and their path
