@@ -5,25 +5,16 @@
 
 #include <iostream>
 
-Thermostat::Thermostat(std::string server_name, std::string port)
+Thermostat::Thermostat()
 {
-    // Router router;
-    // Socket server;
-    // // add new paths here
-    // router.addPath("/", &root);
-    // router.addPath("/add_valve", &add_valve);
-    // router.addPath("/set_temperature", &set_temperature);
-    TcpListener server(server_name, port);
-    server.Start();
-    while (true) {
-        std::cout << "Waiting for a new connection...\n";
-        TcpClient client = server.AcceptTcpClient();
-        NetworkStream stream = client.GetStream();
-        std::cout << stream.Read();
-    }
+    Router router;
+    // add new paths here
+    router.addPath("/", std::bind(&Thermostat::root, this, std::placeholders::_1));
+    router.addPath("/add_valve", std::bind(&Thermostat::add_valve, this, std::placeholders::_1));
+    router.addPath("/set_temperature", std::bind(&Thermostat::set_temperature, this, std::placeholders::_1));
 }
 
-std::string root(Payload payload) {
+std::string Thermostat::root(Payload payload) {
     return "Home";
 }
 
@@ -49,5 +40,3 @@ std::string Thermostat::set_temperature(Payload payload) {
     //     + " for " + std::to_string(successfuly_updated_valves) + " valves.";
     return "";
 }
-
-std::vector<Valve_Address> Thermostat::valves = {};
