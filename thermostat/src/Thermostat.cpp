@@ -27,16 +27,16 @@ std::string Thermostat::AddValve(Payload payload) {
 }
 
 std::string Thermostat::SetTemperature(Payload payload) {
-    int successfuly_updated_valves = 0;
-    for (int it = 0; it < m_valves.size(); it++) {
-        Socket serv;
-        int sock_fd = serv.get_sock_fd(m_valves[it].server_name, valves[it].PORT, 10);
-        std::string res = serv.send_request_to_server(sock_fd, payload.GetRawRequest());
-        if (res != "NULL" && HTTP::successResponse(res))
-            successfuly_updated_valves++;
-    }
+    // int successfuly_updated_valves = 0;
+    // for (int it = 0; it < m_valves.size(); it++) {
+    //     Socket serv;
+    //     int sock_fd = serv.get_sock_fd(m_valves[it].server_name, valves[it].PORT, 10);
+    //     std::string res = serv.send_request_to_server(sock_fd, payload.GetRawRequest());
+    //     if (res != "NULL" && HTTP::successResponse(res))
+    //         successfuly_updated_valves++;
+    // }
 
-    return "Temperature changed to " + payload.GetPathVar("temp")
-        + " for " + std::to_string(successfuly_updated_valves) + " valves.";
+    // return "Temperature changed to " + payload.GetPathVar("temp")
+    //     + " for " + std::to_string(successfuly_updated_valves) + " valves.";
     return "";
 }

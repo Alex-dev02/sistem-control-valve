@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <functional>
 
-#include "../communication_protocol/Payload.hpp"
+#include "../IotDCP/Payload.hpp"
 
 
 // The route handler should return a string, representing the data

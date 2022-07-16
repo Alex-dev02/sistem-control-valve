@@ -7,10 +7,12 @@ add_executable(Thermostat
 ../networking/socket/TcpClient.hpp
 ../networking/router/Router.cpp
 ../networking/router/Router.hpp
-../networking/http/HTTP.cpp
-../networking/http/HTTP.hpp
-../networking/http/Payload.cpp
-../networking/http/Payload.hpp
+../networking/IotDCP/IotDCP.cpp
+../networking/IotDCP/IotDCP.hpp
+../networking/IotDCP/Payload.cpp
+../networking/IotDCP/Payload.hpp
+../networking/IotDCP/HttpResponses.hpp
+../networking/IotDCP/HttpResponses.cpp
 ../networking/socket/NetworkStream.hpp
 ../networking/socket/NetworkStream.cpp
 src/Thermostat.cpp

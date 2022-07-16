@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../networking/socket/TcpListener.hpp"
-#include "../../networking/communication_protocol/Payload.hpp"
+#include "../../networking/IotDCP/Payload.hpp"
 #include "../../networking/router/Router.hpp"
 
 #include <vector>
