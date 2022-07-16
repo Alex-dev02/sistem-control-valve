@@ -16,7 +16,10 @@ class Router {
 public:
     Router();
     void AddPath(std::string path, std::function<std::string(Payload)>);
-    std::function<std::string(Payload)> GetPathHandler(std::string &path);
+    std::string GetPathHandlerResponse(std::string request);
 private:
     std::unordered_map<std::string, std::function<std::string(Payload)>> m_routes;
+
+    std::function<std::string(Payload)> GetPathHandler(std::string &path);
+    std::string GetPath(std::string request);
 };

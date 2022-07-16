@@ -20,7 +20,7 @@ class Thermostat
 {
 public:
     Thermostat();
-    Router getRouter();
+    Router GetRouter();
 private:
     Router m_router;
     std::vector<Valve_Address> m_valves;

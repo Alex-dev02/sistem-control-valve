@@ -10,7 +10,7 @@ Thermostat::Thermostat() {
     m_router.AddPath("/set_temperature", std::bind(&Thermostat::SetTemperature, this, std::placeholders::_1));
 }
 
-Router Thermostat::getRouter() {
+Router Thermostat::GetRouter() {
     return m_router;
 }
 
