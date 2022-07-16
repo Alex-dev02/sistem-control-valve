@@ -16,8 +16,7 @@
     {}
  };
 
-class Thermostat
-{
+class Thermostat {
 public:
     Thermostat();
     Router GetRouter();

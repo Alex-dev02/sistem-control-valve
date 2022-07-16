@@ -8,7 +8,7 @@
 #include "Thermostat.hpp"
 
 int main(int argc, char *argv[]) {
-    Thermostat t;
+    Thermostat t = Thermostat();
     TcpListener server("127.0.0.1", "4000");
     server.Start();
     Router router = t.GetRouter();
