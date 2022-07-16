@@ -4,8 +4,8 @@
 
 TcpClient::TcpClient(std::string address, std::string port):
     m_address(address),
-    m_port(port)
-{
+    m_port(port) {
+
     addrinfo* addresses = GetSockAddresses();
     SetSockFd(addresses);
     freeaddrinfo(addresses);

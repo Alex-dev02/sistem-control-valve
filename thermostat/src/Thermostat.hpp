@@ -1,18 +1,18 @@
 #pragma once
 
 #include "../../networking/socket/TcpListener.hpp"
-#include "../../networking/http/Payload.hpp"
+#include "../../networking/communication_protocol/Payload.hpp"
 #include "../../networking/router/Router.hpp"
 
 #include <vector>
 #include <string>
 
  struct Valve_Address {
-    std::string server_name;
-    std::string PORT;
-    Valve_Address(std::string server_name, std::string PORT):
-        server_name(server_name),
-        PORT(PORT)
+    std::string m_server_name;
+    std::string m_port;
+    Valve_Address(std::string server_name, std::string port):
+        m_server_name(server_name),
+        m_port(port)
     {}
  };
 
@@ -23,9 +23,9 @@ public:
     Router getRouter();
 private:
     Router m_router;
+    std::vector<Valve_Address> m_valves;
 
-    std::vector<Valve_Address> valves;
-    std::string root(Payload payload);
-    std::string add_valve(Payload payload);
-    std::string set_temperature(Payload payload);
+    std::string Root(Payload payload);
+    std::string AddValve(Payload payload);
+    std::string SetTemperature(Payload payload);
 };

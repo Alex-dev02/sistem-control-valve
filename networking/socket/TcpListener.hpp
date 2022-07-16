@@ -30,5 +30,5 @@ private:
 
     addrinfo* GetSockAddresses();
     void SetSockFd(addrinfo* sock_addresses);  
-    void *get_in_addr(sockaddr *sa); 
+    void *GetInAddr(sockaddr *sa); 
 };

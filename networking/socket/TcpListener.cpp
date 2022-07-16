@@ -71,7 +71,7 @@ void TcpListener::SetSockFd(addrinfo* sock_addresses) {
     }
 }
 
-void *TcpListener::get_in_addr(sockaddr *sa) {
+void *TcpListener::GetInAddr(sockaddr *sa) {
     if (sa->sa_family == AF_INET) {
         return &(((struct sockaddr_in*)sa)->sin_addr);
     }
@@ -89,7 +89,7 @@ TcpClient TcpListener::AcceptTcpClient() {
         std::cerr << "accept\n";
     }
     
-    inet_ntop(their_addr.ss_family, get_in_addr((sockaddr*)&their_addr), s, sizeof s);
+    inet_ntop(their_addr.ss_family, GetInAddr((sockaddr*)&their_addr), s, sizeof s);
 
     std::cout << "server: got connection from " << s << '\n';
     return TcpClient(new_sock_fd);
