@@ -10,7 +10,6 @@ void Router::AddPath(std::string path, std::function<std::string(Payload)> handl
 
 std::function<std::string(Payload)> Router::GetPathHandler(std::string &path) {
     auto handler = m_routes.find(path);
-    std::cout << "\n" << m_routes.size() << "\n";
     if (handler != m_routes.end())
         return handler->second;
     return nullptr;
@@ -18,14 +17,10 @@ std::function<std::string(Payload)> Router::GetPathHandler(std::string &path) {
 
 std::string Router::GetPathHandlerResponse(std::string request) {
     std::string path = GetPath(request);
-    std::cout << "\n" << path << " " << path.length() << "\n";
     std::function<std::string(Payload)> handler
         = GetPathHandler(path);
-    if (!handler) {
-        std::cout << "Am gasit handlerul\n";
-        std::cout << handler(Payload(request));
+    if (handler)
         return HttpResponses::OK(handler(Payload(request)));
-    }
     return HttpResponses::NotFound();
 }
 
