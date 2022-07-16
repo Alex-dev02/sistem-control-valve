@@ -16,6 +16,6 @@ int main(int argc, char *argv[]) {
         NetworkStream stream = client.GetStream();
         std::string req = stream.Read();
         std::cout << req << '\n';
-        stream.Write(HTTP::getHTTPResponse(req));
+        stream.Write(HTTP::getHTTPResponse(req, t.getRouter()));
     }
 }

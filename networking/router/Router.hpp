@@ -13,9 +13,10 @@
 // ex: /myPath/temp?new=15 -> std::string("new=15");
 
 class Router {
-    static std::unordered_map<std::string, std::function<std::string(Payload)>> routes;
 public:
     Router();
-    static void addPath(std::string path, std::function<std::string(Payload)>);
+    void addPath(std::string path, std::function<std::string(Payload)>);
     std::function<std::string(Payload)> getPathHandler(std::string &path);
+private:
+    std::unordered_map<std::string, std::function<std::string(Payload)>> routes;
 };

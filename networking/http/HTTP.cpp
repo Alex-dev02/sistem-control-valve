@@ -1,5 +1,4 @@
 #include "HTTP.hpp"
-#include "../router/Router.hpp"
 #include "Payload.hpp"
 
 #include <functional>
@@ -22,8 +21,6 @@ std::string HTTP::generateHTTPResponse(
     std::string contentType,
     std::string content)
 {
-
-
     return httpVersion + " " + responseCode
         + "\r\n" + "Content-Length: " + std::to_string(content.length()) +
         + "\r\n" + contentType + "\r\n\r\n" + content; 
@@ -55,8 +52,7 @@ bool HTTP::successResponse(std::string http_res) {
     return false;
 }
 
-std::string HTTP::getHTTPResponse(std::string http_req, std::string httpVersion){ 
-    class Router router;
+std::string HTTP::getHTTPResponse(std::string http_req, Router router, std::string httpVersion){ 
     std::string path = getPath(http_req);
     std::function<std::string(Payload)> handler
         = router.getPathHandler(path);

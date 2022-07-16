@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../router/Router.hpp"
+
 #include <string>
 
 class HTTP {
@@ -16,5 +18,5 @@ class HTTP {
     static std::string getPath(std::string http_req);
 public:
     static bool successResponse(std::string http_res);
-    static std::string getHTTPResponse(std::string http_req, std::string httpVersion = "HTTP/1.1");
+    static std::string getHTTPResponse(std::string http_req, Router router, std::string httpVersion = "HTTP/1.1");
 };
