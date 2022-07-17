@@ -29,7 +29,8 @@ void Payload::AddPathVars() {
             var_value.push_back(m_raw_http_req[it]);
 
         if (m_raw_http_req[it] == ' ') {
-           m_path_vars.emplace(var_name, var_value);
+            var_value.pop_back();
+            m_path_vars.emplace(var_name, var_value);
             break;
         }
     }

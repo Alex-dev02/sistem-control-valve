@@ -1,5 +1,6 @@
 #include "Thermostat.hpp"
 #include "../../networking/socket/NetworkStream.hpp"
+#include "../../networking/IotDCP/HttpResponses.hpp"
 
 #include <iostream>
 
@@ -27,16 +28,18 @@ std::string Thermostat::AddValve(Payload payload) {
 }
 
 std::string Thermostat::SetTemperature(Payload payload) {
-    // int successfuly_updated_valves = 0;
-    // for (int it = 0; it < m_valves.size(); it++) {
-    //     Socket serv;
-    //     int sock_fd = serv.get_sock_fd(m_valves[it].server_name, valves[it].PORT, 10);
-    //     std::string res = serv.send_request_to_server(sock_fd, payload.GetRawRequest());
-    //     if (res != "NULL" && HTTP::successResponse(res))
-    //         successfuly_updated_valves++;
-    // }
+    int successfuly_updated_valves = 0;
+    for (int it = 0; it < m_valves.size(); it++) {
+        TcpClient client(m_valves[it].m_server_name, m_valves[it].m_port);
+        NetworkStream stream = client.GetStream();
+        stream.Write("hi"); // send a IotDCP message for changing temp;
+        std::string res = stream.Read();
+        std::cout << res << '\n';
+        if (HttpResponses::IsResponseASuccess(res))
+            successfuly_updated_valves++;
+        stream.Close();
+    }
 
-    // return "Temperature changed to " + payload.GetPathVar("temp")
-    //     + " for " + std::to_string(successfuly_updated_valves) + " valves.";
-    return "";
+    return "Temperature changed to " + payload.GetPathVar("temp")
+        + " for " + std::to_string(successfuly_updated_valves) + " valves.";
 }

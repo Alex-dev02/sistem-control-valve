@@ -15,3 +15,12 @@ std::string HttpResponses::NotFound() {
 std::string HttpResponses::ServerError() {
     return "HTTP/1.1 500 Internal Server Error\n\n";
 }
+
+// This response would always come from the valves
+// so it's safe to search only for the OK code
+// at least for now
+bool HttpResponses::IsResponseASuccess(std::string http_request) {
+    if (http_request.find("OK") == std::string::npos)
+        return false;
+    return true;
+}

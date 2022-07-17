@@ -22,16 +22,15 @@ addrinfo* TcpClient::GetSockAddresses() {
     memset(&hints, 0, sizeof(hints));
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_UNSPEC;
-
     int err = getaddrinfo(
-        m_address.empty() ? NULL : m_address.c_str(),
+        m_address.c_str(), 
         m_port.c_str(),
         &hints,
         &result
     );
 
     if (err != 0) {
-        std::cerr << "getaddrinfo: " << gai_strerror(err);
+        std::cerr << "getaddrinfo: " << gai_strerror(err) << '\n';
         exit(1);
     }
     return result;
