@@ -1,4 +1,21 @@
 cmake_minimum_required(VERSION 3.10)
 
-add_executable(Thermostat src/main.cc)
+add_executable(Thermostat 
+../networking/socket/TcpListener.cpp
+../networking/socket/TcpListener.hpp
+../networking/socket/TcpClient.cpp
+../networking/socket/TcpClient.hpp
+../networking/router/Router.cpp
+../networking/router/Router.hpp
+../networking/IotDCP/IotDCP.cpp
+../networking/IotDCP/IotDCP.hpp
+../networking/IotDCP/Payload.cpp
+../networking/IotDCP/Payload.hpp
+../networking/IotDCP/HttpResponses.hpp
+../networking/IotDCP/HttpResponses.cpp
+../networking/socket/NetworkStream.hpp
+../networking/socket/NetworkStream.cpp
+src/Thermostat.cpp
+src/Thermostat.hpp
+src/main.cpp)
 
