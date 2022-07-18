@@ -1,18 +1,24 @@
 #include "Valve.hpp"
 
-class Valve
+Valve::Valve():
+    m_temperature(18)
 {
-private:
-    /* data */
-public:
-    Valve(/* args */);
-    ~Valve();
+    m_router.AddPath("/set_temperature", std::bind(&Valve::SetTemperatureRoute, this, std::placeholders::_1));
 };
 
-Valve::Valve(/* args */)
-{
+Router Valve::GetRouter() {
+    return m_router;
 }
 
-Valve::~Valve()
-{
+float Valve::GetTemperature() {
+    return m_temperature;
+}
+
+void Valve::SetTemperature(float temperature) {   m_temperature = temperature;
+}
+
+std::string Valve::SetTemperatureRoute(Payload payload) {
+    IotDCP dcp;
+    SetTemperature(std::stof(payload.GetPathVar("temp")));
+    return dcp.CreateResponse("1 OK", "");
 }

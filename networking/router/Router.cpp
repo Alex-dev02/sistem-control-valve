@@ -20,8 +20,8 @@ std::string Router::GetPathHandlerResponse(std::string request) {
     std::function<std::string(Payload)> handler
         = GetPathHandler(path);
     if (handler)
-        return HttpResponses::OK(handler(Payload(request)));
-    return HttpResponses::NotFound();
+        return handler(Payload(request));
+    return "";
 }
 
 std::string Router::GetPath(std::string request) {
