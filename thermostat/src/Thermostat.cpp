@@ -39,8 +39,6 @@ std::string Thermostat::SetTemperature(Payload payload) {
             "/set_temperature?temp=" + payload.GetPathVar("temp")
             ));
         std::string res = stream.Read();
-        std::cout << "Res:---------------" << res
-             << "----------------------" << '\n';
         if (dcp.IsResponseASuccess(res))
             successfuly_updated_valves++;
         stream.Close();
