@@ -1,6 +1,7 @@
 #include "Thermostat.hpp"
 #include "../../networking/socket/NetworkStream.hpp"
 #include "../../networking/IotDCP/HttpResponses.hpp"
+#include "../../networking/IotDCP/IotDCP.hpp"
 
 #include <iostream>
 
@@ -28,14 +29,18 @@ std::string Thermostat::AddValve(Payload payload) {
 }
 
 std::string Thermostat::SetTemperature(Payload payload) {
+    IotDCP dcp;
     int successfuly_updated_valves = 0;
     for (int it = 0; it < m_valves.size(); it++) {
         TcpClient client(m_valves[it].m_server_name, m_valves[it].m_port);
         NetworkStream stream = client.GetStream();
-        stream.Write("hi"); // send a IotDCP message for changing temp;
+        stream.Write(dcp.CreateRequest(
+            "PUT",
+            "/set_temperature?temp=" + payload.GetPathVar("temp")
+            ));
         std::string res = stream.Read();
         std::cout << res << '\n';
-        if (HttpResponses::IsResponseASuccess(res))
+        if (dcp.IsResponseASuccess(res))
             successfuly_updated_valves++;
         stream.Close();
     }

@@ -17,3 +17,9 @@ std::string IotDCP::CreateResponse(std::string response_code, std::string conten
         "Length " + std::to_string(content.length()) +
         (content.length() == 0 ? "" : '\n' + content); 
 }
+
+bool IotDCP::IsResponseASuccess(std::string response) {
+    if (response[0] == '1')
+        return true;
+    return false;
+}
