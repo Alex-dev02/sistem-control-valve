@@ -53,7 +53,7 @@ public:
         std::string response_code,
         std::string content
     );
-    bool IotDCP::IsResponseASuccess(std::string response);
+    bool IsResponseASuccess(std::string response);
 private:
     std::string m_version = "0.1";
 };
