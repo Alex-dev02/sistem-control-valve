@@ -9,7 +9,7 @@ Thermostat::Thermostat() {
     // add new paths here
     m_router.AddPath("/", std::bind(&Thermostat::Root, this, std::placeholders::_1));
     m_router.AddPath("/add_valve", std::bind(&Thermostat::AddValve, this, std::placeholders::_1));
-    m_router.AddPath("/set_temperature", std::bind(&Thermostat::SetTemperature, this, std::placeholders::_1));
+    m_router.AddPath("/set_target", std::bind(&Thermostat::SetTemperature, this, std::placeholders::_1));
 }
 
 Router Thermostat::GetRouter() {
@@ -36,7 +36,7 @@ std::string Thermostat::SetTemperature(Payload payload) {
         NetworkStream stream = client.GetStream();
         stream.Write(dcp.CreateRequest(
             "PUT",
-            "/set_temperature?temp=" + payload.GetPathVar("temp")
+            "/set_target?target=" + payload.GetPathVar("target")
             ));
         std::string res = stream.Read();
         if (dcp.IsResponseASuccess(res))
@@ -44,7 +44,7 @@ std::string Thermostat::SetTemperature(Payload payload) {
         stream.Close();
     }
 
-    return "Temperature changed to " + payload.GetPathVar("temp")
+    return "Temperature changed to " + payload.GetPathVar("target")
         + " for " + std::to_string(successfuly_updated_valves) + " out of "
         + std::to_string(m_valves.size()) + " valves.";
 }

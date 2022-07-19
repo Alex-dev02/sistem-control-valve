@@ -20,7 +20,11 @@ int main(int argc, char *argv[]) {
         TcpClient client = server.AcceptTcpClient();
         NetworkStream stream = client.GetStream();
         std::string req = stream.Read();
-        std::string res = HttpResponses::OK(router.GetPathHandlerResponse(req)); 
+        std::string res = router.GetPathHandlerResponse(req); 
+        if (res == "NULL")
+            res = HttpResponses::NotFound();
+        else
+            res = HttpResponses::OK(res);
         stream.Write(res);
         stream.Close();
     }

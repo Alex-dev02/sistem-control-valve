@@ -21,7 +21,7 @@ std::string Router::GetPathHandlerResponse(std::string request) {
         = GetPathHandler(path);
     if (handler)
         return handler(Payload(request));
-    return "";
+    return "NULL";
 }
 
 std::string Router::GetPath(std::string request) {
