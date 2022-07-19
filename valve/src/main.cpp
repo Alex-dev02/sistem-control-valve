@@ -16,11 +16,21 @@ void DisplayTemperature(Valve &valve) {
     }
 }
 
+void UpdateTemperature (Valve &valve) {
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        valve.IncrementTemperature();
+    }
+}
+
 int main(int argc, char *argv[]) {
     Valve valve;
     
-    auto DisplayTempThread = std::thread(DisplayTemperature, std::ref(valve));
-    DisplayTempThread.detach();
+    auto display_temp_target_thread = std::thread(DisplayTemperature, std::ref(valve));
+    display_temp_target_thread.detach();
+
+    auto update_temp_thread = std::thread(UpdateTemperature, std::ref(valve));
+    update_temp_thread.detach();
 
     TcpListener server(
         argc >= 2 ? argv[1] : "127.0.0.1",

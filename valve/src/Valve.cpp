@@ -28,9 +28,14 @@ void Valve::SetTemperature(float temperature) {
 }
 
 void Valve::IncrementTemperature() {
-    if (m_current_target - m_temperature > 0.5)
+    if (m_current_target - m_temperature >= 0.5)
         m_temperature += 0.5;
-    m_temperature += (m_current_target - m_temperature);
+    else if (m_current_target - m_temperature <= -0.5)
+        m_temperature -= 0.5;
+    else if (m_current_target - m_temperature < 0.5)
+        m_temperature += (m_current_target - m_temperature);
+    else if (m_current_target - m_temperature < 0)
+        m_temperature -= (m_current_target - m_temperature);
 }
 
 std::string Valve::SetCurrentTargetRoute(Payload payload) {
