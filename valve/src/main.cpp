@@ -6,9 +6,12 @@
 #include "../../networking/socket/NetworkStream.hpp"
 #include "../../networking/router/Router.hpp"
 
-int main() {
+int main(int argc, char *argv[]) {
     Valve v;
-    TcpListener server("127.0.0.1", "5000");
+    TcpListener server(
+        argc >= 2 ? argv[1] : "127.0.0.1",
+        argc >= 3 ? argv[2] : "5000"
+    );
     server.Start();
     Router router = v.GetRouter();
     while (true) {

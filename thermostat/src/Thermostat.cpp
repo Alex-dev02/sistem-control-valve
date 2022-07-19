@@ -45,5 +45,6 @@ std::string Thermostat::SetTemperature(Payload payload) {
     }
 
     return "Temperature changed to " + payload.GetPathVar("temp")
-        + " for " + std::to_string(successfuly_updated_valves) + " valves.";
+        + " for " + std::to_string(successfuly_updated_valves) + " out of "
+        + std::to_string(m_valves.size()) + " valves.";
 }
