@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <mutex>
 
 #include "Valve.hpp"
 #include "../../networking/socket/TcpClient.hpp"
@@ -17,9 +18,12 @@ void DisplayTemperature(Valve &valve) {
 }
 
 void UpdateTemperature (Valve &valve) {
+    std::mutex guard;
     while (true) {
         std::this_thread::sleep_for(std::chrono::seconds(3));
+        guard.lock();
         valve.IncrementTemperature();
+        guard.unlock();
     }
 }
 
