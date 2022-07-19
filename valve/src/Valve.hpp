@@ -11,11 +11,11 @@ public:
     Valve();
 
     Router GetRouter();
-    float GetTemperature();
-    void SetTemperature(float temperature);
+    float GetCurrentTarget();
+    void SetCurrentTarget(float current_targer);
 private:
-    float m_temperature;
+    float m_current_target;
     Router m_router;
 
-    std::string SetTemperatureRoute(Payload payload);
+    std::string SetCurrentTargetRoute(Payload payload);
 };
