@@ -10,8 +10,7 @@
 int main(int argc, char *argv[]) {
     Thermostat t = Thermostat();
     TcpListener server(
-        argc >= 2 ? argv[1] : "127.0.0.1",
-        argc >= 3 ? argv[2] : "4000"
+        argc >= 2 ? argv[1] : "4000"
     );
     server.Start();
     Router router = t.GetRouter();

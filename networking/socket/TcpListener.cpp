@@ -2,7 +2,7 @@
 
 #include "TcpListener.hpp"
 
-TcpListener::TcpListener(std::string address, std::string port):
+TcpListener::TcpListener(std::string port, std::string address):
     m_address(address),
     m_port(port)
 {}
@@ -27,12 +27,15 @@ addrinfo* TcpListener::GetSockAddresses() {
     hints.ai_family = AF_UNSPEC; // compatible with IPv4 and IPv6
     hints.ai_flags = AI_PASSIVE; // can bind() and accept() connections
 
+
     // now that we set the criteria, we must get the linked list of available
     // ips with getaddrinfo()
 
     int err = getaddrinfo(
         m_address.empty() ? NULL : m_address.c_str(), 
-        m_port.c_str(), &hints, &result
+        m_port.c_str(),
+        &hints,
+        &result
     );
 
     if (err != 0) {
@@ -57,9 +60,13 @@ void TcpListener::SetSockFd(addrinfo* sock_addresses) {
             exit(1);
         }
 
-        if (bind(m_sock_fd, address->ai_addr, address->ai_addrlen) == 0) {
-            break;// found a valid socket and binded to it
+        if (bind(m_sock_fd, address->ai_addr, address->ai_addrlen) == -1) {
+            close(m_sock_fd);
+            std::cerr << "server: bind\n";
+            continue;
         }
+
+        break;
     }
     if (address == nullptr) {
         std::cerr << "Could not bind\n";
@@ -90,7 +97,6 @@ TcpClient TcpListener::AcceptTcpClient() {
     }
     
     inet_ntop(their_addr.ss_family, GetInAddr((sockaddr*)&their_addr), s, sizeof s);
-
     std::cout << "server: got connection from " << s << '\n';
     return TcpClient(new_sock_fd);
 }

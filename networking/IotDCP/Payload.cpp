@@ -8,6 +8,8 @@ void Payload::AddPathVars() {
             break;
         }
     }
+    if (pos_start_vars == 0)
+        return;
     std::string var_name, var_value;
     bool getting_var_name = true;
 

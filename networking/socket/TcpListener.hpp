@@ -18,7 +18,7 @@
 
 class TcpListener {
 public:
-    TcpListener(std::string address, std::string port);
+    TcpListener(std::string port, std::string address = "");
     
     void Start();
     void Stop();
