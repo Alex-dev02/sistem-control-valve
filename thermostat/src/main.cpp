@@ -9,11 +9,12 @@
 
 int main(int argc, char *argv[]) {
     Thermostat t = Thermostat();
-    TcpListener server(
-        argc >= 2 ? argv[1] : "4000"
-    );
-    server.Start();
     Router router = t.GetRouter();
+    HttpResponses http;
+    TcpListener server(argc >= 2 ? argv[1] : "4000");
+    
+    server.Start();
+    
     while (true) {
         std::cout << "Waiting for a new connection...\n";
         TcpClient client = server.AcceptTcpClient();
@@ -21,9 +22,9 @@ int main(int argc, char *argv[]) {
         std::string req = stream.Read();
         std::string res = router.GetPathHandlerResponse(req); 
         if (res == "NULL")
-            res = HttpResponses::NotFound();
+            res = http.NotFound();
         else
-            res = HttpResponses::OK(res);
+            res = http.OK(res);
         stream.Write(res);
         stream.Close();
     }

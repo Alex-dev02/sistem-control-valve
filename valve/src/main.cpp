@@ -46,7 +46,6 @@ int main(int argc, char *argv[]) {
         TcpClient client = server.AcceptTcpClient();
         NetworkStream stream = client.GetStream();
         std::string req = stream.Read();
-        std::cout << '\n' << req << '\n';
         std::string res = router.GetPathHandlerResponse(req);
         stream.Write(res);
         stream.Close();

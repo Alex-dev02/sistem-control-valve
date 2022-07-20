@@ -38,7 +38,6 @@ std::string Thermostat::SetTemperature(Payload payload) {
             IotDCP::PUT,
             "/set_target?target=" + payload.GetPathVar("target")
         );
-        std::cout << "\n" << req_to_send << "\n";
         stream.Write(req_to_send);
         std::string res = stream.Read();
         if (dcp.IsResponseASuccess(res))
