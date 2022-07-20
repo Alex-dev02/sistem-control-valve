@@ -1,6 +1,7 @@
 #include "Thermostat.hpp"
 #include "../../networking/socket/NetworkStream.hpp"
-#include "../../networking/IotDCP/HttpResponses.hpp"
+#include "../../networking/IotDCP/Request.hpp"
+#include "../../networking/IotDCP/Response.hpp"
 #include "../../networking/IotDCP/IotDCP.hpp"
 
 #include <iostream>
@@ -16,19 +17,19 @@ Router Thermostat::GetRouter() {
     return m_router;
 }
 
-std::string Thermostat::Root(Payload payload) {
-    return "Home";
+Response Thermostat::Root(Request request) {
+    return Response(Response::HttpOK, "Home");
 }
 
-std::string Thermostat::AddValve(Payload payload) {
+Response Thermostat::AddValve(Request request) {
     m_valves.push_back(Valve_Address(
-        payload.GetPathVar("server_name"),
-        payload.GetPathVar("port")
+        request.GetPathVar("server_name"),
+        request.GetPathVar("port")
     ));
-    return "Valve successfully added!";
+    return Response(Response::HttpOK, "Valve successfully added!");
 }
 
-std::string Thermostat::SetTemperature(Payload payload) {
+Response Thermostat::SetTemperature(Request request) {
     IotDCP dcp;
     int successfuly_updated_valves = 0;
     for (int it = 0; it < m_valves.size(); it++) {
@@ -36,7 +37,7 @@ std::string Thermostat::SetTemperature(Payload payload) {
         NetworkStream stream = client.GetStream();
         std::string req_to_send = dcp.CreateRequest(
             IotDCP::PUT,
-            "/set_target?target=" + payload.GetPathVar("target")
+            "/set_target?target=" + request.GetPathVar("target")
         );
         stream.Write(req_to_send);
         std::string res = stream.Read();
@@ -45,7 +46,10 @@ std::string Thermostat::SetTemperature(Payload payload) {
         stream.Close();
     }
 
-    return "Temperature changed to " + payload.GetPathVar("target")
+    return Response( 
+        Response::HttpOK,
+        "Temperature changed to " + request.GetPathVar("target")
         + " for " + std::to_string(successfuly_updated_valves) + " out of "
-        + std::to_string(m_valves.size()) + " valves.";
+        + std::to_string(m_valves.size()) + " valves."
+    );
 }

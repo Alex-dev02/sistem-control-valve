@@ -9,10 +9,10 @@ add_executable(Valve
 ../networking/router/Router.hpp
 ../networking/IotDCP/IotDCP.cpp
 ../networking/IotDCP/IotDCP.hpp
-../networking/IotDCP/Payload.cpp
-../networking/IotDCP/Payload.hpp
-../networking/IotDCP/HttpResponses.hpp
-../networking/IotDCP/HttpResponses.cpp
+../networking/IotDCP/Response.hpp
+../networking/IotDCP/Response.cpp
+../networking/IotDCP/Request.hpp
+../networking/IotDCP/Request.cpp
 ../networking/socket/NetworkStream.hpp
 ../networking/socket/NetworkStream.cpp
 src/Valve.hpp

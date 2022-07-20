@@ -1,7 +1,8 @@
 #pragma once
 
+#include "../../networking/IotDCP/Request.hpp"
+#include "../../networking/IotDCP/Response.hpp"
 #include "../../networking/socket/TcpListener.hpp"
-#include "../../networking/IotDCP/Payload.hpp"
 #include "../../networking/router/Router.hpp"
 
 #include <vector>
@@ -24,7 +25,7 @@ private:
     Router m_router;
     std::vector<Valve_Address> m_valves;
 
-    std::string Root(Payload payload);
-    std::string AddValve(Payload payload);
-    std::string SetTemperature(Payload payload);
+    Response Root(Request request);
+    Response AddValve(Request request);
+    Response SetTemperature(Request request);
 };

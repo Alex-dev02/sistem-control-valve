@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../../networking/router/Router.hpp"
-#include "../../networking/IotDCP/Payload.hpp"
 #include "../../networking/IotDCP/IotDCP.hpp"
+#include "../../networking/IotDCP/Request.hpp"
+#include "../../networking/IotDCP/Response.hpp"
+
 
 #include <string>
 
@@ -23,5 +25,5 @@ private:
 
     Router m_router;
 
-    std::string SetCurrentTargetRoute(Payload payload);
+    Response SetCurrentTargetRoute(Request request);
 };

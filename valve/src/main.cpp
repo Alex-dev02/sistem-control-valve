@@ -46,8 +46,8 @@ int main(int argc, char *argv[]) {
         TcpClient client = server.AcceptTcpClient();
         NetworkStream stream = client.GetStream();
         std::string req = stream.Read();
-        std::string res = router.GetPathHandlerResponse(req);
-        stream.Write(res);
+        Response res = router.GetResponse(req);
+        stream.Write(res.GetRawIotDCPResponse());
         stream.Close();
     }
 }

@@ -38,8 +38,7 @@ void Valve::IncrementTemperature() {
         m_temperature -= (m_current_target - m_temperature);
 }
 
-std::string Valve::SetCurrentTargetRoute(Payload payload) {
-    IotDCP dcp;
-    SetCurrentTarget(std::stof(payload.GetPathVar("target")));
-    return dcp.CreateResponse(IotDCP::ResponseCode::OK);
+Response Valve::SetCurrentTargetRoute(Request request) {
+    SetCurrentTarget(std::stof(request.GetPathVar("target")));
+    return Response(Response::IoTOK);
 }
