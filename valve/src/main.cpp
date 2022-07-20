@@ -37,8 +37,7 @@ int main(int argc, char *argv[]) {
     update_temp_thread.detach();
 
     TcpListener server(
-        argc >= 2 ? argv[1] : "127.0.0.1",
-        argc >= 3 ? argv[2] : "5000"
+        argc >= 2 ? argv[1] : "5000"
     );
     server.Start();
     Router router = valve.GetRouter();
