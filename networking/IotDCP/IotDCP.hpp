@@ -41,19 +41,18 @@
 
 class IotDCP {
 public:
-    IotDCP(std::string version = "0.1");
+    enum RequestType {GET, PUT};
+    enum ResponseCode {ServErr, OK, NotFound, NotAuth};
+
+    IotDCP();
 
     std::string GetVersion();
 
-    std::string CreateRequest(
-        std::string type = "GET",
-        std::string path = "/"
-    );
-    std::string CreateResponse(
-        std::string response_code,
-        std::string content
-    );
+    std::string CreateRequest(IotDCP::RequestType type, std::string path);
+    std::string CreateResponse(IotDCP::ResponseCode response_code, std::string content = "");
     bool IsResponseASuccess(std::string response);
 private:
     std::string m_version = "0.1";
+    
+    std::string ResponseCodeToString(IotDCP::ResponseCode response_code);
 };
