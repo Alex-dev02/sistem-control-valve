@@ -9,9 +9,8 @@ std::string IotDCP::GetVersion() {
 }
 
 std::string IotDCP::CreateRequest(IotDCP::RequestType type, std::string path) {
-    return 
-        type == IotDCP::GET ? "GET" : "PUT"
-        + ' ' + path + ' ' + "IotDCP/" + m_version;
+    std::string type_ = type == IotDCP::GET ? "GET" : "PUT";
+    return type_ + ' ' + path + ' ' + "IotDCP/" + m_version;
 }
 
 std::string IotDCP::CreateResponse(IotDCP::ResponseCode response_code, std::string content) {

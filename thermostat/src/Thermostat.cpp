@@ -34,10 +34,12 @@ std::string Thermostat::SetTemperature(Payload payload) {
     for (int it = 0; it < m_valves.size(); it++) {
         TcpClient client(m_valves[it].m_server_name, m_valves[it].m_port);
         NetworkStream stream = client.GetStream();
-        stream.Write(dcp.CreateRequest(
+        std::string req_to_send = dcp.CreateRequest(
             IotDCP::PUT,
             "/set_target?target=" + payload.GetPathVar("target")
-            ));
+        );
+        std::cout << "\n" << req_to_send << "\n";
+        stream.Write(req_to_send);
         std::string res = stream.Read();
         if (dcp.IsResponseASuccess(res))
             successfuly_updated_valves++;
