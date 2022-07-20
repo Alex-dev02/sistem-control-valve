@@ -22,7 +22,7 @@ addrinfo* TcpClient::GetSockAddresses() {
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_UNSPEC;
     int err = getaddrinfo(
-        m_address.c_str(), 
+        m_address.empty() ? NULL : m_address.c_str(), 
         m_port.c_str(),
         &hints,
         &result
