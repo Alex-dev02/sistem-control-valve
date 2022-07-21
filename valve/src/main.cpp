@@ -4,9 +4,9 @@
 #include <mutex>
 
 #include "Valve.hpp"
-#include "../../networking/socket/TcpClient.hpp"
-#include "../../networking/socket/TcpListener.hpp"
-#include "../../networking/socket/NetworkStream.hpp"
+#include "../../networking/tcp/TcpClient.hpp"
+#include "../../networking/tcp/TcpListener.hpp"
+#include "../../networking/tcp/NetworkStream.hpp"
 #include "../../networking/router/Router.hpp"
 
 void DisplayTemperature(Valve &valve) {

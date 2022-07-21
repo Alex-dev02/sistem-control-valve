@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
 add_executable(Valve 
-../networking/socket/TcpListener.cpp
-../networking/socket/TcpListener.hpp
-../networking/socket/TcpClient.cpp
-../networking/socket/TcpClient.hpp
+../networking/tcp/TcpListener.cpp
+../networking/tcp/TcpListener.hpp
+../networking/tcp/TcpClient.cpp
+../networking/tcp/TcpClient.hpp
+../networking/tcp/NetworkStream.hpp
+../networking/tcp/NetworkStream.cpp
 ../networking/router/Router.cpp
 ../networking/router/Router.hpp
 ../networking/IotDCP/IotDCP.cpp
@@ -13,8 +15,6 @@ add_executable(Valve
 ../networking/IotDCP/Response.cpp
 ../networking/IotDCP/Request.hpp
 ../networking/IotDCP/Request.cpp
-../networking/socket/NetworkStream.hpp
-../networking/socket/NetworkStream.cpp
 src/Valve.hpp
 src/Valve.cpp
 src/main.cpp)

@@ -1,5 +1,5 @@
 #include "Thermostat.hpp"
-#include "../../networking/socket/NetworkStream.hpp"
+#include "../../networking/tcp/NetworkStream.hpp"
 #include "../../networking/IotDCP/Request.hpp"
 #include "../../networking/IotDCP/Response.hpp"
 #include "../../networking/IotDCP/IotDCP.hpp"

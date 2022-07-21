@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "../../networking/socket/TcpListener.hpp"
+#include "../../networking/tcp/TcpListener.hpp"
 #include "../../networking/router/Router.hpp"
-#include "../../networking/socket/NetworkStream.hpp"
+#include "../../networking/tcp/NetworkStream.hpp"
 #include "../../networking/IotDCP/Response.hpp"
 #include "Thermostat.hpp"
 
