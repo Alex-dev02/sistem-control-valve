@@ -21,9 +21,8 @@ void UpdateTemperature (Valve &valve) {
     std::mutex guard;
     while (true) {
         std::this_thread::sleep_for(std::chrono::seconds(3));
-        guard.lock();
+        std::lock_guard<std::mutex> lock(guard);
         valve.IncrementTemperature();
-        guard.unlock();
     }
 }
 
