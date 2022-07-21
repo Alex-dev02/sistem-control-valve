@@ -27,5 +27,6 @@ private:
 
     Response Root(Request request);
     Response AddValve(Request request);
-    Response SetTemperature(Request request);
+    Response SetTarget(Request request);
+    Response RemoveValve(Request request);
 };
