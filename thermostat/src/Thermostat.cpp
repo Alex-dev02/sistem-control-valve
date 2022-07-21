@@ -30,6 +30,14 @@ Response Thermostat::AddValve(Request request) {
 }
 
 Response Thermostat::SetTemperature(Request request) {
+    // temperature limit 15 and 28
+    int target = std::stoi(request.GetPathVar("target"));
+    if (target < 15 || target > 28)
+        return Response(
+            Response::HttpOK,
+            "The temperature can't be lower than 15C or exceed 28C."
+        );
+    //
     IotDCP dcp;
     int successfuly_updated_valves = 0;
     for (int it = 0; it < m_valves.size(); it++) {
