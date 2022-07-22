@@ -66,7 +66,7 @@ Response Thermostat::SetTarget(Request request) {
 Response Thermostat::RemoveValve(Request request) {
     //should receive a "port" variable
     for (std::vector<Valve_Address>::iterator it = m_valves.begin(); it != m_valves.end(); it++) {
-        if (it->m_port == request.GetPathVar("port")) {
+        if (it->m_server_name == request.GetPathVar("server_name")) {
             m_valves.erase(it);
             return Response(
                 Response::HttpOK,
