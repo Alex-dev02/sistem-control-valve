@@ -1,24 +1,16 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
-add_executable(Valve 
-../networking/tcp/TcpListener.cpp
-../networking/tcp/TcpListener.hpp
-../networking/tcp/TcpClient.cpp
-../networking/tcp/TcpClient.hpp
-../networking/tcp/NetworkStream.hpp
-../networking/tcp/NetworkStream.cpp
-../networking/router/Router.cpp
-../networking/router/Router.hpp
-../networking/IotDCP/IotDCP.cpp
-../networking/IotDCP/IotDCP.hpp
-../networking/IotDCP/Response.hpp
-../networking/IotDCP/Response.cpp
-../networking/IotDCP/Request.hpp
-../networking/IotDCP/Request.cpp
-src/Valve.hpp
-src/Valve.cpp
-src/main.cpp)
+
+add_library(Valve
+    src/Valve.cpp
+    src/main.cpp
+)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(Valve PRIVATE Threads::Threads)
+
+target_include_directories(Valve PUBLIC 
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src> 
+)
+
