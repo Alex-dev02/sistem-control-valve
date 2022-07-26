@@ -8,15 +8,13 @@ std::string IotDCP::GetVersion() {
     return m_version;
 }
 
-std::string IotDCP::CreateRequest(IotDCP::RequestType type, std::string path) {
+Request IotDCP::CreateRequest(IotDCP::RequestType type, std::string path) {
     std::string type_ = type == IotDCP::GET ? "GET" : "PUT";
-    return type_ + ' ' + path + ' ' + "IotDCP/" + m_version;
+    return Request(type_ + ' ' + path + ' ' + "IotDCP/" + m_version);
 }
 
-std::string IotDCP::CreateResponse(IotDCP::ResponseCode response_code, std::string content) {
-    return ResponseCodeToString(response_code) + ' ' + "IotDCP/" + m_version + '\n' +
-        "Length " + std::to_string(content.length()) +
-        (content.length() == 0 ? "" : '\n' + content); 
+Response IotDCP::CreateResponse(IotDCP::ResponseCode response_code, std::string content) {
+    return Response(response_code, content); 
 }
 
 bool IotDCP::IsResponseASuccess(std::string response) {

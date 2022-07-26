@@ -2,6 +2,9 @@
 
 #include <string>
 
+#include "Request.hpp"
+#include "Response.hpp"
+
 // IotDeviceCommunicationProtocol
 
 /*
@@ -48,8 +51,8 @@ public:
 
     std::string GetVersion();
 
-    std::string CreateRequest(IotDCP::RequestType type, std::string path);
-    std::string CreateResponse(IotDCP::ResponseCode response_code, std::string content = "");
+    Request CreateRequest(IotDCP::RequestType type, std::string path);
+    Response CreateResponse(IotDCP::ResponseCode response_code, std::string content = "");
     bool IsResponseASuccess(std::string response);
 private:
     std::string m_version = "0.1";

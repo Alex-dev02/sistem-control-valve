@@ -30,6 +30,10 @@ std::string Request::GetPathVar(std::string var_name) {
     return var != m_path_vars.end() ? var->second : nullptr;
 }
 
+std::string Request::GetRawRequest() {
+    return m_raw_request;
+}
+
 void Request::MapVarsFromPath() {
     int pos_start_vars = 0;
     for (int i = 0; i < m_raw_request.length(); i++) {

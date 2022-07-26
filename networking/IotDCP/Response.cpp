@@ -1,13 +1,13 @@
 #include "Response.hpp"
 #include <iostream>
 
-Response::Response(Response::HttpResponseCode code, std::string content):
-    m_response_code(code),
+Response::Response(Response::HttpResponseCode response_code, std::string content):
+    m_response_code(response_code),
     m_content(content)
 {}
 
-Response::Response(Response::IotDCPResponseCode code, std::string content):
-    m_response_code(code),
+Response::Response(IotDCP::ResponseCode response_code, std::string content):
+    m_response_code(response_code),
     m_content(content)
 {}
 
