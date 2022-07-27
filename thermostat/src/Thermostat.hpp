@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../networking/IotDCP/Request.hpp"
-#include "../../networking/IotDCP/Response.hpp"
+#include "../../networking/communication/Request.hpp"
+#include "../../networking/communication/Response.hpp"
 #include "../../networking/tcp/TcpListener.hpp"
 #include "../../networking/router/Router.hpp"
 

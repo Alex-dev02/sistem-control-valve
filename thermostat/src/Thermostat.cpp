@@ -1,8 +1,8 @@
 #include "Thermostat.hpp"
 #include "../../networking/tcp/NetworkStream.hpp"
-#include "../../networking/IotDCP/Request.hpp"
-#include "../../networking/IotDCP/Response.hpp"
-#include "../../networking/IotDCP/IotDCP.hpp"
+#include "../../networking/communication/Request.hpp"
+#include "../../networking/communication/Response.hpp"
+#include "../../networking/communication/IotDCP.hpp"
 
 #include <iostream>
 
@@ -19,7 +19,8 @@ Router Thermostat::GetRouter() {
 }
 
 Response Thermostat::Root(Request request) {
-    return Response(Response::HttpOK, "Home");
+    // create HTTP response with http class
+    return Response(Utils::ResponseCode::HttpOK, "Home");
 }
 
 Response Thermostat::AddValve(Request request) {

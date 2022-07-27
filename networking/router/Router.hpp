@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <functional>
 
-#include "../IotDCP/Request.hpp"
-#include "../IotDCP/Response.hpp"
+#include "../communication/Request.hpp"
+#include "../communication/Response.hpp"
 
 // The route handler should return a string, representing the data
 // returned by the path handler
