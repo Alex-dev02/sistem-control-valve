@@ -17,12 +17,6 @@ Response IotDCP::CreateResponse(IotDCP::ResponseCode response_code, std::string 
     return Response(response_code, content); 
 }
 
-bool IotDCP::IsResponseASuccess(std::string response) {
-    if (response[0] == '1')
-        return true;
-    return false;
-}
-
 std::string IotDCP::ResponseCodeToString(IotDCP::ResponseCode response_code) {
     switch (response_code) {
         case IotDCP::ResponseCode::ServErr : return  "0 Server Error";

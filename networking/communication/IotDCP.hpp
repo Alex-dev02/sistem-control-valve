@@ -53,9 +53,8 @@ public:
 
     Request CreateRequest(IotDCP::RequestType type, std::string path);
     Response CreateResponse(IotDCP::ResponseCode response_code, std::string content = "");
-    bool IsResponseASuccess(std::string response);
-private:
-    std::string m_version = "0.1";
     
     std::string ResponseCodeToString(IotDCP::ResponseCode response_code);
+private:
+    std::string m_version = "0.1";
 };
