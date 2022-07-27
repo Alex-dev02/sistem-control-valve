@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "Utils.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
 
@@ -44,17 +45,14 @@
 
 class IotDCP {
 public:
-    enum RequestType {GET, PUT};
-    enum ResponseCode {ServErr, OK, NotFound, NotAuth};
-
     IotDCP();
 
     std::string GetVersion();
 
-    Request CreateRequest(IotDCP::RequestType type, std::string path);
-    Response CreateResponse(IotDCP::ResponseCode response_code, std::string content = "");
+    Request CreateRequest(Utils::RequestType type, std::string path);
+    Response CreateResponse(Utils::ResponseCode response_code, std::string content = "");
     
-    std::string ResponseCodeToString(IotDCP::ResponseCode response_code);
+    std::string ResponseCodeToString(Utils::ResponseCode response_code);
 private:
     std::string m_version = "0.1";
 };

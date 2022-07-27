@@ -2,19 +2,19 @@
 
 #include <string>
 
-#include "IotDCP.hpp"
+#include "Utils.hpp"
+
 
 class Response{
 public:
-    enum HttpResponseCode {HttpOK = 200, HttpNotAuth = 401, HttpNotFound = 404, HttpServErr = 500};
-    
-    Response(Response::HttpResponseCode response_code, std::string content = "");
-    Response(IotDCP::ResponseCode response_code, std::string content = "");
-    std::string GetRawHttpResponse();
-    std::string GetRawIotDCPResponse();
-private:
-    std::string m_content;
-    int m_response_code;
+    Response(std::string raw_response, Utils::Protocol protocol);
 
-    std::string ResponseCodeToWords();
+    std::string GetRawResponse();
+    Utils::Protocol GetProtocol();
+    Utils::ResponseCode GetReponseCode();
+
+    bool Successful();
+private:
+    std::string m_raw_response;
+    Utils::Protocol m_protocol;
 };
