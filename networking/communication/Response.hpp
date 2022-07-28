@@ -11,7 +11,7 @@ public:
 
     std::string GetRawResponse();
     Utils::Protocol GetProtocol();
-    Utils::ResponseCode GetReponseCode();
+    int GetReponseCode();
 
     bool Successful();
 private:

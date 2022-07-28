@@ -13,7 +13,7 @@ Request IotDCP::CreateRequest(Utils::RequestType type, std::string path) {
     return Request(type_ + ' ' + path + ' ' + "IotDCP/" + m_version);
 }
 
-Response IotDCP::CreateResponse(Utils::ResponseCode response_code, std::string content) {
+Response IotDCP::CreateResponse(Utils::IotDCPResponseCode response_code, std::string content) {
     return Response(
         ResponseCodeToString(response_code) + ' ' + "IotDCP/" + m_version +
         "\nLength " + std::to_string(content.length()) + '\n' + content,

@@ -16,17 +16,27 @@ Utils::Protocol Response::GetProtocol() {
     return m_protocol;
 }
 
-Utils::ResponseCode Response::GetReponseCode() {
+int Response::GetReponseCode() {
     if (m_protocol == Utils::Protocol::IotDCP) {
-        return Utils::ResponseCodeToEnum(
+        return Utils::IotDCPResponseCodeToEnum(
             std::stoi(std::string("" + m_raw_response[0]))
         );  
     }
+
     char* tokens = strtok((char*)(m_raw_response.c_str()), " ");
-    if (tokens[1] != NULL)
-        return Utils::ResponseCodeToEnum(tokens[1]);
+    try {
+        char
+        return Utils::HTTPResponseCodeToEnum(tokens[1]);
+    }catch(std::string e) {
+        return 500;
+    }
+
 }
 
 bool Response::Successful() {
-    return GetReponseCode() == Utils::ResponseCode::OK;
+    if (m_protocol == Utils::HTTP)
+        return
+            Utils::HTTPResponseCodeToEnum(GetReponseCode()) == Utils::HTTPResponseCode::H_OK;
+    return
+        Utils::IotDCPResponseCodeToEnum(GetReponseCode()) == Utils::IotDCPResponseCode::I_OK;
 }
