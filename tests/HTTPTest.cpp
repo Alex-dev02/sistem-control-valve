@@ -4,9 +4,13 @@
 
 static HTTP http;
 
-void print(std::string to_print) {
-    std::cout << to_print;
+// Get Version Unit Tests
+
+TEST(HTTPTests, CheckVersion) {
+    EXPECT_EQ("1.1", http.GetVersion());
 }
+
+// Create Response Unit Tests
 
 TEST(HTTPTests, CreateOKResponse) {
     Response response = http.CreateResponse(Utils::HTTPResponseCode::H_OK, "OK");

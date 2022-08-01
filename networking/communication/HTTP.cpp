@@ -15,3 +15,7 @@ Response HTTP::CreateResponse(Utils::HTTPResponseCode response_code, std::string
     std::cout << res.GetRawResponse() << "\n";
     return res;
 }
+
+std::string HTTP::GetVersion() {
+    return m_version;
+}
