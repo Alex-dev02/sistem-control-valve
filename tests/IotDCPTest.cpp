@@ -3,18 +3,17 @@
 #include "../networking/communication/IotDCP.hpp"
 #include "../networking/communication/Utils.hpp"
 
+static IotDCP dcp;
+
 // Get Version Unit Tests
 
 TEST(IotDCPTests, CheckVersion) {
-    IotDCP dcp;
     EXPECT_EQ("0.1", dcp.GetVersion());
 }
 
 // Create Request Unit Tests
 
 TEST(IotDCPTests, CreateGETRequest) {
-    IotDCP dcp;
-
     Request request = dcp.CreateRequest(Utils::RequestType::GET, "/test/path");
     EXPECT_EQ(
         "GET /test/path IotDCP/0.1",
@@ -29,8 +28,6 @@ TEST(IotDCPTests, CreateGETRequest) {
 }
 
 TEST(IotDCPTests, CreatePUTRequest) {
-    IotDCP dcp;
-
     Request request = dcp.CreateRequest(Utils::RequestType::PUT, "/test/path");
     EXPECT_EQ(
         "PUT /test/path IotDCP/0.1",
@@ -47,8 +44,6 @@ TEST(IotDCPTests, CreatePUTRequest) {
 // Create Response Unit Tests
 
 TEST(IotDCPTests, CreateOKResponse) {
-    IotDCP dcp;
-
     Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_OK, "some content");
     EXPECT_EQ(
         "1 OK IotDCP/0.1\nLength 12\nsome content",
@@ -57,8 +52,6 @@ TEST(IotDCPTests, CreateOKResponse) {
 }
 
 TEST(IotDCPTests, CreateServErrReponse) {
-    IotDCP dcp;
-
     Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Error");
     EXPECT_EQ(
         "0 Server Error IotDCP/0.1\nLength 5\nError",
@@ -67,8 +60,6 @@ TEST(IotDCPTests, CreateServErrReponse) {
 }
 
 TEST(IotDCPTests, CreateNotFoundReponse) {
-    IotDCP dcp;
-
     Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotFound, "Not Found");
     std::cout << response.GetRawResponse();
     EXPECT_EQ(
@@ -78,8 +69,6 @@ TEST(IotDCPTests, CreateNotFoundReponse) {
 }
 
 TEST(IotDCPTests, CreateNotAuthReponse) {
-    IotDCP dcp;
-
     Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotAuth, "Not Authorized");
     EXPECT_EQ(
         "3 Not Authorized IotDCP/0.1\nLength 14\nNot Authorized",

@@ -4,8 +4,8 @@
 
 namespace Utils{
     enum RequestType {GET, PUT};
-    enum HTTPResponseCode {H_ServErr, H_OK, H_NotFound, H_NotAuth};
-    enum IotDCPResponseCode {I_ServErr, I_OK, I_NotFound, I_NotAuth};
+    enum HTTPResponseCode {H_ServErr = 500, H_OK = 200, H_NotFound = 404, H_NotAuth = 401};
+    enum IotDCPResponseCode {I_ServErr = 0, I_OK = 1, I_NotFound = 2, I_NotAuth = 3};
     enum Protocol {IotDCP, HTTP};
 
     std::string ResponseCodeToString(int response_code);
