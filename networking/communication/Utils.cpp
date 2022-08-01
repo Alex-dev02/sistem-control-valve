@@ -14,7 +14,7 @@ std::string ResponseCodeToString(int response_code) {
     {
         case 0 : return std::to_string(response_code) + " Server Error";
         case 1 : return std::to_string(response_code) + " OK";
-        case 2 : return std::to_string(response_code) + " Not Fountd";
+        case 2 : return std::to_string(response_code) + " Not Found";
         case 3 : return std::to_string(response_code) + " Not Authorized";
     }
     return "404 Not Found";

@@ -59,3 +59,25 @@ TEST(IotDCPTests, CreateServErrReponse) {
         response.GetRawResponse()
     );
 }
+
+TEST(IotDCPTests, CreateNotFoundReponse) {
+    IotDCP dcp;
+
+    Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotFound, "Not Found");
+    std::cout << response.GetRawResponse();
+    EXPECT_EQ(
+        "2 Not Found IotDCP/0.1\nLength 9\nNot Found",
+        response.GetRawResponse()
+    );
+}
+
+TEST(IotDCPTests, CreateNotAuthReponse) {
+    IotDCP dcp;
+
+    Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotAuth, "Not Authorized");
+    EXPECT_EQ(
+        "3 Not Authorized IotDCP/0.1\nLength 14\nNot Authorized",
+        response.GetRawResponse()
+    );
+}
+
