@@ -25,7 +25,6 @@ int Response::GetReponseCode() {
 
     char* tokens = strtok((char*)(m_raw_response.c_str()), " ");
     try {
-        char
         return Utils::HTTPResponseCodeToEnum(tokens[1]);
     }catch(std::string e) {
         return 500;

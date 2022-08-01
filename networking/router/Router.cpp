@@ -16,5 +16,5 @@ Response Router::GetResponse(Request request) {
     if (handler != m_routes.end())
         return (handler->second)(request);
     // vezi ca aici trb lucrat mai mult
-    return dcp.CreateResponse(Utils::ResponseCode::NotFound);
+    return dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotFound);
 }
