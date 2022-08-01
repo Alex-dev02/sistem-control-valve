@@ -3,10 +3,14 @@
 #include "../networking/communication/IotDCP.hpp"
 #include "../networking/communication/Utils.hpp"
 
+// Get Version Unit Tests
+
 TEST(IotDCPTests, CheckVersion) {
     IotDCP dcp;
     EXPECT_EQ("0.1", dcp.GetVersion());
 }
+
+// Create Request Unit Tests
 
 TEST(IotDCPTests, CreateGETRequest) {
     IotDCP dcp;
@@ -39,6 +43,8 @@ TEST(IotDCPTests, CreatePUTRequest) {
         request.GetRawRequest()
     );
 }
+
+// Create Response Unit Tests
 
 TEST(IotDCPTests, CreateOKResponse) {
     IotDCP dcp;
@@ -80,4 +86,3 @@ TEST(IotDCPTests, CreateNotAuthReponse) {
         response.GetRawResponse()
     );
 }
-
