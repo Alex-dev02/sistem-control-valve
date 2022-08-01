@@ -49,3 +49,13 @@ TEST(IotDCPTests, CreateOKResponse) {
         response.GetRawResponse()
     );
 }
+
+TEST(IotDCPTests, CreateServErrReponse) {
+    IotDCP dcp;
+
+    Response response = dcp.CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Error");
+    EXPECT_EQ(
+        "0 Server Error IotDCP/0.1\nLength 5\nError",
+        response.GetRawResponse()
+    );
+}
