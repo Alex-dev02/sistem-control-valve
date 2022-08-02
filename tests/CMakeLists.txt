@@ -20,6 +20,7 @@ add_executable(Tests
 IotDCPTest.cpp
 HTTPTest.cpp
 RequestTest.cpp
+ResponseTest.cpp
 main.cpp)
 
 target_include_directories(Tests PRIVATE ../networking/IotDCP)

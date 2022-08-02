@@ -19,13 +19,16 @@ Utils::Protocol Response::GetProtocol() {
 int Response::GetReponseCode() {
     if (m_protocol == Utils::Protocol::IotDCP) {
         return Utils::IotDCPResponseCodeToEnum(
-            std::stoi(std::string("" + m_raw_response[0]))
+            m_raw_response[0] - '0'
         );  
     }
-
-    char* tokens = strtok((char*)(m_raw_response.c_str()), " ");
     try {
-        return Utils::HTTPResponseCodeToEnum(tokens[1]);
+        std::string raw_response_copy = m_raw_response;
+        raw_response_copy.erase(0, raw_response_copy.find(' ') + 1);
+
+        return Utils::HTTPResponseCodeToEnum(
+            std::stoi(raw_response_copy.substr(0, raw_response_copy.find(' ')))
+        );
     }catch(std::string e) {
         return 500;
     }
