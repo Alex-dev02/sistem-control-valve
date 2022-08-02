@@ -48,3 +48,73 @@ TEST(UtilsTest, ResponseCodeToString) {
         Utils::ResponseCodeToString(3)
     );
 }
+
+TEST(UtilsTests, HTTPResponseCodeToEnum) {
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_OK,
+        Utils::HTTPResponseCodeToEnum(200)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_OK,
+        Utils::HTTPResponseCodeToEnum(201)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_OK,
+        Utils::HTTPResponseCodeToEnum(299)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_NotAuth,
+        Utils::HTTPResponseCodeToEnum(401)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_NotFound,
+        Utils::HTTPResponseCodeToEnum(404)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_ServErr,
+        Utils::HTTPResponseCodeToEnum(500)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_ServErr,
+        Utils::HTTPResponseCodeToEnum(501)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_ServErr,
+        Utils::HTTPResponseCodeToEnum(599)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_NotFound,
+        Utils::HTTPResponseCodeToEnum(19)
+    );
+    ASSERT_EQ(
+        Utils::HTTPResponseCode::H_NotFound,
+        Utils::HTTPResponseCodeToEnum(789)
+    );
+}
+
+TEST(UtilsTests, IotDCPResponseCodeToEnum) {
+    ASSERT_EQ(
+        Utils::IotDCPResponseCode::I_OK,
+        Utils::IotDCPResponseCodeToEnum(1)
+    );
+    ASSERT_EQ(
+        Utils::IotDCPResponseCode::I_ServErr,
+        Utils::IotDCPResponseCodeToEnum(0)
+    );
+    ASSERT_EQ(
+        Utils::IotDCPResponseCode::I_NotFound,
+        Utils::IotDCPResponseCodeToEnum(2)
+    );
+    ASSERT_EQ(
+        Utils::IotDCPResponseCode::I_NotAuth,
+        Utils::IotDCPResponseCodeToEnum(3)
+    );
+    ASSERT_EQ(
+        Utils::IotDCPResponseCode::I_NotFound,
+        Utils::IotDCPResponseCodeToEnum(-1)
+    );
+    ASSERT_EQ(
+        Utils::IotDCPResponseCode::I_NotFound,
+        Utils::IotDCPResponseCodeToEnum(5)
+    );
+}
