@@ -21,7 +21,7 @@ TEST(RequestTests, GetPath) {
 }
 
 TEST(RequestTests, GetPathVar) {
-    Request request("PUT /mypath/animal?animal=cat&name=john&crash IotDCP/0.1");
+    Request request("PUT /mypath/animal?animal=cat&name=john IotDCP/0.1");
     ASSERT_EQ(
         "cat",
         request.GetPathVar("animal")
