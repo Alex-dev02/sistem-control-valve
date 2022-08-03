@@ -22,6 +22,7 @@ HTTPTest.cpp
 RequestTest.cpp
 ResponseTest.cpp
 UtilsTest.cpp
+RouterTest.cpp
 main.cpp)
 
 target_include_directories(Tests PRIVATE ../networking/IotDCP)

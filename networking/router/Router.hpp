@@ -15,11 +15,8 @@
 class Router {
 public:
     Router();
-    void AddPath(std::string path, std::function<Response(Request)>);
+    bool AddPath(std::string path, std::function<Response(Request)>);
     Response GetResponse(Request request);
 private:
     std::unordered_map<std::string, std::function<Response(Request)>> m_routes;
-
-    Response GetResponseForPath(std::string &path);
-    std::string GetPath(std::string request);
 };
