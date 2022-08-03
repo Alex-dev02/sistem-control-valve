@@ -34,6 +34,7 @@
 
 ### Features
 
+- [ ] input validator pentru requesturi HTTP si IotDCP poate
 - [ ] logger (single tone)
 - [ ] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
 - [ ] unit teste
@@ -41,3 +42,7 @@
 - [ ] nu ar trebui sa putem inregistra o valva daca nu e pornita
 - [ ] folosire json pentru interpretari de request/response
 - [ ] folosire stl petru operatii de cautare/stergere etc
+
+### FIXES 
+
+- de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
