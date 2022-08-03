@@ -3,10 +3,16 @@
 #include <iostream>
 #include <string.h>
 
-Response::Response(std::string raw_response, Utils::Protocol protocol):
-    m_raw_response(raw_response),
-    m_protocol(protocol)
-{}
+Response::Response(std::string raw_response):
+    m_raw_response(raw_response)
+{
+    if(raw_response.find("IotDCP") != std::string::npos)
+        m_protocol = Utils::Protocol::IotDCP;
+    else if (raw_response.find("HTTP") != std::string::npos)
+        m_protocol = Utils::Protocol::HTTP;
+    // else invalid response
+    // try to handle
+}
 
 std::string Response::GetRawResponse() {
     return m_raw_response;

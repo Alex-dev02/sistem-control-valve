@@ -3,6 +3,12 @@
 Request::Request(std::string raw_request):
     m_raw_request(raw_request)
 {
+    if(raw_request.find("IotDCP") != std::string::npos)
+        m_protocol = Utils::Protocol::IotDCP;
+    else if (raw_request.find("HTTP") != std::string::npos)
+        m_protocol = Utils::Protocol::HTTP;
+    // else handle invalid request
+
     MapVarsFromPath();
 }
 
@@ -32,6 +38,10 @@ std::string Request::GetPathVar(std::string var_name) {
 
 std::string Request::GetRawRequest() {
     return m_raw_request;
+}
+
+Utils::Protocol Request::GetProtocol() {
+    return m_protocol;
 }
 
 void Request::MapVarsFromPath() {

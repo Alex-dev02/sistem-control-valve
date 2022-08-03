@@ -22,13 +22,13 @@ TEST(RequestTests, GetPath) {
 
     // HTTP
 
-    request = Request("GET /mypath/http HTTP/1.1\nContent-Length: 0\nContent-Type: text/plain\n\n");
+    request = Request("GET /mypath/http HTTP/1.1");
     ASSERT_EQ(
         "/mypath/http",
         request.GetPath()
     );
 
-    request = Request("PUT /mypath/path?varname=varvalue HTTP/1.1\nContent-Length: 0\nContent-Type: text/plain\n\n");
+    request = Request("PUT /mypath/path?varname=varvalue HTTP/1.1");
     ASSERT_EQ(
         "/mypath/path",
         request.GetPath()
@@ -52,7 +52,7 @@ TEST(RequestTests, GetPathVar) {
     );
 
     request =
-        Request("PUT /mypath/path?insect=fly&age=1 HTTP/1.1\nContent-Length: 0\nContent-Type: text/plain\n\n");
+        Request("PUT /mypath/path?insect=fly&age=1 HTTP/1.1");
     ASSERT_EQ(
         "fly",
         request.GetPathVar("insect")
@@ -70,9 +70,23 @@ TEST(RequestTest, GetRawRequest) {
         request.GetRawRequest()
     );
     
-    request = Request("PUT /home/page.php HTTP/1.1\nContent-Length: 0\nContent-Type: text/plain\n\n");
+    request = Request("PUT /home/page.php HTTP/1.1");
     ASSERT_EQ(
-        "PUT /home/page.php HTTP/1.1\nContent-Length: 0\nContent-Type: text/plain\n\n",
+        "PUT /home/page.php HTTP/1.1",
         request.GetRawRequest()
+    );
+}
+
+TEST(RequestTest, GetProtocol) {
+    Request request("GET /path/to/source IotDCP/0.1");
+    ASSERT_EQ(
+        Utils::Protocol::IotDCP,
+        request.GetProtocol()
+    );
+
+    request = Request("PUT /home/page.php HTTP/1.1");
+    ASSERT_EQ(
+        Utils::Protocol::HTTP,
+        request.GetProtocol()
     );
 }

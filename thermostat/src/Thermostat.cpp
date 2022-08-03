@@ -56,7 +56,7 @@ Response Thermostat::SetTarget(Request request) {
             "/set_target?target=" + request.GetPathVar("target")
         );
         stream.Write(request.GetRawRequest());
-        Response response(stream.Read(), Utils::Protocol::IotDCP);
+        Response response(stream.Read());
         if (response.Successful())
             successfuly_updated_valves++;
         stream.Close();

@@ -11,13 +11,11 @@ Content-Type: text/html
 Connection: Closed
 */
 static Response http_res(
-    "HTTP/1.1 203 OK\nContent-Length: 7\nContent-Type: text/plain\n\nContent",
-    Utils::Protocol::HTTP
+    "HTTP/1.1 203 OK\nContent-Length: 7\nContent-Type: text/plain\n\nContent"
 );
 
 static Response iotdcp_res(
-    "1 OK IotDCP/0.1\nLength 5\nSalut",
-    Utils::Protocol::IotDCP
+    "1 OK IotDCP/0.1\nLength 5\nSalut"
 );
 
 TEST(ResponseTest, GetProtocol) {
@@ -44,8 +42,7 @@ TEST(ResponseTest, GetResponseCode) {
     );
 
     Response http_res_(
-        "HTTP/1.1 401 Not Authorized\nContent-Length: 7\nContent-Type: text/plain\n\nContent",
-        Utils::Protocol::HTTP
+        "HTTP/1.1 401 Not Authorized\nContent-Length: 7\nContent-Type: text/plain\n\nContent"
     );
     ASSERT_EQ(
         401,
@@ -69,12 +66,10 @@ TEST(ResponseTest, Successful) {
     ASSERT_TRUE(iotdcp_res.Successful());
 
     Response http_res_(
-        "HTTP/1.1 401 Not Authorized\nContent-Length: 7\nContent-Type: text/plain\n\nContent",
-        Utils::Protocol::HTTP
+        "HTTP/1.1 401 Not Authorized\nContent-Length: 7\nContent-Type: text/plain\n\nContent"
     );
     Response iotdcp_res_(
-        "0 Server Error IotDCP/0.1\nLength 5\nSalut",
-        Utils::Protocol::IotDCP
+        "0 Server Error IotDCP/0.1\nLength 5\nSalut"
     );
     ASSERT_FALSE(http_res_.Successful());
     ASSERT_FALSE(iotdcp_res_.Successful());

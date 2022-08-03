@@ -1,6 +1,7 @@
 #include "Router.hpp"
 #include "../communication/Utils.hpp"
 #include "../communication/IotDCP.hpp"
+#include "../communication/HTTP.hpp"
 
 #include <iostream>
 
@@ -18,11 +19,13 @@ bool Router::AddPath(std::string path, std::function<Response(Request)> handler)
 }
 
 Response Router::GetResponse(Request request) {
-    IotDCP dcp;
-    std::cout << "\n\n\n" << m_routes.size() << "\n\n\n";
     auto handler = m_routes.find(request.GetPath());
     if (handler != m_routes.end())
         return (handler->second)(request);
-    // vezi ca aici trb lucrat mai mult
-    return dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotFound);
+    if (request.GetProtocol() == Utils::Protocol::IotDCP) {
+        IotDCP dcp;
+        return dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotFound);
+    }
+    HTTP http;
+    return http.CreateResponse(Utils::HTTPResponseCode::H_NotFound);
 }

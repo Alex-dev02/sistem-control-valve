@@ -7,7 +7,7 @@
 
 class Response{
 public:
-    Response(std::string raw_response, Utils::Protocol protocol);
+    Response(std::string raw_response);
 
     std::string GetRawResponse();
     Utils::Protocol GetProtocol();
