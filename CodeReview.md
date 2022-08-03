@@ -34,6 +34,7 @@
 
 ### Features
 
+- [ ] logger (single tone)
 - [ ] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
 - [ ] unit teste
 - [ ] valva sa primeasca requesturi http ca sa stie care ii este thermostatul (? de discutat deoarece momentan se intampla invers)
