@@ -1,4 +1,4 @@
-#include "NetworkStream.hpp"
+#include "network_stream.hpp"
 
 #include <unistd.h>
 #include <sys/socket.h>

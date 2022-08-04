@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../../networking/communication/Request.hpp"
-#include "../../networking/communication/Response.hpp"
-#include "../../networking/tcp/TcpListener.hpp"
-#include "../../networking/router/Router.hpp"
+#include "../../networking/communication/request.hpp"
+#include "../../networking/communication/response.hpp"
+#include "../../networking/tcp/tcp_listener.hpp"
+#include "../../networking/router/router.hpp"
 
 #include <vector>
 #include <string>

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../networking/communication/Response.hpp"
+#include "../networking/communication/response.hpp"
 
 /*HTTP/1.1 200 OK
 Date: Mon, 27 Jul 2009 12:28:53 GMT

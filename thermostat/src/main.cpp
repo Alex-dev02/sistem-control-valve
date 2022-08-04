@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "../../networking/tcp/TcpListener.hpp"
-#include "../../networking/router/Router.hpp"
-#include "../../networking/tcp/NetworkStream.hpp"
-#include "../../networking/communication/Response.hpp"
-#include "Thermostat.hpp"
+#include "../../networking/tcp/tcp_listener.hpp"
+#include "../../networking/router/router.hpp"
+#include "../../networking/tcp/network_stream.hpp"
+#include "../../networking/communication/response.hpp"
+#include "thermostat.hpp"
 
 int main(int argc, char *argv[]) {
     Thermostat t = Thermostat();

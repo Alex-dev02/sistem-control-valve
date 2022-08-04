@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 
 add_library(libValve
-    src/Valve.cpp
+    src/valve.cpp
 )
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)

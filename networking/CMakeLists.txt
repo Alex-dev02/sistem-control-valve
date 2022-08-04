@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.16)
 
 add_library(libNetworking
-    communication/HTTP.cpp
-    communication/Utils.cpp
-    communication/IotDCP.cpp
-    communication/Request.cpp
-    communication/Response.cpp
-    router/Router.cpp
-    tcp/NetworkStream.cpp
-    tcp/TcpListener.cpp
-    tcp/TcpClient.cpp
+    communication/http.cpp
+    communication/utils.cpp
+    communication/iot_dcp.cpp
+    communication/request.cpp
+    communication/response.cpp
+    router/router.cpp
+    tcp/network_stream.cpp
+    tcp/tcp_listener.cpp
+    tcp/tcp_client.cpp
 )
 
 target_include_directories(libNetworking PUBLIC 

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "../networking/communication/IotDCP.hpp"
-#include "../networking/communication/Utils.hpp"
+#include "../networking/communication/iot_dcp.hpp"
+#include "../networking/communication/utils.hpp"
 
 static IotDCP dcp;
 

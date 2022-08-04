@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../networking/tcp/TcpClient.hpp"
+#include "../networking/tcp/tcp_client.hpp"
 
 TEST(TcpClientTest, GetStream) {
     static TcpClient client("4000");

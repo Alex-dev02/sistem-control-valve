@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Utils.hpp"
-#include "Response.hpp"
+#include "http.hpp"
+#include "response.hpp"
 
 class HTTP {
 public:

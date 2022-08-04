@@ -17,13 +17,13 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(Tests
-IotDCPTest.cpp
-HTTPTest.cpp
-RequestTest.cpp
-ResponseTest.cpp
-UtilsTest.cpp
-RouterTest.cpp
-TcpClientTest.cpp
+iot_dcp_test.cpp
+http_test.cpp
+request_test.cpp
+response_test.cpp
+utils_test.cpp
+router_test.cpp
+tcp_client_test.cpp
 main.cpp)
 
 target_include_directories(Tests PRIVATE ../networking/IotDCP)

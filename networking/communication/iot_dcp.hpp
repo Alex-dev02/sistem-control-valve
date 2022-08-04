@@ -2,9 +2,9 @@
 
 #include <string>
 
-#include "Utils.hpp"
-#include "Request.hpp"
-#include "Response.hpp"
+#include "utils.hpp"
+#include "request.hpp"
+#include "response.hpp"
 
 // IotDeviceCommunicationProtocol
 
