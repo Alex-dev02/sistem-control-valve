@@ -61,6 +61,21 @@ TEST(RequestTests, GetPathVar) {
         "1",
         request.GetPathVar("age")
     );
+    ASSERT_THROW({
+        try
+        {
+            std::string var = request.GetPathVar("notvalidvarname");
+        }
+        catch(const std::exception& e)
+        {
+            ASSERT_STREQ(
+                "The var_name does not correspond to any variable",
+                e.what()
+            );
+            throw;
+        }
+        
+    }, std::exception);
 }
 
 TEST(RequestTest, GetRawRequest) {
