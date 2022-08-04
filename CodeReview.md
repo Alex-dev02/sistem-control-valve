@@ -45,4 +45,5 @@
 
 ### FIXES 
 
-- de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
+- [ ] de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
+- [ ] foloseste try catch atunci cand foloseste Request::GetPathVar, eventual o functie care sa faca try catchul
