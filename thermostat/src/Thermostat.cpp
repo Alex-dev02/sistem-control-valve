@@ -29,17 +29,34 @@ Response Thermostat::Root(Request request) {
 
 Response Thermostat::AddValve(Request request) {
     HTTP http;
-    m_valves.push_back(Valve_Address(
-        request.GetPathVar("server_name"),
-        request.GetPathVar("port")
-    ));
+    try
+    {
+        m_valves.push_back(Valve_Address(
+            request.GetPathVar("server_name"),
+            request.GetPathVar("port")
+        ));
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
+    }
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve successfully added!");
 }
 
 Response Thermostat::SetTarget(Request request) {
     HTTP http;
     // temperature limit 15 and 28
-    int target = std::stoi(request.GetPathVar("target"));
+    int target = 0;
+    try
+    {
+        target = std::stoi(request.GetPathVar("target"));
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
+    }
     if (target < 15 || target > 28)
         return http.CreateResponse(
             Utils::HTTPResponseCode::H_OK,
@@ -53,7 +70,7 @@ Response Thermostat::SetTarget(Request request) {
         NetworkStream stream = client.GetStream();
          Request request = dcp.CreateRequest(
             Utils::RequestType::PUT,
-            "/set_target?target=" + request.GetPathVar("target")
+            "/set_target?target=" + std::to_string(target)
         );
         stream.Write(request.GetRawRequest());
         Response response(stream.Read());
@@ -63,7 +80,7 @@ Response Thermostat::SetTarget(Request request) {
     }
     return http.CreateResponse( 
         Utils::HTTPResponseCode::H_OK,
-        "Temperature changed to " + request.GetPathVar("target")
+        "Temperature changed to " + std::to_string(target)
         + " for " + std::to_string(successfuly_updated_valves) + " out of "
         + std::to_string(m_valves.size()) + " valves."
     );
@@ -72,8 +89,19 @@ Response Thermostat::SetTarget(Request request) {
 Response Thermostat::RemoveValve(Request request) {
     HTTP http;
     //should receive a "port" variable
+    std::string server_name;
     for (std::vector<Valve_Address>::iterator it = m_valves.begin(); it != m_valves.end(); it++) {
-        if (it->m_server_name == request.GetPathVar("server_name")) {
+        try
+        {
+            server_name = request.GetPathVar("server_name");
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+            return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
+        }
+        
+        if (it->m_server_name == server_name) {
             m_valves.erase(it);
             return http.CreateResponse(
                 Utils::HTTPResponseCode::H_OK,

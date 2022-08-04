@@ -13,7 +13,7 @@
 
 ### Valve/Thermostat
 
-- [ ] termostatul crash-uieste daca primeste requesturi in care variabilele sunt numite incorect
+- [x] termostatul crash-uieste daca primeste requesturi in care variabilele sunt numite incorect
 - [ ] ce se intampla daca primim o variabila fara valoare in path + unit test pe ea
 - [ ] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
 - [ ] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
@@ -46,4 +46,4 @@
 ### FIXES 
 
 - [ ] de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
-- [ ] foloseste try catch atunci cand foloseste Request::GetPathVar, eventual o functie care sa faca try catchul
+- [x] foloseste try catch pentru apelarea Request::GetPathVar, eventual o functie care sa faca try catchul

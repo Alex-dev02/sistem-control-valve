@@ -69,7 +69,7 @@ TEST(RequestTests, GetPathVar) {
         catch(const std::exception& e)
         {
             ASSERT_STREQ(
-                "The var_name does not correspond to any variable",
+                "The var_name does not correspond to any variable: notvalidvarname",
                 e.what()
             );
             throw;

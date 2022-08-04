@@ -34,7 +34,7 @@ std::string Request::GetPath() {
 std::string Request::GetPathVar(std::string var_name) {
     auto var = m_path_vars.find(var_name);
     if (var == m_path_vars.end())
-        throw std::invalid_argument("The var_name does not correspond to any variable");
+        throw std::invalid_argument("The var_name does not correspond to any variable: " + var_name);
     
     return var != m_path_vars.end() ? var->second : nullptr;
 }
