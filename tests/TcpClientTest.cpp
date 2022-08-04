@@ -3,6 +3,14 @@
 #include "../networking/tcp/TcpClient.hpp"
 
 TEST(TcpClientTest, GetStream) {
-    TcpClient client("4000");
-    client.Close();
+    static TcpClient client("4000");
+    static TcpClient second_client(client.GetStream());
+    ASSERT_LT(
+        0,
+        client.GetStream()
+    );
+    ASSERT_LT(
+        0,
+        second_client.GetStream()
+    );
 }
