@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-add_library(Networking
+add_library(libNetworking
     communication/HTTP.cpp
     communication/Utils.cpp
     communication/IotDCP.cpp
@@ -12,7 +12,7 @@ add_library(Networking
     tcp/TcpClient.cpp
 )
 
-target_include_directories(Networking PUBLIC 
+target_include_directories(libNetworking PUBLIC 
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/communication> 
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/router>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/tcp>

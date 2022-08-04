@@ -27,5 +27,5 @@ Response Router::GetResponse(Request request) {
         return dcp.CreateResponse(Utils::IotDCPResponseCode::I_NotFound);
     }
     HTTP http;
-    return http.CreateResponse(Utils::HTTPResponseCode::H_NotFound);
+    return http.CreateResponse(Utils::HTTPResponseCode::H_NotFound, "Not a valid path");
 }

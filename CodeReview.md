@@ -5,8 +5,8 @@
 ### Code structure
 
 - [ ] rename pe executabile sa-thermostat, sa-valve
-- [ ] de vreme ce ai folosit directoare separate fă biblioteci separate pentru fiecare folder (networking)
-- [ ] folosește Include paths (vezi de exemplu acest [item din SO](https://stackoverflow.com/questions/13703647/how-to-properly-add-include-directories-with-cmake)).
+- [x] de vreme ce ai folosit directoare separate fă biblioteci separate pentru fiecare folder (networking)
+- [x] folosește Include paths (vezi de exemplu acest [item din SO](https://stackoverflow.com/questions/13703647/how-to-properly-add-include-directories-with-cmake)).
 - [ ] folosește naming consecvent pentru fișiere. Litere mici, și pentru fișiere și pentru directoare.
 - [ ] include doar ce e necesar. Include minimul necesar în headere - include doar ce ai nevoie în fiecare unitate de compilare.
 - [ ] Functia care extrage variabilele din request trebuie regandita
@@ -30,7 +30,7 @@
 
 - [ ] GetStream ar trebui să returneze un stream, nu un int.
 - [ ] Porturile sunt uint16_t. Nu string, nu altceva.
-- [ ] `IsResponseASuccess` should be `Successful`
+- [x] `IsResponseASuccess` should be `Successful`
 
 ### Features
 

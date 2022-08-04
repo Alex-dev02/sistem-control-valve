@@ -1,5 +1,7 @@
 #include "Request.hpp"
 
+#include <iostream>
+
 Request::Request(std::string raw_request):
     m_raw_request(raw_request)
 {
@@ -8,7 +10,6 @@ Request::Request(std::string raw_request):
     else if (raw_request.find("HTTP") != std::string::npos)
         m_protocol = Utils::Protocol::HTTP;
     // else handle invalid request
-
     MapVarsFromPath();
 }
 

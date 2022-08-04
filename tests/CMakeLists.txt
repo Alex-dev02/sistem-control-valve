@@ -29,7 +29,7 @@ main.cpp)
 target_include_directories(Tests PRIVATE ../networking/IotDCP)
 
 target_link_libraries(Tests
-    Networking
+    libNetworking
 )
 
 target_link_libraries(

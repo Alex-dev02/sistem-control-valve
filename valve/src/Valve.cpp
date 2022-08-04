@@ -42,7 +42,7 @@ void Valve::IncrementTemperature() {
 
 Response Valve::SetCurrentTargetRoute(Request request) {
     IotDCP dcp;
-    int target = 0;
+    float target = 0;
     try
     {
         target = std::stof(request.GetPathVar("target"));

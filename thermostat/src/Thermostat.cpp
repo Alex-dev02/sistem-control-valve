@@ -47,10 +47,10 @@ Response Thermostat::AddValve(Request request) {
 Response Thermostat::SetTarget(Request request) {
     HTTP http;
     // temperature limit 15 and 28
-    int target = 0;
+    float target = 0;
     try
     {
-        target = std::stoi(request.GetPathVar("target"));
+        target = std::stof(request.GetPathVar("target"));
     }
     catch(const std::exception& e)
     {
@@ -66,7 +66,7 @@ Response Thermostat::SetTarget(Request request) {
     IotDCP dcp;
     int successfuly_updated_valves = 0;
     for (int it = 0; it < m_valves.size(); it++) {
-        TcpClient client(m_valves[it].m_server_name, m_valves[it].m_port);
+        TcpClient client(m_valves[it].m_port, m_valves[it].m_server_name);
         NetworkStream stream = client.GetStream();
          Request request = dcp.CreateRequest(
             Utils::RequestType::PUT,

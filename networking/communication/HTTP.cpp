@@ -11,7 +11,6 @@ Response HTTP::CreateResponse(Utils::HTTPResponseCode response_code, std::string
         "Content-Length: " + std::to_string(content.length()) + '\n' + "Content-Type: text/plain"
         + "\n\n" + content
     );
-    std::cout << res.GetRawResponse() << "\n";
     return res;
 }
 
