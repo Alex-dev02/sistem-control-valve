@@ -3,7 +3,7 @@
 #include "../../networking/tcp/TcpListener.hpp"
 #include "../../networking/router/Router.hpp"
 #include "../../networking/tcp/NetworkStream.hpp"
-#include "../../networking/IotDCP/Response.hpp"
+#include "../../networking/communication/Response.hpp"
 #include "Thermostat.hpp"
 
 int main(int argc, char *argv[]) {
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
         NetworkStream stream = client.GetStream();
         std::string req = stream.Read();
         Response res = router.GetResponse(Request(req)); 
-        stream.Write(res.GetRawHttpResponse());
+        stream.Write(res.GetRawResponse());
         stream.Close();
     }
 }

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-TcpClient::TcpClient(std::string address, std::string port):
+TcpClient::TcpClient(std::string port, std::string address):
     m_address(address),
     m_port(port) {
 

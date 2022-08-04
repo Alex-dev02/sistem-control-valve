@@ -2,6 +2,10 @@
 
 #include <string>
 
+#include "Utils.hpp"
+#include "Request.hpp"
+#include "Response.hpp"
+
 // IotDeviceCommunicationProtocol
 
 /*
@@ -41,18 +45,13 @@
 
 class IotDCP {
 public:
-    enum RequestType {GET, PUT};
-    enum ResponseCode {ServErr, OK, NotFound, NotAuth};
-
     IotDCP();
 
     std::string GetVersion();
 
-    std::string CreateRequest(IotDCP::RequestType type, std::string path);
-    std::string CreateResponse(IotDCP::ResponseCode response_code, std::string content = "");
-    bool IsResponseASuccess(std::string response);
+    Request CreateRequest(Utils::RequestType type, std::string path);
+    Response CreateResponse(Utils::IotDCPResponseCode response_code, std::string content = "");
+
 private:
     std::string m_version = "0.1";
-    
-    std::string ResponseCodeToString(IotDCP::ResponseCode response_code);
 };

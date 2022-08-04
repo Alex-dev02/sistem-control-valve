@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <functional>
 
-#include "../IotDCP/Request.hpp"
-#include "../IotDCP/Response.hpp"
+#include "../communication/Request.hpp"
+#include "../communication/Response.hpp"
 
 // The route handler should return a string, representing the data
 // returned by the path handler
@@ -15,11 +15,8 @@
 class Router {
 public:
     Router();
-    void AddPath(std::string path, std::function<Response(Request)>);
+    bool AddPath(std::string path, std::function<Response(Request)>);
     Response GetResponse(Request request);
 private:
     std::unordered_map<std::string, std::function<Response(Request)>> m_routes;
-
-    Response GetResponseForPath(std::string &path);
-    std::string GetPath(std::string request);
 };
