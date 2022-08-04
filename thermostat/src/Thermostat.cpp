@@ -111,6 +111,6 @@ Response Thermostat::RemoveValve(Request request) {
     }
     return http.CreateResponse(
         Utils::HTTPResponseCode::H_OK,
-        "Coulnd not find the valve."
+        "Could not find the valve."
     );
 }
