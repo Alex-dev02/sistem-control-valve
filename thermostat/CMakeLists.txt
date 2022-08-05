@@ -4,6 +4,7 @@ add_library(libThermostat
     src/thermostat.cpp
 )
 
-target_include_directories(libThermostat PUBLIC 
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src> 
+target_include_directories(libThermostat PUBLIC
+$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>
 )

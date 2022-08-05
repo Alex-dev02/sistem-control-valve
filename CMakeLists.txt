@@ -17,7 +17,7 @@ target_link_libraries(sa_valve libValve)
 
 include(CTest)
 
-find_package(GTest REQUIRED CONFIG)
+# find_package(GTest REQUIRED CONFIG)
 
 set_property(TARGET libThermostat libValve sa_thermostat sa_valve PROPERTY CXX_STANDARD 17)
 
