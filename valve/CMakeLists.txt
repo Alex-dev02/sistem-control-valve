@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
+include_directories(../networking)
 
 add_library(libValve
     src/valve.cpp

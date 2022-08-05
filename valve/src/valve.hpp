@@ -1,9 +1,9 @@
 #pragma once
 
-#include <networking/router.hpp>
-#include <networking/iot_dcp.hpp>
-#include <networking/request.hpp>
-#include <networking/response.hpp>
+#include <router.hpp>
+#include <iot_dcp.hpp>
+#include <request.hpp>
+#include <response.hpp>
 
 
 #include <string>

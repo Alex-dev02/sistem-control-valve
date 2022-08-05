@@ -16,4 +16,4 @@ target_include_directories(libNetworking PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/> 
 )
 
-install(TARGETS libNetworking DESTINATION bin)
+install(TARGETS libNetworking DESTINATION usr/local/bin)
