@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../../networking/tcp/tcp_listener.hpp"
-#include "../../networking/router/router.hpp"
-#include "../../networking/tcp/network_stream.hpp"
-#include "../../networking/communication/response.hpp"
+#include "../../networking/tcp_listener.hpp"
+#include "../../networking/router.hpp"
+#include "../../networking/network_stream.hpp"
+#include "../../networking/response.hpp"
 #include "thermostat.hpp"
 
 int main(int argc, char *argv[]) {

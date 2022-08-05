@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../networking/router/router.hpp"
+#include "../networking/router.hpp"
 
 static Router router;
 

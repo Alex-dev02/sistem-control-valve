@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../networking/communication/http.hpp"
+#include "../networking/http.hpp"
 
 static HTTP http;
 

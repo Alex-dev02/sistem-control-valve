@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../networking/communication/utils.hpp"
+#include "../networking/utils.hpp"
 
 TEST(UtilsTest, ResponseCodeToString) {
     ASSERT_EQ(

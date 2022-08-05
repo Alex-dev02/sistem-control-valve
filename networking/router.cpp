@@ -1,7 +1,7 @@
 #include "router.hpp"
-#include "../communication/utils.hpp"
-#include "../communication/iot_dcp.hpp"
-#include "../communication/http.hpp"
+#include "utils.hpp"
+#include "iot_dcp.hpp"
+#include "http.hpp"
 
 #include <iostream>
 

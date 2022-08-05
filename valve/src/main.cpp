@@ -4,10 +4,10 @@
 #include <mutex>
 
 #include "valve.hpp"
-#include "../../networking/tcp/tcp_client.hpp"
-#include "../../networking/tcp/tcp_listener.hpp"
-#include "../../networking/tcp/network_stream.hpp"
-#include "../../networking/router/router.hpp"
+#include "../../networking/tcp_client.hpp"
+#include "../../networking/tcp_listener.hpp"
+#include "../../networking/network_stream.hpp"
+#include "../../networking/router.hpp"
 
 void DisplayTemperature(Valve &valve) {
     while (true) {

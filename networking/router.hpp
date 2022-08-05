@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <functional>
 
-#include "../communication/request.hpp"
-#include "../communication/response.hpp"
+#include "request.hpp"
+#include "response.hpp"
 
 // The route handler should return a string, representing the data
 // returned by the path handler
