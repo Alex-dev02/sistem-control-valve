@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../networking/request.hpp"
+#include <networking/request.hpp>
 
 TEST(RequestTests, GetPath) {
     // IotDCP

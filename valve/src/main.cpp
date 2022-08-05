@@ -3,11 +3,12 @@
 #include <chrono>
 #include <mutex>
 
+#include <networking/tcp_client.hpp>
+#include <networking/tcp_listener.hpp>
+#include <networking/network_stream.hpp>
+#include <networking/router.hpp>
+
 #include "valve.hpp"
-#include "../../networking/tcp_client.hpp"
-#include "../../networking/tcp_listener.hpp"
-#include "../../networking/network_stream.hpp"
-#include "../../networking/router.hpp"
 
 void DisplayTemperature(Valve &valve) {
     while (true) {

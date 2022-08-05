@@ -1,9 +1,7 @@
 #include "thermostat.hpp"
-#include "../../networking/network_stream.hpp"
-#include "../../networking/request.hpp"
-#include "../../networking/response.hpp"
-#include "../../networking/iot_dcp.hpp"
-#include "../../networking/http.hpp"
+#include <networking/network_stream.hpp>
+#include <networking/iot_dcp.hpp>
+#include <networking/http.hpp>
 
 #include <iostream>
 
