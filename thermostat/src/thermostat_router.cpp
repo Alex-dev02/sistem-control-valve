@@ -13,6 +13,11 @@ ThermostatRouter::ThermostatRouter() {
     m_router.AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
 }
 
+Response ThermostatRouter::GetResponse(const Request& request) {
+    return m_router.GetResponse(request);
+}
+
+
 Response ThermostatRouter::Root(Request request) {
     HTTP http;
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Home");
@@ -56,12 +61,12 @@ Response ThermostatRouter::SetTarget(Request request) {
     //
     IotDCP dcp;
     int successfuly_updated_valves = 0;
-    Request request = dcp.CreateRequest(
+    Request request_to_send = dcp.CreateRequest(
         Utils::RequestType::PUT,
         "/set_target?target=" + std::to_string(target)
     );
 
-    std::vector<Response> responses = m_thermostat.WriteToValves(request);
+    std::vector<Response> responses = m_thermostat.WriteToValves(request_to_send);
     for (int it = 0; it < responses.size(); it++)
         if (responses[it].Successful())
             successfuly_updated_valves++;
@@ -76,7 +81,6 @@ Response ThermostatRouter::SetTarget(Request request) {
 
 Response ThermostatRouter::RemoveValve(Request request) {
     HTTP http;
-    //should receive a "port" variable
     bool succesfully_deleted = true;
     try
     {

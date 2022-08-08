@@ -5,9 +5,7 @@
 Valve::Valve():
     m_current_target(18),
     m_temperature(18)
-{
-    m_router.AddPath("/set_target", std::bind(&Valve::SetCurrentTargetRoute, this, std::placeholders::_1));
-};
+{};
 
 float Valve::GetCurrentTarget() {
     return m_current_target;
@@ -34,21 +32,4 @@ void Valve::IncrementTemperature() {
         m_temperature += (m_current_target - m_temperature);
     else if (m_current_target - m_temperature < 0)
         m_temperature -= (m_current_target - m_temperature);
-}
-
-Response Valve::SetCurrentTargetRoute(Request request) {
-    IotDCP dcp;
-    float target = 0;
-    try
-    {
-        target = std::stof(request.GetPathVar("target"));
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        return dcp.CreateResponse(Utils::IotDCPResponseCode::I_ServErr);
-    }
-    
-    SetCurrentTarget(target);
-    return dcp.CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }

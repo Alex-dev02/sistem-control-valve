@@ -18,7 +18,7 @@ bool Router::AddPath(std::string path, std::function<Response(Request)> handler)
     }
 }
 
-Response Router::GetResponse(Request request) {
+Response Router::GetResponse(const Request& request) {
     auto handler = m_routes.find(request.GetPath());
     if (handler != m_routes.end())
         return (handler->second)(request);

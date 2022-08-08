@@ -16,7 +16,7 @@ class Router {
 public:
     Router();
     bool AddPath(std::string path, std::function<Response(Request)>);
-    Response GetResponse(Request request);
+    Response GetResponse(const Request& request);
 private:
     Router(const Router&);
     Router& operator=(const Router&);

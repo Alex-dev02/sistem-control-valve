@@ -8,7 +8,7 @@
 #include <networking/network_stream.hpp>
 #include <networking/router.hpp>
 
-#include "valve.hpp"
+#include "valve_router.hpp"
 
 void DisplayTemperature(Valve &valve) {
     while (true) {
@@ -28,14 +28,14 @@ void UpdateTemperature (Valve &valve) {
 }
 
 int main(int argc, char *argv[]) {
-    Valve valve;
+    ValveRouter router;
+    Valve valve = router.GetValve();
     
     auto display_temp_target_thread = std::thread(DisplayTemperature, std::ref(valve));
     display_temp_target_thread.detach();
 
     auto update_temp_thread = std::thread(UpdateTemperature, std::ref(valve));
     update_temp_thread.detach();
-
     TcpListener server(
         argc >= 2 ? argv[1] : "5000"
     );
