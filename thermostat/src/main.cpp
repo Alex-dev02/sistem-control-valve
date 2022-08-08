@@ -4,10 +4,10 @@
 #include <networking/network_stream.hpp>
 #include <networking/response.hpp>
 
-#include "thermostat.hpp"
+#include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
-    Thermostat t = Thermostat();
+    ThermostatRouter t = ThermostatRouter();
     Router router = t.GetRouter();
     TcpListener server(argc >= 2 ? argv[1] : "4000");
     

@@ -8,18 +8,18 @@
 #include <vector>
 #include <string>
 
- struct Valve_Address {
+struct Valve_Address {
     std::string m_server_name;
     std::string m_port;
     Valve_Address(std::string server_name, std::string port):
         m_server_name(server_name),
         m_port(port)
     {}
- };
+};
 
-class Thermostat {
+class ThermostatRouter {
 public:
-    Thermostat();
+    ThermostatRouter();
     Router GetRouter();
 private:
     Router m_router;

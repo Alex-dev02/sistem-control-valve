@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 add_library(libThermostat
-    src/thermostat.cpp
+    src/thermostat_router.cpp
 )
 
 target_include_directories(libThermostat PUBLIC

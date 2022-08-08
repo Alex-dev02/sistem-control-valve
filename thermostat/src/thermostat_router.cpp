@@ -1,31 +1,31 @@
-#include "thermostat.hpp"
+#include "thermostat_router.hpp"
 #include <networking/network_stream.hpp>
 #include <networking/iot_dcp.hpp>
 #include <networking/http.hpp>
 
 #include <iostream>
 
-Thermostat::Thermostat() {
+ThermostatRouter::ThermostatRouter() {
     // add new paths here
-    m_router.AddPath("/", std::bind(&Thermostat::Root, this, std::placeholders::_1));
-    m_router.AddPath("/add_valve", std::bind(&Thermostat::AddValve, this, std::placeholders::_1));
-    m_router.AddPath("/set_target", std::bind(&Thermostat::SetTarget, this, std::placeholders::_1));
-    m_router.AddPath("/remove_valve", std::bind(&Thermostat::RemoveValve, this, std::placeholders::_1));
+    m_router.AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
+    m_router.AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
+    m_router.AddPath("/set_target", std::bind(&ThermostatRouter::SetTarget, this, std::placeholders::_1));
+    m_router.AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
 }
 
 // maybe create a HTTP var inside the Thermostat class ?
 
-Router Thermostat::GetRouter() {
+Router ThermostatRouter::GetRouter() {
     return m_router;
 }
 
-Response Thermostat::Root(Request request) {
+Response ThermostatRouter::Root(Request request) {
     HTTP http;
     // create HTTP response with http class
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Home");
 }
 
-Response Thermostat::AddValve(Request request) {
+Response ThermostatRouter::AddValve(Request request) {
     HTTP http;
     try
     {
@@ -42,7 +42,7 @@ Response Thermostat::AddValve(Request request) {
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve successfully added!");
 }
 
-Response Thermostat::SetTarget(Request request) {
+Response ThermostatRouter::SetTarget(Request request) {
     HTTP http;
     // temperature limit 15 and 28
     float target = 0;
@@ -84,7 +84,7 @@ Response Thermostat::SetTarget(Request request) {
     );
 }
 
-Response Thermostat::RemoveValve(Request request) {
+Response ThermostatRouter::RemoveValve(Request request) {
     HTTP http;
     //should receive a "port" variable
     std::string server_name;
