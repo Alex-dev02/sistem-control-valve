@@ -7,8 +7,7 @@
 #include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
-    ThermostatRouter t = ThermostatRouter();
-    Router router = t.GetRouter();
+    ThermostatRouter thermostat_router;
     TcpListener server(argc >= 2 ? argv[1] : "4000");
     
     server.Start();
@@ -18,7 +17,7 @@ int main(int argc, char *argv[]) {
         TcpClient client = server.AcceptTcpClient();
         NetworkStream stream = client.GetStream();
         std::string req = stream.Read();
-        Response res = router.GetResponse(Request(req)); 
+        Response res = thermostat_router.GetResponse(Request(req)); 
         stream.Write(res.GetRawResponse());
         stream.Close();
     }

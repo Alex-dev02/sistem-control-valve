@@ -10,7 +10,6 @@ class Valve {
  public:
   Valve();
 
-  Router GetRouter();
   float GetCurrentTarget();
   float GetTemperature();
 

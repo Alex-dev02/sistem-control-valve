@@ -13,7 +13,7 @@ Request::Request(std::string raw_request):
     MapVarsFromPath();
 }
 
-std::string Request::GetPath() {
+std::string Request::GetPath() const{
     std::string path;
     bool pathB = false;
     for (int it = 0; it < m_raw_request.length(); it++) {
@@ -32,7 +32,7 @@ std::string Request::GetPath() {
     return path;
 }
 
-std::string Request::GetPathVar(std::string var_name) {
+std::string Request::GetPathVar(std::string var_name) const{
     auto var = m_path_vars.find(var_name);
     if (var == m_path_vars.end())
         throw std::invalid_argument("The var_name does not correspond to any variable: " + var_name);
@@ -40,11 +40,11 @@ std::string Request::GetPathVar(std::string var_name) {
     return var != m_path_vars.end() ? var->second : nullptr;
 }
 
-std::string Request::GetRawRequest() {
+std::string Request::GetRawRequest() const{
     return m_raw_request;
 }
 
-Utils::Protocol Request::GetProtocol() {
+Utils::Protocol Request::GetProtocol() const{
     return m_protocol;
 }
 

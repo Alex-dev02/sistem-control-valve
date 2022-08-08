@@ -13,15 +13,8 @@ ThermostatRouter::ThermostatRouter() {
     m_router.AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
 }
 
-// maybe create a HTTP var inside the Thermostat class ?
-
-Router ThermostatRouter::GetRouter() {
-    return m_router;
-}
-
 Response ThermostatRouter::Root(Request request) {
     HTTP http;
-    // create HTTP response with http class
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Home");
 }
 
@@ -29,7 +22,7 @@ Response ThermostatRouter::AddValve(Request request) {
     HTTP http;
     try
     {
-        m_valves.push_back(Valve_Address(
+        m_thermostat.AddValve(ValveAddress(
             request.GetPathVar("server_name"),
             request.GetPathVar("port")
         ));
@@ -63,52 +56,40 @@ Response ThermostatRouter::SetTarget(Request request) {
     //
     IotDCP dcp;
     int successfuly_updated_valves = 0;
-    for (int it = 0; it < m_valves.size(); it++) {
-        TcpClient client(m_valves[it].m_port, m_valves[it].m_server_name);
-        NetworkStream stream = client.GetStream();
-         Request request = dcp.CreateRequest(
-            Utils::RequestType::PUT,
-            "/set_target?target=" + std::to_string(target)
-        );
-        stream.Write(request.GetRawRequest());
-        Response response(stream.Read());
-        if (response.Successful())
+    Request request = dcp.CreateRequest(
+        Utils::RequestType::PUT,
+        "/set_target?target=" + std::to_string(target)
+    );
+
+    std::vector<Response> responses = m_thermostat.WriteToValves(request);
+    for (int it = 0; it < responses.size(); it++)
+        if (responses[it].Successful())
             successfuly_updated_valves++;
-        stream.Close();
-    }
+
     return http.CreateResponse( 
         Utils::HTTPResponseCode::H_OK,
         "Temperature changed to " + std::to_string(target)
         + " for " + std::to_string(successfuly_updated_valves) + " out of "
-        + std::to_string(m_valves.size()) + " valves."
+        + std::to_string(responses.size()) + " valves."
     );
 }
 
 Response ThermostatRouter::RemoveValve(Request request) {
     HTTP http;
     //should receive a "port" variable
-    std::string server_name;
-    for (std::vector<Valve_Address>::iterator it = m_valves.begin(); it != m_valves.end(); it++) {
-        try
-        {
-            server_name = request.GetPathVar("server_name");
-        }
-        catch(const std::exception& e)
-        {
-            std::cerr << e.what() << '\n';
-            return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
-        }
-        
-        if (it->m_server_name == server_name) {
-            m_valves.erase(it);
-            return http.CreateResponse(
-                Utils::HTTPResponseCode::H_OK,
-                "Valve successfully disconnected."
-            );
-        }
+    bool succesfully_deleted = true;
+    try
+    {
+        std::string server_name = request.GetPathVar("server_name");
+        succesfully_deleted = m_thermostat.RemoveValve(server_name);
     }
-    return http.CreateResponse(
-        Utils::HTTPResponseCode::H_OK,
-        "Could not find the valve."
-    );
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
+    }
+    
+
+    return succesfully_deleted ? http.CreateResponse(Utils::HTTPResponseCode::H_OK,"Valve successfully disconnected.")
+        : http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve.");
 }

@@ -40,7 +40,6 @@ int main(int argc, char *argv[]) {
         argc >= 2 ? argv[1] : "5000"
     );
     server.Start();
-    Router router = valve.GetRouter();
     while (true) {
         std::cout << "Waiting for a new connection...\n";
         TcpClient client = server.AcceptTcpClient();

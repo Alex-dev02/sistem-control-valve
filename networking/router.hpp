@@ -18,5 +18,8 @@ public:
     bool AddPath(std::string path, std::function<Response(Request)>);
     Response GetResponse(Request request);
 private:
+    Router(const Router&);
+    Router& operator=(const Router&);
+
     std::unordered_map<std::string, std::function<Response(Request)>> m_routes;
 };

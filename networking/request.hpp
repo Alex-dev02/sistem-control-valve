@@ -9,10 +9,10 @@ class Request{
 public:
     Request(std::string raw_request);
 
-    std::string GetPath();
-    std::string GetPathVar(std::string var_name);
-    std::string GetRawRequest();
-    Utils::Protocol GetProtocol();
+    std::string GetPath() const;
+    std::string GetPathVar(std::string var_name) const;
+    std::string GetRawRequest() const;
+    Utils::Protocol GetProtocol() const;
 private:
     std::string m_raw_request;
     std::unordered_map<std::string, std::string> m_path_vars;

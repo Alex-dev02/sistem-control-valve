@@ -9,10 +9,6 @@ Valve::Valve():
     m_router.AddPath("/set_target", std::bind(&Valve::SetCurrentTargetRoute, this, std::placeholders::_1));
 };
 
-Router Valve::GetRouter() {
-    return m_router;
-}
-
 float Valve::GetCurrentTarget() {
     return m_current_target;
 }

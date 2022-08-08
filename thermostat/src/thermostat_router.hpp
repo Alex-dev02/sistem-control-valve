@@ -4,26 +4,20 @@
 #include <networking/response.hpp>
 #include <networking/tcp_listener.hpp>
 #include <networking/router.hpp>
+#include "thermostat.hpp"
 
 #include <vector>
 #include <string>
 
-struct Valve_Address {
-    std::string m_server_name;
-    std::string m_port;
-    Valve_Address(std::string server_name, std::string port):
-        m_server_name(server_name),
-        m_port(port)
-    {}
-};
-
 class ThermostatRouter {
 public:
     ThermostatRouter();
-    Router GetRouter();
+
+    Response GetResponse(const Request& request);
+
 private:
     Router m_router;
-    std::vector<Valve_Address> m_valves;
+    Thermostat m_thermostat;
 
     Response Root(Request request);
     Response AddValve(Request request);
