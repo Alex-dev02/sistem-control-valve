@@ -17,13 +17,13 @@
 - [x] ce se intampla daca primim o variabila fara valoare in path + unit test pe ea
 - [ ] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
 - [ ] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
-- [ ] Pentru Router este un tip de date complex ar trebui să nu poată fi copiat - operațiunea de copiere nu ar trebui să aibă sens pentru Router. Tu faci o copie în main, dar dacă adaug on-the-fly noi endpoints în Router? `main` nu le va vedea.
+- [x] Pentru Router este un tip de date complex ar trebui să nu poată fi copiat - operațiunea de copiere nu ar trebui să aibă sens pentru Router. Tu faci o copie în main, dar dacă adaug on-the-fly noi endpoints în Router? `main` nu le va vedea.
 - [ ] main-ul de la termostat și valvă seamănă foarte mult. Se poate refolosi acel cod?
-- [ ] Thermostat::SetTarget are prea multe responsabilități. Face parsare de date, actualizare de structuri interne, management de stream-uri de rețea, compunere de mesaje și trimitere de mesaje, compunere de răspunsuri.
+- [x] Thermostat::SetTarget are prea multe responsabilități. Face parsare de date, actualizare de structuri interne, management de stream-uri de rețea, compunere de mesaje și trimitere de mesaje, compunere de răspunsuri.
 - [x] typo: „Coulnd not”
 - [ ] Too many things are included in the main of thermostat
 - [ ] What would it take to have the valve threads done in only one thread? How about doing it in the main thread?
-- [ ] remove la valve ar trebui sa se realizeze pe baza ip-ului
+- [x] remove la valve ar trebui sa se realizeze pe baza ip-ului
 
 
 ### Networking
@@ -39,9 +39,9 @@
 - [ ] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
 - [ ] unit teste
 - [ ] valva sa primeasca requesturi http ca sa stie care ii este thermostatul (? de discutat deoarece momentan se intampla invers)
-- [ ] nu ar trebui sa putem inregistra o valva daca nu e pornita
+- [x] nu ar trebui sa putem inregistra o valva daca nu e pornita
 - [ ] folosire json pentru interpretari de request/response
-- [ ] folosire stl petru operatii de cautare/stergere etc
+- [x] folosire stl petru operatii de cautare/stergere etc
 
 ### FIXES 
 

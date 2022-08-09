@@ -10,9 +10,13 @@ public:
     float GetTemperature() const;
 
     void SetCurrentTarget(float current_targer);
-    void SetTemperature(float temperature);
-    void IncrementTemperature();
 private:
     float m_current_target;
     float m_temperature;
+
+    void SetTemperature(float temperature);
+    void IncrementTemperature();
+    void UpdateValve();
+    void DisplayTemperature();
+    void UpdateTemperature();
 };
