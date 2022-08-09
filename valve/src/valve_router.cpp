@@ -12,10 +12,6 @@ Response ValveRouter::GetResponse(const Request& request) {
     return m_router.GetResponse(request);
 }
 
-Valve& ValveRouter::GetValve() {
-    return m_valve;
-}
-
 Response ValveRouter::Ping(Request request) {
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }

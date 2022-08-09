@@ -11,8 +11,6 @@ public:
     ValveRouter();
 
     Response GetResponse(const Request& request);
-
-    Valve& GetValve();
 private:
     Router m_router;
     Valve m_valve;

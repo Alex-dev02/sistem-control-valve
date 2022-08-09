@@ -15,14 +15,14 @@
 
 - [x] termostatul crash-uieste daca primeste requesturi in care variabilele sunt numite incorect
 - [x] ce se intampla daca primim o variabila fara valoare in path + unit test pe ea
-- [ ] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
+- [x] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
 - [ ] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
 - [x] Pentru Router este un tip de date complex ar trebui să nu poată fi copiat - operațiunea de copiere nu ar trebui să aibă sens pentru Router. Tu faci o copie în main, dar dacă adaug on-the-fly noi endpoints în Router? `main` nu le va vedea.
 - [ ] main-ul de la termostat și valvă seamănă foarte mult. Se poate refolosi acel cod?
 - [x] Thermostat::SetTarget are prea multe responsabilități. Face parsare de date, actualizare de structuri interne, management de stream-uri de rețea, compunere de mesaje și trimitere de mesaje, compunere de răspunsuri.
 - [x] typo: „Coulnd not”
 - [ ] Too many things are included in the main of thermostat
-- [ ] What would it take to have the valve threads done in only one thread? How about doing it in the main thread?
+- [x] What would it take to have the valve threads done in only one thread? How about doing it in the main thread?
 - [x] remove la valve ar trebui sa se realizeze pe baza ip-ului
 
 
