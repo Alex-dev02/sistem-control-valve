@@ -42,8 +42,10 @@
 - [x] nu ar trebui sa putem inregistra o valva daca nu e pornita
 - [ ] folosire json pentru interpretari de request/response
 - [x] folosire stl petru operatii de cautare/stergere etc
+- [ ] teste pentru GetIP si GetPort pentru NetworkStream si Request
 
 ### FIXES 
 
 - [ ] de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
 - [x] foloseste try catch pentru apelarea Request::GetPathVar, eventual o functie care sa faca try catchul
+- [ ] repara testele pentru NetworkStream

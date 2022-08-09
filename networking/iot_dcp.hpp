@@ -20,6 +20,7 @@
     - the path must be followed by a white space
     - the abreviation of the protocol's name and it's version
         ex: IotDCP/0.1
+    - a new line followed by the IP and PORT of the server
     ### Responses
     - must start with a response code and the meaning of it:
         - 0 Server, Error for faild to GET/PUT 
@@ -34,7 +35,8 @@
     - new line before the content, if any
     
     ex of full request:
-        GET /current_temp IotDCP/0.1
+        GET /current_temp IotDCP/0.1 
+        127.0.0.1 4000
     ex of full response:
         1 OK IotDCP/0.1
         Length 3
@@ -49,7 +51,7 @@ public:
 
     std::string GetVersion();
 
-    Request CreateRequest(Utils::RequestType type, std::string path);
+    Request CreateRequest(Utils::RequestType type, std::string path, std::string ip_address, std::string port);
     Response CreateResponse(Utils::IotDCPResponseCode response_code, std::string content = "");
 
 private:

@@ -48,6 +48,16 @@ Utils::Protocol Request::GetProtocol() const{
     return m_protocol;
 }
 
+std::string Request::GetIP() {
+    std::string ip_and_port = m_raw_request.substr(m_raw_request.find('\n') + 1, m_raw_request.length());
+    return ip_and_port.substr(0, ip_and_port.find(' '));
+}
+
+std::string Request::GetPort() {
+    std::string ip_and_port = m_raw_request.substr(m_raw_request.find('\n') + 1, m_raw_request.length());
+    return ip_and_port.substr(ip_and_port.find(' ') + 1, ip_and_port.length());
+}
+
 void Request::MapVarsFromPath() {
     int pos_start_vars = 0;
     for (int i = 0; i < m_raw_request.length(); i++) {

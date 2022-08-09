@@ -19,6 +19,7 @@ Response ValveRouter::Connect(Request request) {
 Response ValveRouter::SetCurrentTargetRoute(Request request) {
     IotDCP dcp;
     float target = 0;
+    std::cout << request.GetIP() << "\n\n\n" << request.GetPort() << "\n\n\n";
     try
     {
         target = std::stof(request.GetPathVar("target"));

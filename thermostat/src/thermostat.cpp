@@ -41,11 +41,13 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	return responses;
 }
 
-bool Thermostat::PingValve(std::string server_name, std::string port) {
+bool Thermostat::ConnectValve(std::string valve_server_name, std::string valve_port, std::string thermostat_server_name, std::string thermostat_port) {
 	try {
-		TcpClient client(port, server_name);
+		TcpClient client(valve_port, valve_server_name);
 		NetworkStream stream  = client.GetStream();
-		stream.Write(IotDCP().CreateRequest(Utils::RequestType::GET, "/connect").GetRawRequest());
+		stream.Write(
+			IotDCP().CreateRequest(Utils::RequestType::GET, "/connect", thermostat_server_name, thermostat_port
+        ).GetRawRequest());
 		Response response(stream.Read());
 		stream.Close();
 	}catch(const std::exception& e) {

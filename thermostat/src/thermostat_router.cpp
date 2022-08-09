@@ -20,7 +20,6 @@ Response ThermostatRouter::GetResponse(const Request& request) {
     return m_router.GetResponse(request);
 }
 
-
 Response ThermostatRouter::Root(Request request) {
     HTTP http;
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Home");
@@ -42,8 +41,8 @@ Response ThermostatRouter::AddValve(Request request) {
     }
 
     // checking if the valve exists with a ping
-    bool pinged_successfully = m_thermostat.PingValve(valve_server_name, valve_port);
-    if (pinged_successfully) {
+    bool connected_successfully = m_thermostat.ConnectValve(valve_server_name, valve_port, request.GetIP(), request.GetPort());
+    if (connected_successfully) {
         m_thermostat.AddValve(ValveAddress(
             valve_server_name,
             valve_port
@@ -76,7 +75,9 @@ Response ThermostatRouter::SetTarget(Request request) {
     int successfuly_updated_valves = 0;
     Request request_to_send = dcp.CreateRequest(
         Utils::RequestType::PUT,
-        "/set_target?target=" + std::to_string(target)
+        "/set_target?target=" + std::to_string(target),
+        m_ip_address,
+        m_port
     );
 
     std::vector<Response> responses = m_thermostat.WriteToValves(request_to_send);
