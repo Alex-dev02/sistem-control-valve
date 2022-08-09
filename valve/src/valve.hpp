@@ -6,8 +6,8 @@ class Valve {
 public:
     Valve();
 
-    float GetCurrentTarget();
-    float GetTemperature();
+    float GetCurrentTarget() const;
+    float GetTemperature() const;
 
     void SetCurrentTarget(float current_targer);
     void SetTemperature(float temperature);

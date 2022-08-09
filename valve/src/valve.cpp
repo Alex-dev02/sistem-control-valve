@@ -7,11 +7,11 @@ Valve::Valve():
     m_temperature(18)
 {};
 
-float Valve::GetCurrentTarget() {
+float Valve::GetCurrentTarget() const{
     return m_current_target;
 }
 
-float Valve::GetTemperature() {
+float Valve::GetTemperature() const{
     return m_temperature;
 }
 

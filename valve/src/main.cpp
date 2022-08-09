@@ -10,7 +10,7 @@
 
 #include "valve_router.hpp"
 
-void DisplayTemperature(Valve &valve) {
+void DisplayTemperature(const Valve &valve) {
     while (true) {
         std::cout << "Current Target: " << valve.GetCurrentTarget() << '\n';
         std::cout << "Temperature: " << valve.GetTemperature() << '\n';
@@ -29,7 +29,7 @@ void UpdateTemperature (Valve &valve) {
 
 int main(int argc, char *argv[]) {
     ValveRouter router;
-    Valve valve = router.GetValve();
+    Valve& valve = router.GetValve();
     
     auto display_temp_target_thread = std::thread(DisplayTemperature, std::ref(valve));
     display_temp_target_thread.detach();
