@@ -19,6 +19,6 @@ include(CTest)
 
 #find_package(GTest REQUIRED CONFIG)
 
-set_property(TARGET libThermostat libValve sa_thermostat PROPERTY CXX_STANDARD 17)
+set_property(TARGET libNetworking libThermostat libValve sa_thermostat sa_valve PROPERTY CXX_STANDARD 17)
 
-install(TARGETS sa_thermostat DESTINATION bin)
+install(TARGETS sa_thermostat sa_valve DESTINATION bin)
