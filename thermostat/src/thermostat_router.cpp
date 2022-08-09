@@ -51,7 +51,7 @@ Response ThermostatRouter::SetTarget(Request request) {
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
-        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
+        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, "The target must be a numeric value.");
     }
     if (target < 15 || target > 28)
         return http.CreateResponse(
