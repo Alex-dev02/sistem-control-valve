@@ -100,3 +100,7 @@ TcpClient TcpListener::AcceptTcpClient() {
     std::cout << "server: got connection from " << s << '\n';
     return TcpClient(new_sock_fd);
 }
+
+NetworkStream TcpListener::GetStream() {
+    return NetworkStream(m_sock_fd);
+}

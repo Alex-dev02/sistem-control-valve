@@ -5,7 +5,10 @@
 
 #include <iostream>
 
-ThermostatRouter::ThermostatRouter() {
+ThermostatRouter::ThermostatRouter(std::string ip_address, std::string port):
+m_ip_address(ip_address),
+m_port(port)
+{
     // add new paths here
     m_router.AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
     m_router.AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));

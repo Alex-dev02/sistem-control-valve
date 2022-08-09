@@ -5,14 +5,14 @@
 
 ValveRouter::ValveRouter() {
     m_router.AddPath("/set_target", std::bind(&ValveRouter::SetCurrentTargetRoute, this, std::placeholders::_1));
-    m_router.AddPath("/ping", std::bind(&ValveRouter::Ping, this, std::placeholders::_1));
+    m_router.AddPath("/connect", std::bind(&ValveRouter::Connect, this, std::placeholders::_1));
 }
 
 Response ValveRouter::GetResponse(const Request& request) {
     return m_router.GetResponse(request);
 }
 
-Response ValveRouter::Ping(Request request) {
+Response ValveRouter::Connect(Request request) {
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 

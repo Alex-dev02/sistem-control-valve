@@ -23,6 +23,7 @@ public:
     void Start();
     void Stop();
     TcpClient AcceptTcpClient();
+    NetworkStream GetStream();
 private:
     std::string m_address;
     std::string m_port;

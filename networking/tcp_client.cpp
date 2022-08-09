@@ -52,8 +52,8 @@ void TcpClient::SetSockFd(addrinfo* sock_addresses) {
         throw std::runtime_error("Could not connect to client");
 }
 
-int TcpClient::GetStream() {
-    return m_sock_fd;
+NetworkStream TcpClient::GetStream() {
+    return NetworkStream(m_sock_fd);
 }
 
 void TcpClient::Close() {

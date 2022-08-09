@@ -45,7 +45,7 @@ bool Thermostat::PingValve(std::string server_name, std::string port) {
 	try {
 		TcpClient client(port, server_name);
 		NetworkStream stream  = client.GetStream();
-		stream.Write(IotDCP().CreateRequest(Utils::RequestType::GET, "/ping").GetRawRequest());
+		stream.Write(IotDCP().CreateRequest(Utils::RequestType::GET, "/connect").GetRawRequest());
 		Response response(stream.Read());
 		stream.Close();
 	}catch(const std::exception& e) {

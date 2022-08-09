@@ -8,7 +8,7 @@ public:
 
     std::string Read();
     void Write(std::string message);
-
+    std::string GetIP();
     void Close();
 private:
     int m_sock_fd;

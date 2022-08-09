@@ -14,12 +14,14 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+#include "network_stream.hpp"
+
 class TcpClient {
 public:
     TcpClient(std::string port, std::string address = "");
     TcpClient(int sock_fd);
 
-    int GetStream();
+    NetworkStream GetStream();
     void Close();
 private:
     std::string m_address;

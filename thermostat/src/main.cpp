@@ -7,9 +7,9 @@
 #include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
-    ThermostatRouter thermostat_router;
-    TcpListener server(argc >= 2 ? argv[1] : "4000");
-    
+    std::string port = argc >= 2 ? argv[1] : "4000";
+    TcpListener server(port);
+    ThermostatRouter thermostat_router(server.GetStream().GetIP(), port);
     server.Start();
     
     while (true) {
