@@ -23,6 +23,8 @@ public:
 	void AddValve(const ValveAddress& valve_addr);
 	bool RemoveValve(const std::string& server_name);
 	std::vector<Response> WriteToValves(const Request& request);
+    bool PingValve(std::string server_name, std::string port);
+
 private:
 	std::vector<ValveAddress> m_valves;
 };

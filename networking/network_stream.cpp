@@ -21,9 +21,8 @@ std::string NetworkStream::Read() {
 
 void NetworkStream::Write(std::string message) {
     int err = write(m_sock_fd, message.c_str(), message.length());
-    if (err == -1) {
-        std::cerr << "Failed to write\n";
-    }
+    if (err == -1)
+        throw std::runtime_error("Failed to write");
 }
 
 void NetworkStream::Close() {

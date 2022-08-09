@@ -5,6 +5,7 @@
 
 ValveRouter::ValveRouter() {
     m_router.AddPath("/set_target", std::bind(&ValveRouter::SetCurrentTargetRoute, this, std::placeholders::_1));
+    m_router.AddPath("/ping", std::bind(&ValveRouter::Ping, this, std::placeholders::_1));
 }
 
 Response ValveRouter::GetResponse(const Request& request) {
@@ -13,6 +14,10 @@ Response ValveRouter::GetResponse(const Request& request) {
 
 Valve& ValveRouter::GetValve() {
     return m_valve;
+}
+
+Response ValveRouter::Ping(Request request) {
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
 Response ValveRouter::SetCurrentTargetRoute(Request request) {

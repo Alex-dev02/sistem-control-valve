@@ -12,7 +12,6 @@ public:
     void SetCurrentTarget(float current_targer);
     void SetTemperature(float temperature);
     void IncrementTemperature();
-
 private:
     float m_current_target;
     float m_temperature;

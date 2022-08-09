@@ -25,19 +25,29 @@ Response ThermostatRouter::Root(Request request) {
 
 Response ThermostatRouter::AddValve(Request request) {
     HTTP http;
+    std::string valve_server_name;
+    std::string valve_port;
     try
     {
-        m_thermostat.AddValve(ValveAddress(
-            request.GetPathVar("server_name"),
-            request.GetPathVar("port")
-        ));
+        valve_server_name = request.GetPathVar("server_name");
+        valve_port = request.GetPathVar("port");
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
-        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, e.what());
+        return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, "Not enough parameters provided");
     }
-    return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve successfully added!");
+
+    // checking if the valve exists with a ping
+    bool pinged_successfully = m_thermostat.PingValve(valve_server_name, valve_port);
+    if (pinged_successfully) {
+        m_thermostat.AddValve(ValveAddress(
+            valve_server_name,
+            valve_port
+        ));
+        return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve successfully added!");
+    }
+    return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve!");
 }
 
 Response ThermostatRouter::SetTarget(Request request) {

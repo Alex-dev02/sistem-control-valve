@@ -28,10 +28,8 @@ addrinfo* TcpClient::GetSockAddresses() {
         &result
     );
 
-    if (err != 0) {
-        std::cerr << "getaddrinfo: " << gai_strerror(err) << '\n';
-        exit(1);
-    }
+    if (err != 0)
+        throw std::runtime_error("getaddrinfo: " + std::string(gai_strerror(err)));
     return result;
 }
 
@@ -50,10 +48,8 @@ void TcpClient::SetSockFd(addrinfo* sock_addresses) {
         break;
     }
 
-    if (address == NULL){
-        std::cerr << "client: failed to connect\n";
-        exit(2);
-    }
+    if (address == NULL)
+        throw std::runtime_error("Could not connect to client");
 }
 
 int TcpClient::GetStream() {

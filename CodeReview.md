@@ -14,7 +14,7 @@
 ### Valve/Thermostat
 
 - [x] termostatul crash-uieste daca primeste requesturi in care variabilele sunt numite incorect
-- [ ] ce se intampla daca primim o variabila fara valoare in path + unit test pe ea
+- [x] ce se intampla daca primim o variabila fara valoare in path + unit test pe ea
 - [ ] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
 - [ ] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
 - [ ] Pentru Router este un tip de date complex ar trebui să nu poată fi copiat - operațiunea de copiere nu ar trebui să aibă sens pentru Router. Tu faci o copie în main, dar dacă adaug on-the-fly noi endpoints în Router? `main` nu le va vedea.
@@ -34,7 +34,7 @@
 
 ### Features
 
-- [ ] input validator pentru requesturi HTTP si IotDCP poate
+- [x] input validator pentru requesturi HTTP si IotDCP poate
 - [ ] logger (single tone)
 - [ ] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
 - [ ] unit teste

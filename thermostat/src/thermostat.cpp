@@ -1,8 +1,10 @@
 #include "thermostat.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <networking/tcp_client.hpp>
 #include <networking/network_stream.hpp>
+#include <networking/iot_dcp.hpp>
 
 bool ValveAddress::operator==(const ValveAddress& valve_addr) {
 	return m_server_name == valve_addr.m_server_name & m_port == valve_addr.m_port;
@@ -37,4 +39,18 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
         stream.Close();
 	}
 	return responses;
+}
+
+bool Thermostat::PingValve(std::string server_name, std::string port) {
+	try {
+		TcpClient client(port, server_name);
+		NetworkStream stream  = client.GetStream();
+		stream.Write(IotDCP().CreateRequest(Utils::RequestType::GET, "/ping").GetRawRequest());
+		Response response(stream.Read());
+		stream.Close();
+	}catch(const std::exception& e) {
+		std::cerr << e.what() << '\n';
+		return false;
+	}
+	return true;
 }

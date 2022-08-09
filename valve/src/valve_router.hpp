@@ -17,5 +17,6 @@ private:
     Router m_router;
     Valve m_valve;
 
+    Response Ping(Request request);
     Response SetCurrentTargetRoute(Request request);
 };
