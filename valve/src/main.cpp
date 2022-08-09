@@ -8,10 +8,9 @@
 #include "valve_router.hpp"
 
 int main(int argc, char *argv[]) {
-    ValveRouter router;
-    TcpListener server(
-        argc >= 2 ? argv[1] : "5000"
-    );
+    std::string port = argc >= 2 ? argv[1] : "5000";
+    TcpListener server(port);
+    ValveRouter router(server.GetStream().GetIP(), port);
     server.Start();
     while (true) {
         std::cout << "Waiting for a new connection...\n";

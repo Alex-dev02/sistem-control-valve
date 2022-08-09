@@ -3,7 +3,11 @@
 #include <iostream>
 #include <networking/iot_dcp.hpp>
 
-ValveRouter::ValveRouter() {
+ValveRouter::ValveRouter(std::string ip_address, std::string port):
+    m_ip_address(ip_address),
+    m_port(port)
+{
+    m_valve.SetValve(m_ip_address, m_port);
     m_router.AddPath("/set_target", std::bind(&ValveRouter::SetCurrentTargetRoute, this, std::placeholders::_1));
     m_router.AddPath("/connect", std::bind(&ValveRouter::Connect, this, std::placeholders::_1));
 }
@@ -13,13 +17,13 @@ Response ValveRouter::GetResponse(const Request& request) {
 }
 
 Response ValveRouter::Connect(Request request) {
+    m_valve.SetThermostat(request.GetIP(), request.GetPort());
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
 Response ValveRouter::SetCurrentTargetRoute(Request request) {
     IotDCP dcp;
     float target = 0;
-    std::cout << request.GetIP() << "\n\n\n" << request.GetPort() << "\n\n\n";
     try
     {
         target = std::stof(request.GetPathVar("target"));

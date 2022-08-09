@@ -8,12 +8,15 @@
 
 class ValveRouter {
 public:
-    ValveRouter();
+    ValveRouter(std::string ip_address, std::string port);
 
     Response GetResponse(const Request& request);
 private:
     Router m_router;
     Valve m_valve;
+
+    std::string m_ip_address;
+    std::string m_port;
 
     Response Connect(Request request);
     Response SetCurrentTargetRoute(Request request);
