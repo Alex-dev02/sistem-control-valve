@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 project(SisCtrlValve)
 
+add_subdirectory(system)
 add_subdirectory(networking)
 add_subdirectory(thermostat)
 add_subdirectory(valve)

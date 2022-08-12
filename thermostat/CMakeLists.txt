@@ -6,6 +6,7 @@ add_library(libThermostat
 )
 
 target_link_libraries(libThermostat PRIVATE libNetworking)
+target_link_libraries(libThermostat PRIVATE libSystem)
 
 target_include_directories(libThermostat PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
