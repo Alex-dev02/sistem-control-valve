@@ -8,7 +8,7 @@
 #include <array>
 
 std::string System::ExecuteCommand(const char* command) {
-    std::array<char, 512> buffer;
+    std::array<char, 256> buffer;
     std::string result;
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command, "r"), pclose);
     if (!pipe) {
