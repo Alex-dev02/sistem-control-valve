@@ -34,17 +34,6 @@ void NetworkStream::Write(std::string message) {
         throw std::runtime_error("Failed to write");
 }
 
-std::string NetworkStream::GetIP() {
-    struct sockaddr_in addr;
-    socklen_t addr_size = sizeof(struct sockaddr_in);
-    int res = getpeername(m_sock_fd, (struct sockaddr *)&addr, &addr_size);
-    char *clientip = new char[20];
-    strcpy(clientip, inet_ntoa(addr.sin_addr));
-    std::string string_clientip = clientip;
-    delete[] clientip;
-    return string_clientip;
-}
-
 void NetworkStream::Close() {
     close(m_sock_fd);
 }
