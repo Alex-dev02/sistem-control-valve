@@ -14,6 +14,7 @@ m_port(port)
     m_router.AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
     m_router.AddPath("/set_target", std::bind(&ThermostatRouter::SetTarget, this, std::placeholders::_1));
     m_router.AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
+    m_router.AddPath("/ping", std::bind(&ThermostatRouter::Ping, this, std::placeholders::_1));
 }
 
 Response ThermostatRouter::GetResponse(const Request& request) {
@@ -41,7 +42,7 @@ Response ThermostatRouter::AddValve(Request request) {
     }
 
     // checking if the valve exists with a ping
-    bool connected_successfully = m_thermostat.ConnectValve(valve_server_name, valve_port, request.GetIP(), request.GetPort());
+    bool connected_successfully = m_thermostat.ConnectValve(valve_server_name, valve_port, m_ip_address, m_port);
     if (connected_successfully) {
         m_thermostat.AddValve(ValveAddress(
             valve_server_name,
@@ -110,4 +111,8 @@ Response ThermostatRouter::RemoveValve(Request request) {
 
     return succesfully_deleted ? http.CreateResponse(Utils::HTTPResponseCode::H_OK,"Valve successfully disconnected.")
         : http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve.");
+}
+
+Response ThermostatRouter::Ping(Request request) {
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }

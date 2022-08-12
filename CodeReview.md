@@ -36,7 +36,7 @@
 
 - [x] input validator pentru requesturi HTTP si IotDCP poate
 - [ ] logger (single tone)
-- [ ] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
+- [x] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
 - [ ] unit teste
 - [ ] valva sa primeasca requesturi http ca sa stie care ii este thermostatul (? de discutat deoarece momentan se intampla invers)
 - [x] nu ar trebui sa putem inregistra o valva daca nu e pornita
@@ -49,3 +49,4 @@
 - [ ] de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
 - [x] foloseste try catch pentru apelarea Request::GetPathVar, eventual o functie care sa faca try catchul
 - [ ] repara testele pentru NetworkStream
+- [ ] daca o valva e deconectata de la un thermostat ar trebui sa se revina la o valoare default

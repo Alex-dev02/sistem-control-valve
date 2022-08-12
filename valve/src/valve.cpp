@@ -40,7 +40,6 @@ void Valve::SetValve(std::string ip_address, std::string port) {
 bool Valve::PollToThermostat() {
     try
     {
-        //std::cout << m_thermostat_ip_address << "\n\n\n" << m_thermostat_port << "\n\n";
         TcpClient client(m_thermostat_port, m_thermostat_ip_address);
         NetworkStream stream = client.GetStream();
         stream.Write(IotDCP().CreateRequest(
