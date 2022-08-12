@@ -8,9 +8,18 @@
 #include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
+    std::string ip = "127.0.0.1";
+    try
+    {
+        ip = System::EthPortIP();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
     std::string port = argc >= 2 ? argv[1] : "4000";
     TcpListener server(port);
-    ThermostatRouter thermostat_router(server.GetStream().GetIP(), port);
+    ThermostatRouter thermostat_router(ip, port);
     server.Start();
     
     while (true) {
