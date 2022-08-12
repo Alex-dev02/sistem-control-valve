@@ -3,6 +3,7 @@
 #include <networking/router.hpp>
 #include <networking/network_stream.hpp>
 #include <networking/response.hpp>
+#include <networking/endpoint.hpp>
 #include <system/system.hpp>
 
 #include "thermostat_router.hpp"
@@ -19,7 +20,9 @@ int main(int argc, char *argv[]) {
     }
     std::string port = argc >= 2 ? argv[1] : "4000";
     TcpListener server(port);
-    ThermostatRouter thermostat_router(ip, port);
+    std::cout << ip << " " << port << "\n";
+    const Endpoint thermostat_address(ip, port);
+    ThermostatRouter thermostat_router(thermostat_address);
     server.Start();
     
     while (true) {

@@ -11,7 +11,7 @@
 
 class ThermostatRouter {
 public:
-    ThermostatRouter(std::string ip_address, std::string port = "4000");
+    ThermostatRouter(const Endpoint& thermostat_address);
 
     Response GetResponse(const Request& request);
 
@@ -19,8 +19,7 @@ private:
     Router m_router;
     Thermostat m_thermostat;
 
-    std::string m_port;
-    std::string m_ip_address;
+    Endpoint m_thermostat_address;
 
     Response Root(Request request);
     Response AddValve(Request request);

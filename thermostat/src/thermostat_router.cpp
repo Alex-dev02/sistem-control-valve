@@ -5,10 +5,10 @@
 
 #include <iostream>
 
-ThermostatRouter::ThermostatRouter(std::string ip_address, std::string port):
-m_ip_address(ip_address),
-m_port(port)
+ThermostatRouter::ThermostatRouter(const Endpoint& thermostat_address):
+m_thermostat_address(thermostat_address)
 {
+    std::cout << m_thermostat_address.GetIPAddress() << "a" << m_thermostat_address.GetPort() << "\n";
     // add new paths here
     m_router.AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
     m_router.AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
@@ -40,11 +40,11 @@ Response ThermostatRouter::AddValve(Request request) {
         std::cerr << e.what() << '\n';
         return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, "Not enough parameters provided");
     }
-
+    // std::cout << valve_ip_address << "\n\n";
     // checking if the valve exists with a ping
     bool connected_successfully = m_thermostat.ConnectValve(
         Endpoint(valve_ip_address, valve_port),
-        Endpoint(m_ip_address, m_port)
+        m_thermostat_address
     );
     if (connected_successfully) {
         m_thermostat.AddValve(Endpoint(valve_ip_address, valve_port));
@@ -77,8 +77,8 @@ Response ThermostatRouter::SetTarget(Request request) {
     Request request_to_send = dcp.CreateRequest(
         Utils::RequestType::PUT,
         "/set_target?target=" + std::to_string(target),
-        m_ip_address,
-        m_port
+        m_thermostat_address.GetIPAddress(),
+        m_thermostat_address.GetPort()
     );
 
     std::vector<Response> responses = m_thermostat.WriteToValves(request_to_send);

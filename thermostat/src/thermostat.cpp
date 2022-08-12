@@ -8,14 +8,14 @@
 
 Thermostat::Thermostat() {}
 
-void Thermostat::AddValve(const Endpoint& valve_address) {
+void Thermostat::AddValve(const Endpoint valve_address) {
   	m_valves.emplace(
 		valve_address.GetIPAddress() + valve_address.GetPort(),
 		valve_address
 	);
 }
 
-bool Thermostat::RemoveValve(const Endpoint& valve_address) {
+bool Thermostat::RemoveValve(const Endpoint valve_address) {
 	auto valve_to_remove = m_valves.find(valve_address.GetIPAddress() + valve_address.GetPort());
 	if (valve_to_remove != m_valves.end()) {
 		m_valves.erase(valve_to_remove);
@@ -37,7 +37,10 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	return responses;
 }
 
-bool Thermostat::ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
+bool Thermostat::ConnectValve(const Endpoint valve_address, const Endpoint thermostat_address) {
+	std::cout << "\n\n\n" << valve_address.GetIPAddress() << " " << valve_address.GetPort() << "\n\n\n";
+	std::cout << "\n\n\n" << thermostat_address.GetIPAddress() << " " << thermostat_address.GetPort() << "\n\n\n";
+
 	try {
 		TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 		NetworkStream stream  = client.GetStream();
