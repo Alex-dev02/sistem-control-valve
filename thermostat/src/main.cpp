@@ -3,6 +3,7 @@
 #include <networking/router.hpp>
 #include <networking/network_stream.hpp>
 #include <networking/response.hpp>
+#include <system/system.hpp>
 
 #include "thermostat_router.hpp"
 

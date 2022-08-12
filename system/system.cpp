@@ -19,3 +19,22 @@ std::string System::ExecuteCommand(const char* command) {
     }
     return result;
 }
+
+std::string System::EthPortIP() {
+    std::string eth0_data;
+    try
+    {
+        eth0_data = System::ExecuteCommand("ifconfig eth0");
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    if (eth0_data.find("error") != std::string::npos)
+        throw std::runtime_error("eth0: error fetching interface information: Device not found");
+
+    eth0_data = eth0_data.substr(
+            eth0_data.find("broadcast") + std::string("broadcast").length() + 1
+        );
+    return eth0_data.substr(0, eth0_data.find("\n"));
+}
