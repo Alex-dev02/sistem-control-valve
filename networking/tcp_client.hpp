@@ -18,7 +18,7 @@
 
 class TcpClient {
 public:
-    TcpClient(std::string port, std::string address = "");
+    TcpClient(std::string address, std::string port);
     TcpClient(int sock_fd);
 
     NetworkStream GetStream();

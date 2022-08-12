@@ -2,29 +2,21 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include <networking/response.hpp>
 #include <networking/request.hpp>
-
-struct ValveAddress {
-    std::string m_server_name;
-    std::string m_port;
-    ValveAddress(std::string server_name, std::string port):
-        m_server_name(server_name),
-        m_port(port)
-    {}
-	bool operator==(const ValveAddress& valve_addr);
-};
+#include <networking/endpoint.hpp>
 
 class Thermostat {
 public:
 	Thermostat();
 	
-	void AddValve(const ValveAddress& valve_addr);
-	bool RemoveValve(const std::string& server_name);
+	void AddValve(const Endpoint& valve_address);
+	bool RemoveValve(const Endpoint& valve_address);
 	std::vector<Response> WriteToValves(const Request& request);
-    bool ConnectValve(std::string valve_server_name, std::string valve_port, std::string thermostat_server_name, std::string thermostat_port);
+    bool ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address);
 
 private:
-	std::vector<ValveAddress> m_valves;
+    std::unordered_map<std::string, Endpoint> m_valves;
 };

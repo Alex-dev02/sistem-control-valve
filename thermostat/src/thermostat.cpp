@@ -6,21 +6,17 @@
 #include <networking/network_stream.hpp>
 #include <networking/iot_dcp.hpp>
 
-bool ValveAddress::operator==(const ValveAddress& valve_addr) {
-	return m_server_name == valve_addr.m_server_name & m_port == valve_addr.m_port;
-}
-
 Thermostat::Thermostat() {}
 
-void Thermostat::AddValve(const ValveAddress& valve_addr) {
-  	m_valves.push_back(valve_addr);
+void Thermostat::AddValve(const Endpoint& valve_address) {
+  	m_valves.emplace(
+		valve_address.GetIPAddress() + valve_address.GetPort(),
+		valve_address
+	);
 }
 
-bool Thermostat::RemoveValve(const std::string& server_name) {
-  	std::vector<ValveAddress>::iterator valve_to_remove = 
-		std::find_if(m_valves.begin(), m_valves.end(), [&server_name](const ValveAddress& valves){
-			return server_name == valves.m_server_name;
-		});
+bool Thermostat::RemoveValve(const Endpoint& valve_address) {
+	auto valve_to_remove = m_valves.find(valve_address.GetIPAddress() + valve_address.GetPort());
 	if (valve_to_remove != m_valves.end()) {
 		m_valves.erase(valve_to_remove);
 		return true;
@@ -30,8 +26,8 @@ bool Thermostat::RemoveValve(const std::string& server_name) {
 
 std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	std::vector<Response> responses;
-	for (int it = 0; it < m_valves.size(); it++) {
-		TcpClient client(m_valves[it].m_port, m_valves[it].m_server_name);
+	for (auto it = m_valves.begin(); it != m_valves.end(); it++) {
+		TcpClient client(it->second.GetIPAddress(), it->second.GetPort());
         NetworkStream stream = client.GetStream();
         stream.Write(request.GetRawRequest());
         Response response(stream.Read());
@@ -41,12 +37,13 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	return responses;
 }
 
-bool Thermostat::ConnectValve(std::string valve_server_name, std::string valve_port, std::string thermostat_server_name, std::string thermostat_port) {
+bool Thermostat::ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
 	try {
-		TcpClient client(valve_port, valve_server_name);
+		TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 		NetworkStream stream  = client.GetStream();
 		stream.Write(
-			IotDCP().CreateRequest(Utils::RequestType::GET, "/connect", thermostat_server_name, thermostat_port
+			IotDCP().CreateRequest(Utils::RequestType::GET, "/connect",
+			thermostat_address.GetIPAddress(), thermostat_address.GetPort()
         ).GetRawRequest());
 		Response response(stream.Read());
 		stream.Close();

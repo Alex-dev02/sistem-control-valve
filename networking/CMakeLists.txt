@@ -10,6 +10,7 @@ add_library(libNetworking
     network_stream.cpp
     tcp_listener.cpp
     tcp_client.cpp
+    endpoint.cpp
 )
 
 target_include_directories(libNetworking PUBLIC 

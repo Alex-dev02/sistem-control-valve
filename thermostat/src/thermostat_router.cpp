@@ -28,11 +28,11 @@ Response ThermostatRouter::Root(Request request) {
 
 Response ThermostatRouter::AddValve(Request request) {
     HTTP http;
-    std::string valve_server_name;
+    std::string valve_ip_address;
     std::string valve_port;
     try
     {
-        valve_server_name = request.GetPathVar("server_name");
+        valve_ip_address = request.GetPathVar("server_name");
         valve_port = request.GetPathVar("port");
     }
     catch(const std::exception& e)
@@ -42,12 +42,12 @@ Response ThermostatRouter::AddValve(Request request) {
     }
 
     // checking if the valve exists with a ping
-    bool connected_successfully = m_thermostat.ConnectValve(valve_server_name, valve_port, m_ip_address, m_port);
+    bool connected_successfully = m_thermostat.ConnectValve(
+        Endpoint(valve_ip_address, valve_port),
+        Endpoint(m_ip_address, m_port)
+    );
     if (connected_successfully) {
-        m_thermostat.AddValve(ValveAddress(
-            valve_server_name,
-            valve_port
-        ));
+        m_thermostat.AddValve(Endpoint(valve_ip_address, valve_port));
         return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve successfully added!");
     }
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve!");
@@ -100,7 +100,8 @@ Response ThermostatRouter::RemoveValve(Request request) {
     try
     {
         std::string server_name = request.GetPathVar("server_name");
-        succesfully_deleted = m_thermostat.RemoveValve(server_name);
+        std::string port = request.GetPathVar("port");
+        succesfully_deleted = m_thermostat.RemoveValve(Endpoint(server_name, port));
     }
     catch(const std::exception& e)
     {
