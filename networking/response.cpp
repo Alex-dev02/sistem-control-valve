@@ -14,15 +14,15 @@ Response::Response(std::string raw_response):
     // try to handle
 }
 
-std::string Response::GetRawResponse() {
+std::string Response::GetRawResponse() const{
     return m_raw_response;
 }
 
-Utils::Protocol Response::GetProtocol() {
+Utils::Protocol Response::GetProtocol() const{
     return m_protocol;
 }
 
-int Response::GetReponseCode() {
+int Response::GetReponseCode() const{
     if (m_protocol == Utils::Protocol::IotDCP) {
         return Utils::IotDCPResponseCodeToEnum(
             m_raw_response[0] - '0'
@@ -38,7 +38,7 @@ int Response::GetReponseCode() {
 
 }
 
-bool Response::Successful() {
+bool Response::Successful() const{
     if (m_protocol == Utils::HTTP)
         return
             Utils::HTTPResponseCodeToEnum(GetReponseCode()) == Utils::HTTPResponseCode::H_OK;

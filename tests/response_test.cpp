@@ -10,7 +10,7 @@ Content-Length: 88
 Content-Type: text/html
 Connection: Closed
 */
-static Response http_res(
+static const Response http_res(
     "HTTP/1.1 203 OK\nContent-Length: 7\nContent-Type: text/plain\n\nContent"
 );
 
