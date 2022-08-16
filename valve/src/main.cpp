@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
     {
         std::cerr << e.what() << '\n';
     }
-    std::string port = argc >= 2 ? argv[1] : "5000";
-    TcpListener server(port);
+    uint16_t port = argc >= 2 ? std::stoi(argv[1]) : 5000;
+    TcpListener server(ip, port);
     ValveRouter router(Endpoint(ip, port));
     server.Start();
     while (true) {

@@ -2,7 +2,7 @@
 
 #include "tcp_listener.hpp"
 
-TcpListener::TcpListener(std::string port, std::string address):
+TcpListener::TcpListener(std::string address, uint16_t port):
     m_address(address),
     m_port(port)
 {}
@@ -33,7 +33,7 @@ addrinfo* TcpListener::GetSockAddresses() {
 
     int err = getaddrinfo(
         m_address.empty() ? NULL : m_address.c_str(), 
-        m_port.c_str(),
+        std::to_string(m_port).c_str(),
         &hints,
         &result
     );

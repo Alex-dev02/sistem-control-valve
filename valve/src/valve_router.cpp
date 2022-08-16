@@ -44,6 +44,6 @@ Response ValveRouter::Disconnect(Request request) {
     if (!(thermostat_address == m_valve.GetThermostatAddress()))
         return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_NotAuth, "Could not disconnect valve!");
     // uninitializing the thermostat
-    m_valve.SetThermostat(Endpoint("", ""));
+    m_valve.SetThermostat(Endpoint("", 0));
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK, "Disconnected the valve!");
 }

@@ -53,9 +53,9 @@ std::string Request::GetIP() {
     return ip_and_port.substr(0, ip_and_port.find(' '));
 }
 
-std::string Request::GetPort() {
+uint16_t Request::GetPort() {
     std::string ip_and_port = m_raw_request.substr(m_raw_request.find('\n') + 1, m_raw_request.length());
-    return ip_and_port.substr(ip_and_port.find(' ') + 1, ip_and_port.length());
+    return std::stoi(ip_and_port.substr(ip_and_port.find(' ') + 1, ip_and_port.length()));
 }
 
 void Request::MapVarsFromPath() {

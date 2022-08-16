@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Endpoint::Endpoint(std::string ip_address, std::string port):
+Endpoint::Endpoint(std::string ip_address, uint16_t port):
         m_ip_address(ip_address),
         m_port(port)
 {
@@ -14,7 +14,7 @@ std::string Endpoint::GetIPAddress() const{
     return m_ip_address;
 }
 
-std::string Endpoint::GetPort() const{
+uint16_t Endpoint::GetPort() const{
     return m_port;
 }
 

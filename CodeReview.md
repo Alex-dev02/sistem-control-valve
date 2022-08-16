@@ -16,7 +16,7 @@
 - [x] termostatul crash-uieste daca primeste requesturi in care variabilele sunt numite incorect
 - [x] ce se intampla daca primim o variabila fara valoare in path + unit test pe ea
 - [x] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
-- [ ] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
+- [x] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
 - [x] Pentru Router este un tip de date complex ar trebui să nu poată fi copiat - operațiunea de copiere nu ar trebui să aibă sens pentru Router. Tu faci o copie în main, dar dacă adaug on-the-fly noi endpoints în Router? `main` nu le va vedea.
 - [ ] main-ul de la termostat și valvă seamănă foarte mult. Se poate refolosi acel cod?
 - [x] Thermostat::SetTarget are prea multe responsabilități. Face parsare de date, actualizare de structuri interne, management de stream-uri de rețea, compunere de mesaje și trimitere de mesaje, compunere de răspunsuri.
@@ -28,8 +28,8 @@
 
 ### Networking
 
-- [ ] GetStream ar trebui să returneze un stream, nu un int.
-- [ ] Porturile sunt uint16_t. Nu string, nu altceva.
+- [x] GetStream ar trebui să returneze un stream, nu un int.
+- [x] Porturile sunt uint16_t. Nu string, nu altceva.
 - [x] `IsResponseASuccess` should be `Successful`
 
 ### Features
@@ -38,7 +38,7 @@
 - [ ] logger (single tone)
 - [x] polling de la valve la thermostat -> daca nu mai raspunde termostatul atunci revenim la o valoare default ca target al valvelor
 - [ ] unit teste
-- [ ] valva sa primeasca requesturi http ca sa stie care ii este thermostatul (? de discutat deoarece momentan se intampla invers)
+- [x] valva sa primeasca requesturi http ca sa stie care ii este thermostatul (? de discutat deoarece momentan se intampla invers)
 - [x] nu ar trebui sa putem inregistra o valva daca nu e pornita
 - [ ] folosire json pentru interpretari de request/response
 - [x] folosire stl petru operatii de cautare/stergere etc
@@ -49,4 +49,4 @@
 - [ ] de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
 - [x] foloseste try catch pentru apelarea Request::GetPathVar, eventual o functie care sa faca try catchul
 - [ ] repara testele pentru NetworkStream
-- [ ] daca o valva e deconectata de la un thermostat ar trebui sa se revina la o valoare default
+- [x] daca o valva e deconectata de la un thermostat ar trebui sa se revina la o valoare default

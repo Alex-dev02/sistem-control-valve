@@ -18,8 +18,8 @@ int main(int argc, char *argv[]) {
     {
         std::cerr << e.what() << '\n';
     }
-    std::string port = argc >= 2 ? argv[1] : "4000";
-    TcpListener server(port);
+    uint16_t port = argc >= 2 ? std::stoi(argv[1]) : 4000;
+    TcpListener server(ip, port);
     const Endpoint thermostat_address(ip, port);
     ThermostatRouter thermostat_router(thermostat_address);
     server.Start();

@@ -14,13 +14,13 @@ TEST(IotDCPTests, CheckVersion) {
 // Create Request Unit Tests
 
 TEST(IotDCPTests, CreateGETRequest) {
-    Request request = dcp.CreateRequest(Utils::RequestType::GET, "/test/path", "127.0.0.1", "4000");
+    Request request = dcp.CreateRequest(Utils::RequestType::GET, "/test/path", "127.0.0.1", 4000);
     EXPECT_EQ(
         "GET /test/path IotDCP/0.1",
         request.GetRawRequest()
     );
     
-    request = dcp.CreateRequest(Utils::RequestType::GET, "/test/path?var=var1", "127.0.0.1", "4000");
+    request = dcp.CreateRequest(Utils::RequestType::GET, "/test/path?var=var1", "127.0.0.1", 4000);
     EXPECT_EQ(
         "GET /test/path?var=var1 IotDCP/0.1",
         request.GetRawRequest()
@@ -28,13 +28,13 @@ TEST(IotDCPTests, CreateGETRequest) {
 }
 
 TEST(IotDCPTests, CreatePUTRequest) {
-    Request request = dcp.CreateRequest(Utils::RequestType::PUT, "/test/path", "127.0.0.1", "4000");
+    Request request = dcp.CreateRequest(Utils::RequestType::PUT, "/test/path", "127.0.0.1", 4000);
     EXPECT_EQ(
         "PUT /test/path IotDCP/0.1",
         request.GetRawRequest()
     );
 
-    request = dcp.CreateRequest(Utils::RequestType::PUT, "/test/path?var=232", "127.0.0.1", "4000");
+    request = dcp.CreateRequest(Utils::RequestType::PUT, "/test/path?var=232", "127.0.0.1", 4000);
     EXPECT_EQ(
         "PUT /test/path?var=232 IotDCP/0.1",
         request.GetRawRequest()

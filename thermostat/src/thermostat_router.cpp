@@ -28,11 +28,11 @@ Response ThermostatRouter::Root(Request request) {
 Response ThermostatRouter::AddValve(Request request) {
     HTTP http;
     std::string valve_ip_address;
-    std::string valve_port;
+    uint16_t valve_port;
     try
     {
         valve_ip_address = request.GetPathVar("server_name");
-        valve_port = request.GetPathVar("port");
+        valve_port = std::stoi(request.GetPathVar("port"));
     }
     catch(const std::exception& e)
     {
@@ -99,7 +99,7 @@ Response ThermostatRouter::RemoveValve(Request request) {
     try
     {
         std::string server_name = request.GetPathVar("server_name");
-        std::string port = request.GetPathVar("port");
+        uint16_t port = std::stoi(request.GetPathVar("port"));
         successfully_disconnected = m_thermostat.DisconnectValve(
             Endpoint(server_name, port),
             m_thermostat_address

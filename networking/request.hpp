@@ -14,7 +14,7 @@ public:
     std::string GetRawRequest() const;
     Utils::Protocol GetProtocol() const;
     std::string GetIP();
-    std::string GetPort();
+    uint16_t GetPort();
 private:
     std::string m_raw_request;
     std::unordered_map<std::string, std::string> m_path_vars;

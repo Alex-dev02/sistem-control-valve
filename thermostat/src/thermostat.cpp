@@ -10,13 +10,13 @@ Thermostat::Thermostat() {}
 
 void Thermostat::AddValve(const Endpoint& valve_address) {
   	m_valves.emplace(
-		valve_address.GetIPAddress() + valve_address.GetPort(),
+		valve_address.GetIPAddress() + std::to_string(valve_address.GetPort()),
 		valve_address
 	);
 }
 
 bool Thermostat::RemoveValve(const Endpoint& valve_address) {
-	auto valve_to_remove = m_valves.find(valve_address.GetIPAddress() + valve_address.GetPort());
+	auto valve_to_remove = m_valves.find(valve_address.GetIPAddress() + std::to_string(valve_address.GetPort()));
 	if (valve_to_remove != m_valves.end()) {
 		m_valves.erase(valve_to_remove);
 		return true;

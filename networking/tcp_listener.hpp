@@ -18,7 +18,7 @@
 
 class TcpListener {
 public:
-    TcpListener(std::string port, std::string address = "");
+    TcpListener(std::string address, uint16_t port);
     
     void Start();
     void Stop();
@@ -26,7 +26,7 @@ public:
     NetworkStream GetStream();
 private:
     std::string m_address;
-    std::string m_port;
+    uint16_t m_port;
     int m_sock_fd;
 
     addrinfo* GetSockAddresses();

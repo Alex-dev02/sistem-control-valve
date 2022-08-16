@@ -18,14 +18,14 @@
 
 class TcpClient {
 public:
-    TcpClient(std::string address, std::string port);
+    TcpClient(std::string address, uint16_t port);
     TcpClient(int sock_fd);
 
     NetworkStream GetStream();
     void Close();
 private:
     std::string m_address;
-    std::string m_port;
+    uint16_t m_port;
     int m_sock_fd;
 
     addrinfo* GetSockAddresses();

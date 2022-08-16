@@ -51,7 +51,7 @@ public:
 
     std::string GetVersion();
 
-    Request CreateRequest(Utils::RequestType type, std::string path, std::string ip_address, std::string port);
+    Request CreateRequest(Utils::RequestType type, std::string path, std::string ip_address, uint16_t port);
     Response CreateResponse(Utils::IotDCPResponseCode response_code, std::string content = "");
 
 private:

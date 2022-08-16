@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-TcpClient::TcpClient(std::string address, std::string port):
+TcpClient::TcpClient(std::string address, uint16_t port):
     m_address(address),
     m_port(port) {
 
@@ -23,7 +23,7 @@ addrinfo* TcpClient::GetSockAddresses() {
     hints.ai_family = AF_UNSPEC;
     int err = getaddrinfo(
         m_address.empty() ? NULL : m_address.c_str(), 
-        m_port.c_str(),
+        std::to_string(m_port).c_str(),
         &hints,
         &result
     );
