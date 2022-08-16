@@ -48,12 +48,14 @@ Utils::Protocol Request::GetProtocol() const{
     return m_protocol;
 }
 
-std::string Request::GetIP() {
+std::string Request::GetIPAddressIotDCP() const{
+    if (m_protocol != Utils::Protocol::IotDCP)
+        throw std::logic_error("Function Request::GetIPAddressIotDCP is ment to be used on IotDDCP request types");
     std::string ip_and_port = m_raw_request.substr(m_raw_request.find('\n') + 1, m_raw_request.length());
     return ip_and_port.substr(0, ip_and_port.find(' '));
 }
 
-uint16_t Request::GetPort() {
+uint16_t Request::GetPortIotDCP() const{
     std::string ip_and_port = m_raw_request.substr(m_raw_request.find('\n') + 1, m_raw_request.length());
     return std::stoi(ip_and_port.substr(ip_and_port.find(' ') + 1, ip_and_port.length()));
 }

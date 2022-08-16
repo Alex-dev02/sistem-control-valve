@@ -49,10 +49,10 @@ class IotDCP {
 public:
     IotDCP();
 
-    std::string GetVersion();
+    std::string GetVersion() const;
 
-    Request CreateRequest(Utils::RequestType type, std::string path, std::string ip_address, uint16_t port);
-    Response CreateResponse(Utils::IotDCPResponseCode response_code, std::string content = "");
+    Request CreateRequest(Utils::RequestType type, std::string path, std::string ip_address, uint16_t port) const;
+    Response CreateResponse(Utils::IotDCPResponseCode response_code, std::string content = "") const;
 
 private:
     std::string m_version = "0.1";

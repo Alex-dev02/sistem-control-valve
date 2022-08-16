@@ -3,7 +3,7 @@
 #include <networking/iot_dcp.hpp>
 #include <networking/utils.hpp>
 
-static IotDCP dcp;
+static const IotDCP dcp;
 
 // Get Version Unit Tests
 

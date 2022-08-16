@@ -17,7 +17,7 @@ Response ValveRouter::GetResponse(const Request& request) {
 }
 
 Response ValveRouter::Connect(Request request) {
-    m_valve.SetThermostat(Endpoint(request.GetIP(), request.GetPort()));
+    m_valve.SetThermostat(Endpoint(request.GetIPAddressIotDCP(), request.GetPortIotDCP()));
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
@@ -40,7 +40,7 @@ Response ValveRouter::SetCurrentTargetRoute(Request request) {
 
 Response ValveRouter::Disconnect(Request request) {
     // checking if the request came from the thermostat that the valve is connected to
-    const Endpoint thermostat_address(request.GetIP(), request.GetPort());
+    const Endpoint thermostat_address(request.GetIPAddressIotDCP(), request.GetPortIotDCP());
     if (!(thermostat_address == m_valve.GetThermostatAddress()))
         return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_NotAuth, "Could not disconnect valve!");
     // uninitializing the thermostat

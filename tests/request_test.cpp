@@ -4,17 +4,17 @@
 
 TEST(RequestTests, GetPath) {
     // IotDCP
-    Request request("PUT /mypath/animals?animal=dog IotDCP/0.1");
+    Request request("PUT /mypath/animals?animal=dog IotDCP/0.1\n127.0.0.1 4000");
     ASSERT_EQ(
         "/mypath/animals",
         request.GetPath()
     );
-    request = Request("PUT /mywrongpath/animals=animal IotDCP/0.1");
+    request = Request("PUT /mywrongpath/animals=animal IotDCP/0.1\n127.0.0.1 4000");
     ASSERT_EQ(
         "/mywrongpath/animals=animal",
         request.GetPath()
     );
-    request = Request("GET /path/without/any/vars/test IotDCP/0.1");
+    request = Request("GET /path/without/any/vars/test IotDCP/0.1\n127.0.0.1 4000");
     ASSERT_EQ(
         "/path/without/any/vars/test",
         request.GetPath()
@@ -37,7 +37,7 @@ TEST(RequestTests, GetPath) {
 
 TEST(RequestTests, GetPathVar) {
     // IotDCP
-    Request request("PUT /mypath/animal?animal=cat&name=john&age=3 IotDCP/0.1");
+    Request request("PUT /mypath/animal?animal=cat&name=john&age=3 IotDCP/0.1\n127.0.0.1 4000");
     ASSERT_EQ(
         "cat",
         request.GetPathVar("animal")
@@ -79,9 +79,9 @@ TEST(RequestTests, GetPathVar) {
 }
 
 TEST(RequestTest, GetRawRequest) {
-    Request request("GET /path/to/source IotDCP/0.1");
+    Request request("GET /path/to/source IotDCP/0.1\n127.0.0.1 4000");
     ASSERT_EQ(
-        "GET /path/to/source IotDCP/0.1",
+        "GET /path/to/source IotDCP/0.1\n127.0.0.1 4000",
         request.GetRawRequest()
     );
     
@@ -93,7 +93,7 @@ TEST(RequestTest, GetRawRequest) {
 }
 
 TEST(RequestTest, GetProtocol) {
-    Request request("GET /path/to/source IotDCP/0.1");
+    Request request("GET /path/to/source IotDCP/0.1\n127.0.0.1 4000");
     ASSERT_EQ(
         Utils::Protocol::IotDCP,
         request.GetProtocol()
@@ -104,4 +104,18 @@ TEST(RequestTest, GetProtocol) {
         Utils::Protocol::HTTP,
         request.GetProtocol()
     );
+}
+
+TEST(RequestTest, GetIPAddressIotDCP) {
+    Request request("GET /path/without/any/vars/test IotDCP/0.1\n127.0.0.1 4000");
+    EXPECT_EQ("127.0.0.1", request.GetIPAddressIotDCP());
+    request = Request("PUT /mypath/animals?animal=dog IotDCP/0.1\n168.172.0.1 5000");
+    EXPECT_EQ("168.172.0.1", request.GetIPAddressIotDCP());
+}
+
+TEST(RequestTest, GetPortIotDCP) {
+    Request request("GET /path/without/any/vars/test IotDCP/0.1\n127.0.0.1 4000");
+    EXPECT_EQ(4000, request.GetPortIotDCP());
+    request = Request("PUT /mypath/animals?animal=dog IotDCP/0.1\n168.172.0.1 5000");
+    EXPECT_EQ(5000, request.GetPortIotDCP());
 }

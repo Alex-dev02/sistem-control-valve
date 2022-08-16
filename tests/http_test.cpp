@@ -2,7 +2,7 @@
 
 #include <networking/http.hpp>
 
-static HTTP http;
+static const HTTP http;
 
 // Get Version Unit Tests
 
