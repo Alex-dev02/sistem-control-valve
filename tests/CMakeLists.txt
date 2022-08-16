@@ -24,6 +24,7 @@ response_test.cpp
 utils_test.cpp
 router_test.cpp
 tcp_client_test.cpp
+endpoint_test.cpp
 main.cpp)
 
 target_include_directories(Tests PRIVATE ../networking/IotDCP)
