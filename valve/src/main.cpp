@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     }
     std::string port = argc >= 2 ? argv[1] : "5000";
     TcpListener server(port);
-    ValveRouter router(ip, port);
+    ValveRouter router(Endpoint(ip, port));
     server.Start();
     while (true) {
         std::cout << "Waiting for a new connection...\n";

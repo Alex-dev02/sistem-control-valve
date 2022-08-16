@@ -8,20 +8,34 @@
 
 Thermostat::Thermostat() {}
 
-void Thermostat::AddValve(const Endpoint valve_address) {
+void Thermostat::AddValve(const Endpoint& valve_address) {
   	m_valves.emplace(
 		valve_address.GetIPAddress() + valve_address.GetPort(),
 		valve_address
 	);
 }
 
-bool Thermostat::RemoveValve(const Endpoint valve_address) {
+bool Thermostat::RemoveValve(const Endpoint& valve_address) {
 	auto valve_to_remove = m_valves.find(valve_address.GetIPAddress() + valve_address.GetPort());
 	if (valve_to_remove != m_valves.end()) {
 		m_valves.erase(valve_to_remove);
 		return true;
 	}
 	return false;
+}
+
+bool Thermostat::DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
+	TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
+	NetworkStream stream = client.GetStream();
+	stream.Write(
+		(IotDCP().CreateRequest(
+			Utils::RequestType::GET,
+			"/disconnect",
+			thermostat_address.GetIPAddress(),
+			thermostat_address.GetPort()
+		).GetRawRequest())
+	);
+	return Response(stream.Read()).Successful();
 }
 
 std::vector<Response> Thermostat::WriteToValves(const Request& request) {

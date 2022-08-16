@@ -3,13 +3,13 @@
 #include <iostream>
 #include <networking/iot_dcp.hpp>
 
-ValveRouter::ValveRouter(std::string ip_address, std::string port):
-    m_ip_address(ip_address),
-    m_port(port)
-{
-    m_valve.SetValve(m_ip_address, m_port);
+ValveRouter::ValveRouter(const Endpoint& valve_address):
+    m_valve_address(valve_address),
+    m_valve(m_valve_address)
+{    
     m_router.AddPath("/set_target", std::bind(&ValveRouter::SetCurrentTargetRoute, this, std::placeholders::_1));
     m_router.AddPath("/connect", std::bind(&ValveRouter::Connect, this, std::placeholders::_1));
+    m_router.AddPath("/disconnect", std::bind(&ValveRouter::Disconnect, this, std::placeholders::_1));
 }
 
 Response ValveRouter::GetResponse(const Request& request) {
@@ -17,7 +17,7 @@ Response ValveRouter::GetResponse(const Request& request) {
 }
 
 Response ValveRouter::Connect(Request request) {
-    m_valve.SetThermostat(request.GetIP(), request.GetPort());
+    m_valve.SetThermostat(Endpoint(request.GetIP(), request.GetPort()));
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
@@ -36,4 +36,14 @@ Response ValveRouter::SetCurrentTargetRoute(Request request) {
     
     m_valve.SetCurrentTarget(target);
     return dcp.CreateResponse(Utils::IotDCPResponseCode::I_OK);
+}
+
+Response ValveRouter::Disconnect(Request request) {
+    // checking if the request came from the thermostat that the valve is connected to
+    const Endpoint thermostat_address(request.GetIP(), request.GetPort());
+    if (!(thermostat_address == m_valve.GetThermostatAddress()))
+        return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_NotAuth, "Could not disconnect valve!");
+    // uninitializing the thermostat
+    m_valve.SetThermostat(Endpoint("", ""));
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK, "Disconnected the valve!");
 }

@@ -7,9 +7,10 @@
 #include <networking/tcp_client.hpp>
 #include <networking/iot_dcp.hpp>
 
-Valve::Valve():
+Valve::Valve(const Endpoint& valve_address):
     m_current_target(18),
-    m_temperature(18)
+    m_temperature(18),
+    m_valve_address(valve_address)
 {
     auto update_temp_thread = std::thread(&Valve::UpdateValve, this);
     update_temp_thread.detach();
@@ -23,30 +24,31 @@ float Valve::GetTemperature() const{
     return m_temperature;
 }
 
+const Endpoint& Valve::GetThermostatAddress() const {
+    return m_thermostat_address;
+}
+
 void Valve::SetCurrentTarget(float target) {
     m_current_target = target;
 }
 
-void Valve::SetThermostat(std::string ip_address, std::string port) {
-    m_thermostat_ip_address = ip_address;
-    m_thermostat_port = port;
-}
-
-void Valve::SetValve(std::string ip_address, std::string port) {
-    m_ip_address = ip_address;
-    m_port = port;
+void Valve::SetThermostat(const Endpoint& thermostat_address) {
+    m_thermostat_address = thermostat_address;
 }
 
 bool Valve::PollToThermostat() {
+    // check if endpoint is init
+    if (m_thermostat_address.GetIPAddress().empty())
+        return false;
     try
     {
-        TcpClient client(m_thermostat_port, m_thermostat_ip_address);
+        TcpClient client(m_thermostat_address.GetIPAddress(), m_thermostat_address.GetPort());
         NetworkStream stream = client.GetStream();
         stream.Write(IotDCP().CreateRequest(
             Utils::RequestType::GET,
             "/ping",
-            m_ip_address,
-            m_port
+            m_valve_address.GetIPAddress(),
+            m_valve_address.GetPort()
         ).GetRawRequest());
         Response response = stream.Read();
         return response.Successful();

@@ -95,12 +95,17 @@ Response ThermostatRouter::SetTarget(Request request) {
 
 Response ThermostatRouter::RemoveValve(Request request) {
     HTTP http;
-    bool succesfully_deleted = true;
+    bool successfully_deleted = true;
+    bool successfully_disconnected = true;
     try
     {
         std::string server_name = request.GetPathVar("server_name");
         std::string port = request.GetPathVar("port");
-        succesfully_deleted = m_thermostat.RemoveValve(Endpoint(server_name, port));
+        successfully_disconnected = m_thermostat.DisconnectValve(
+            Endpoint(server_name, port),
+            m_thermostat_address
+        );
+        successfully_deleted = m_thermostat.RemoveValve(Endpoint(server_name, port));
     }
     catch(const std::exception& e)
     {
@@ -109,7 +114,7 @@ Response ThermostatRouter::RemoveValve(Request request) {
     }
     
 
-    return succesfully_deleted ? http.CreateResponse(Utils::HTTPResponseCode::H_OK,"Valve successfully disconnected.")
+    return successfully_deleted || successfully_disconnected ? http.CreateResponse(Utils::HTTPResponseCode::H_OK,"Valve successfully disconnected.")
         : http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve.");
 }
 

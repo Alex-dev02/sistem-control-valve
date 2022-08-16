@@ -12,8 +12,9 @@ class Thermostat {
 public:
 	Thermostat();
 	
-	void AddValve(const Endpoint valve_address);
-	bool RemoveValve(const Endpoint valve_address);
+	void AddValve(const Endpoint& valve_address);
+	bool RemoveValve(const Endpoint& valve_address);
+	bool DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address);
 	std::vector<Response> WriteToValves(const Request& request);
     bool ConnectValve(const Endpoint valve_address, const Endpoint thermostat_address);
 

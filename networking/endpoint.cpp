@@ -8,6 +8,8 @@ Endpoint::Endpoint(std::string ip_address, std::string port):
 {
 }
 
+Endpoint::Endpoint() {}
+
 std::string Endpoint::GetIPAddress() const{
     return m_ip_address;
 }
@@ -16,6 +18,6 @@ std::string Endpoint::GetPort() const{
     return m_port;
 }
 
-bool Endpoint::operator==(const Endpoint& endpoint) {
+bool Endpoint::operator==(const Endpoint& endpoint) const{
 	return m_ip_address == endpoint.m_ip_address & m_port == endpoint.m_port;
 }

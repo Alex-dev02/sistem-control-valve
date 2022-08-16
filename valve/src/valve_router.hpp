@@ -5,19 +5,19 @@
 #include <networking/router.hpp>
 #include <networking/request.hpp>
 #include <networking/response.hpp>
+#include <networking/endpoint.hpp>
 
 class ValveRouter {
 public:
-    ValveRouter(std::string ip_address, std::string port);
+    ValveRouter(const Endpoint& valve_address);
 
     Response GetResponse(const Request& request);
 private:
     Router m_router;
     Valve m_valve;
-
-    std::string m_ip_address;
-    std::string m_port;
+    Endpoint m_valve_address;
 
     Response Connect(Request request);
     Response SetCurrentTargetRoute(Request request);
+    Response Disconnect(Request request);
 };
