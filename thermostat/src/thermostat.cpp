@@ -52,9 +52,6 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 }
 
 bool Thermostat::ConnectValve(const Endpoint valve_address, const Endpoint thermostat_address) {
-	std::cout << "\n\n\n" << valve_address.GetIPAddress() << " " << valve_address.GetPort() << "\n\n\n";
-	std::cout << "\n\n\n" << thermostat_address.GetIPAddress() << " " << thermostat_address.GetPort() << "\n\n\n";
-
 	try {
 		TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 		NetworkStream stream  = client.GetStream();

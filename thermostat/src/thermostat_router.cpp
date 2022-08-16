@@ -39,7 +39,6 @@ Response ThermostatRouter::AddValve(Request request) {
         std::cerr << e.what() << '\n';
         return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, "Not enough parameters provided");
     }
-    // std::cout << valve_ip_address << "\n\n";
     // checking if the valve exists with a ping
     bool connected_successfully = m_thermostat.ConnectValve(
         Endpoint(valve_ip_address, valve_port),

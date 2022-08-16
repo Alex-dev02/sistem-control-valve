@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
     }
     std::string port = argc >= 2 ? argv[1] : "4000";
     TcpListener server(port);
-    std::cout << ip << " " << port << "\n";
     const Endpoint thermostat_address(ip, port);
     ThermostatRouter thermostat_router(thermostat_address);
     server.Start();
