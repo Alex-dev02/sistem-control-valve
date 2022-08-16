@@ -8,7 +8,6 @@
 ThermostatRouter::ThermostatRouter(const Endpoint& thermostat_address):
 m_thermostat_address(thermostat_address)
 {
-    std::cout << m_thermostat_address.GetIPAddress() << "a" << m_thermostat_address.GetPort() << "\n";
     // add new paths here
     m_router.AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
     m_router.AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));

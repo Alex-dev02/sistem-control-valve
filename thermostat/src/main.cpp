@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
     const Endpoint thermostat_address(ip, port);
     ThermostatRouter thermostat_router(thermostat_address);
     server.Start();
-    std::cout << "am dat start la sv \n";
     while (true) {
         std::cout << "Waiting for a new connection...\n";
         TcpClient client = server.AcceptTcpClient();
