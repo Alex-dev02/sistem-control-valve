@@ -25,12 +25,14 @@ utils_test.cpp
 router_test.cpp
 tcp_client_test.cpp
 endpoint_test.cpp
+system_test.cpp
 main.cpp)
 
 target_include_directories(Tests PRIVATE ../networking/IotDCP)
 
 target_link_libraries(Tests
     libNetworking
+    libSystem
 )
 
 target_link_libraries(

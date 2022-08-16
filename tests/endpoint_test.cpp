@@ -6,14 +6,14 @@ static const Endpoint endpoint("127.0.0.1", 4000);
 static const Endpoint second_endpoint("168.172.15.1", 5000);
 
 TEST(EndpointTests, GetIPAddress) {
-    EXPECT_EQ(endpoint.GetIPAddress(), "127.0.0.1");
-    EXPECT_EQ(second_endpoint.GetIPAddress(), "168.172.15.1");
+    EXPECT_EQ("127.0.0.1", endpoint.GetIPAddress());
+    EXPECT_EQ("168.172.15.1", second_endpoint.GetIPAddress());
 
 }
 
 TEST(EndpointTests, GetPort) {
-    EXPECT_EQ(endpoint.GetPort(), 4000);
-    EXPECT_EQ(second_endpoint.GetPort(), 5000);
+    EXPECT_EQ(4000, endpoint.GetPort());
+    EXPECT_EQ(5000, second_endpoint.GetPort());
 }
 
 TEST(EndpointTests, OperatorEQ) {
