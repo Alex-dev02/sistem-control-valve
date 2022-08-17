@@ -9,15 +9,11 @@ ThermostatRouter::ThermostatRouter(const Endpoint& thermostat_address):
 m_thermostat_address(thermostat_address)
 {
     // add new paths here
-    m_router.AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
-    m_router.AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
-    m_router.AddPath("/set_target", std::bind(&ThermostatRouter::SetTarget, this, std::placeholders::_1));
-    m_router.AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
-    m_router.AddPath("/ping", std::bind(&ThermostatRouter::Ping, this, std::placeholders::_1));
-}
-
-Response ThermostatRouter::GetResponse(const Request& request) {
-    return m_router.GetResponse(request);
+    AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
+    AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
+    AddPath("/set_target", std::bind(&ThermostatRouter::SetTarget, this, std::placeholders::_1));
+    AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
+    AddPath("/ping", std::bind(&ThermostatRouter::Ping, this, std::placeholders::_1));
 }
 
 Response ThermostatRouter::Root(Request request) {

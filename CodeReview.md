@@ -42,7 +42,7 @@
 - [x] nu ar trebui sa putem inregistra o valva daca nu e pornita
 - [ ] folosire json pentru interpretari de request/response
 - [x] folosire stl petru operatii de cautare/stergere etc
-- [ ] teste pentru GetIP si GetPort pentru NetworkStream si Request
+- [x] teste pentru GetIP si GetPort pentru NetworkStream si Request
 
 ### FIXES 
 

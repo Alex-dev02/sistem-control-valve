@@ -9,14 +9,11 @@
 #include <vector>
 #include <string>
 
-class ThermostatRouter {
+class ThermostatRouter : public Router{
 public:
     ThermostatRouter(const Endpoint& thermostat_address);
 
-    Response GetResponse(const Request& request);
-
 private:
-    Router m_router;
     Thermostat m_thermostat;
 
     Endpoint m_thermostat_address;

@@ -20,6 +20,6 @@ public:
 private:
     Router(const Router&);
     Router& operator=(const Router&);
-
+    
     std::unordered_map<std::string, std::function<Response(Request)>> m_routes;
 };
