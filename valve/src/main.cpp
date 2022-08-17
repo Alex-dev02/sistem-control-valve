@@ -17,6 +17,5 @@ int main(int argc, char *argv[]) {
     uint16_t port = argc >= 2 ? std::stoi(argv[1]) : 5000;
     const Endpoint valve_address(ip, port);
     Server<ValveRouter> server;
-    std::cout << "salut";
     server.Listen(valve_address);
 }

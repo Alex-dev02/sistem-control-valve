@@ -5,7 +5,7 @@
 
 ValveRouter::ValveRouter(const Endpoint& valve_address):
     m_valve_address(valve_address),
-    m_valve(m_valve_address)
+    m_valve(valve_address)
 {    
     AddPath("/set_target", std::bind(&ValveRouter::SetCurrentTargetRoute, this, std::placeholders::_1));
     AddPath("/connect", std::bind(&ValveRouter::Connect, this, std::placeholders::_1));

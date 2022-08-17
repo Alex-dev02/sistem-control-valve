@@ -1,7 +1,5 @@
 #include <iostream>
-#include <networking/endpoint.hpp>
 #include <system/system.hpp>
-
 #include <networking/server.hpp>
 
 #include "thermostat_router.hpp"
