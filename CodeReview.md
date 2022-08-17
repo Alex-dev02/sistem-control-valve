@@ -18,7 +18,7 @@
 - [x] `void SetTemperature(float temperature);` și `void IncrementTemperature();` sunt publice. De ce?
 - [x] Îmi e neclară relația dintre clasa Valve și clasa Router. Valva este un Router? Are un router? Ar trebui să fie derivată din Router?
 - [x] Pentru Router este un tip de date complex ar trebui să nu poată fi copiat - operațiunea de copiere nu ar trebui să aibă sens pentru Router. Tu faci o copie în main, dar dacă adaug on-the-fly noi endpoints în Router? `main` nu le va vedea.
-- [ ] main-ul de la termostat și valvă seamănă foarte mult. Se poate refolosi acel cod?
+- [x] main-ul de la termostat și valvă seamănă foarte mult. Se poate refolosi acel cod?
 - [x] Thermostat::SetTarget are prea multe responsabilități. Face parsare de date, actualizare de structuri interne, management de stream-uri de rețea, compunere de mesaje și trimitere de mesaje, compunere de răspunsuri.
 - [x] typo: „Coulnd not”
 - [ ] Too many things are included in the main of thermostat
