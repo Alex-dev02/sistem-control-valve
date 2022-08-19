@@ -44,9 +44,36 @@
 - [x] folosire stl petru operatii de cautare/stergere etc
 - [x] teste pentru GetIP si GetPort pentru NetworkStream si Request
 
-### FIXES 
+### FIXES
 
 - [ ] de ce trebuiesc adaugate iar pathurile in router la RouterTest.cpp
 - [x] foloseste try catch pentru apelarea Request::GetPathVar, eventual o functie care sa faca try catchul
 - [ ] repara testele pentru NetworkStream
 - [x] daca o valva e deconectata de la un thermostat ar trebui sa se revina la o valoare default
+
+### 2022-08-19
+- [ ] Excepțiile nu sunt prinse peste tot (de exemplu nu faci catch pe stoi).
+- [ ] Structura executabilelor ar trebui să fie: 1. Procesarea argc/argv într-o funcție și pus informațiile din parametri într-o structură, să zicem CommandLineParameters 2. apelată o funcție care folosește acei parametri.
+- [ ] `int main` trebuie să returneze ceva.
+- [ ] La teste nu adăuga verificarea pe textul excepției, pentru că va trebui să modifici excepția mai încolo, și poate vei vrea să nu ai o tonă de teste de întreținut. Verifică tipul excepției, totuși.
+- [ ] Testele tale în general verifică doar situațiile favorabile - dar ar trebui să creeze și să verifice comportamentul mai ales în situațiile în care informațiile sunt greșite sau la limită
+
+Thermostat
+    - Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
+    - typo 'successfuly' -> 'successfully'
+    - Ce se intampla daca vreau sa adaug/sterg o valva folosind server_name si port de la thermostat?
+    - /remove_valve returneaza doar 'failed to write'  daca valva pe care incerc sa o sterg nu a fost conectata anterior.
+      Poate un mesaj cu 'unable to disconnect. Valve not found' ar fi mai util
+    - Ping-ul ar trebui sa fie pentru verificarea conexiunii cu valvele sau ...?
+
+Valve
+    - Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
+    - /set_target nu functioneaza cum trebuie
+    - /connect si /disconnect imi dau exceptii
+
+System
+    - poate ar trebui sa avem doar o lista cu comenzile pe care le folosim si sa nu dam posibilitatea sa poata fi folosite comenzi nedorite?
+
+Test
+    - 2 teste care imi dau fail
+    - de adaugat teste cu conexiuni intre valve si thermostate (diferite scenarii)
