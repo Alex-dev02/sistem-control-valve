@@ -57,7 +57,15 @@ std::string Request::GetIPAddressIotDCP() const{
 
 uint16_t Request::GetPortIotDCP() const{
     std::string ip_and_port = m_raw_request.substr(m_raw_request.find('\n') + 1, m_raw_request.length());
-    return std::stoi(ip_and_port.substr(ip_and_port.find(' ') + 1, ip_and_port.length()));
+    try
+    {
+        return std::stoi(ip_and_port.substr(ip_and_port.find(' ') + 1, ip_and_port.length()));
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        throw std::runtime_error("Could not extract the PORT from IotDCP request!");
+    }
 }
 
 void Request::MapVarsFromPath() {

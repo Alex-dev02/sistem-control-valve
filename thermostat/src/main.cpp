@@ -7,8 +7,18 @@
 
 int main(int argc, char *argv[]) {
     System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
-    const Endpoint thermostat_address = System::GetEndpointToBind(cmd_params); 
+    Endpoint thermostat_address;
 
+    try
+    {
+        thermostat_address = System::GetEndpointToBind(cmd_params); 
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return 0;
+    }
+    
     Server<ThermostatRouter> server;
     server.Listen(thermostat_address);
     

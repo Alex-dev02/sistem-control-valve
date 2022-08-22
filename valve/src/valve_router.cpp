@@ -13,7 +13,15 @@ ValveRouter::ValveRouter(const Endpoint& valve_address):
 }
 
 Response ValveRouter::Connect(Request request) {
-    m_valve.SetThermostat(Endpoint(request.GetIPAddressIotDCP(), request.GetPortIotDCP()));
+    try
+    {
+        m_valve.SetThermostat(Endpoint(request.GetIPAddressIotDCP(), request.GetPortIotDCP()));
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Could not extract the PORT from IotDCP request!");
+    }
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
@@ -36,7 +44,16 @@ Response ValveRouter::SetCurrentTargetRoute(Request request) {
 
 Response ValveRouter::Disconnect(Request request) {
     // checking if the request came from the thermostat that the valve is connected to
-    const Endpoint thermostat_address(request.GetIPAddressIotDCP(), request.GetPortIotDCP());
+    Endpoint thermostat_address;
+    try
+    {
+        thermostat_address = Endpoint(request.GetIPAddressIotDCP(), request.GetPortIotDCP());
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Could not extract the PORT from IotDCP request!");
+    }
     if (!(thermostat_address == m_valve.GetThermostatAddress()))
         return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_NotAuth, "Could not disconnect valve!");
     // uninitializing the thermostat

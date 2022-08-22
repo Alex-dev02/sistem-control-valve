@@ -7,8 +7,17 @@
 
 int main(int argc, char *argv[]) {
     System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
-    const Endpoint valve_address = System::GetEndpointToBind(cmd_params); 
-    
+    Endpoint valve_address;
+    try
+    {
+        valve_address = System::GetEndpointToBind(cmd_params); 
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return 0;
+    }
+        
     Server<ValveRouter> server;
     server.Listen(valve_address);
     
