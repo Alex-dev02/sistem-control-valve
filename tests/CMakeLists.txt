@@ -28,8 +28,6 @@ endpoint_test.cpp
 system_test.cpp
 main.cpp)
 
-target_include_directories(Tests PRIVATE ../networking/IotDCP)
-
 target_link_libraries(Tests
     libNetworking
     libSystem

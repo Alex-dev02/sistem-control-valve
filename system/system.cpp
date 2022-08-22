@@ -39,3 +39,27 @@ std::string System::EthPortIP() {
     );
     return eth0_data.substr(0, eth0_data.find("\n"));
 }
+
+System::CommandLineParameters System::GetCmdLineParameters(int argc, char *argv[]) {
+    System::CommandLineParameters cmd_params;
+
+    for (int it = 0; it < argc; it++) {
+        cmd_params.parameters.push_back(argv[it]);
+    }
+
+    return cmd_params;
+}
+
+Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
+    std::string ip = "127.0.0.1";
+    try
+    {
+        ip = System::EthPortIP();
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    uint16_t port = cmd_params.parameters.size() >= 2 ? std::stoi(cmd_params.parameters[1]) : 4000;
+    return Endpoint(ip, port);
+}
