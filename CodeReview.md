@@ -54,7 +54,7 @@
 ### 2022-08-19
 - [ ] Excepțiile nu sunt prinse peste tot (de exemplu nu faci catch pe stoi).
 - [x] Structura executabilelor ar trebui să fie: 1. Procesarea argc/argv într-o funcție și pus informațiile din parametri într-o structură, să zicem CommandLineParameters 2. apelată o funcție care folosește acei parametri.
-- [ ] `int main` trebuie să returneze ceva.
+- [x] `int main` trebuie să returneze ceva.
 - [ ] La teste nu adăuga verificarea pe textul excepției, pentru că va trebui să modifici excepția mai încolo, și poate vei vrea să nu ai o tonă de teste de întreținut. Verifică tipul excepției, totuși.
 - [ ] Testele tale în general verifică doar situațiile favorabile - dar ar trebui să creeze și să verifice comportamentul mai ales în situațiile în care informațiile sunt greșite sau la limită
 

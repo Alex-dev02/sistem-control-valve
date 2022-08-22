@@ -11,4 +11,6 @@ int main(int argc, char *argv[]) {
     
     Server<ValveRouter> server;
     server.Listen(valve_address);
+    
+    return 0;
 }

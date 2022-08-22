@@ -11,4 +11,6 @@ int main(int argc, char *argv[]) {
 
     Server<ThermostatRouter> server;
     server.Listen(thermostat_address);
+    
+    return 0;
 }
