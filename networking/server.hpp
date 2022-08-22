@@ -20,7 +20,14 @@ public:
             NetworkStream stream = client.GetStream();
             std::string req = stream.Read();
             Response res = router.GetResponse(Request(req)); 
-            stream.Write(res.GetRawResponse());
+            try
+            {
+                stream.Write(res.GetRawResponse());
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
             stream.Close();
         }
     }
