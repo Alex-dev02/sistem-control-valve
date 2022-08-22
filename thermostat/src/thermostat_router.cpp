@@ -67,7 +67,7 @@ Response ThermostatRouter::SetTarget(Request request) {
         );
     //
     IotDCP dcp;
-    int successfuly_updated_valves = 0;
+    int successfully_updated_valves = 0;
     Request request_to_send = dcp.CreateRequest(
         Utils::RequestType::PUT,
         "/set_target?target=" + std::to_string(target),
@@ -78,12 +78,12 @@ Response ThermostatRouter::SetTarget(Request request) {
     std::vector<Response> responses = m_thermostat.WriteToValves(request_to_send);
     for (int it = 0; it < responses.size(); it++)
         if (responses[it].Successful())
-            successfuly_updated_valves++;
+            successfully_updated_valves++;
 
     return http.CreateResponse( 
         Utils::HTTPResponseCode::H_OK,
         "Temperature changed to " + std::to_string(target)
-        + " for " + std::to_string(successfuly_updated_valves) + " out of "
+        + " for " + std::to_string(successfully_updated_valves) + " out of "
         + std::to_string(responses.size()) + " valves."
     );
 }
