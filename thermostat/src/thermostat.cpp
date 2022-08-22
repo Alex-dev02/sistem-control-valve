@@ -27,14 +27,22 @@ bool Thermostat::RemoveValve(const Endpoint& valve_address) {
 bool Thermostat::DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
 	TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 	NetworkStream stream = client.GetStream();
-	stream.Write(
-		(IotDCP().CreateRequest(
-			Utils::RequestType::GET,
-			"/disconnect",
-			thermostat_address.GetIPAddress(),
-			thermostat_address.GetPort()
-		).GetRawRequest())
-	);
+	try
+	{
+		stream.Write(
+			(IotDCP().CreateRequest(
+				Utils::RequestType::GET,
+				"/disconnect",
+				thermostat_address.GetIPAddress(),
+				thermostat_address.GetPort()
+			).GetRawRequest())
+		);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+		return false;
+	}
 	return Response(stream.Read()).Successful();
 }
 
@@ -43,9 +51,17 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	for (auto it = m_valves.begin(); it != m_valves.end(); it++) {
 		TcpClient client(it->second.GetIPAddress(), it->second.GetPort());
         NetworkStream stream = client.GetStream();
-        stream.Write(request.GetRawRequest());
-        Response response(stream.Read());
-        responses.push_back(response);
+        try
+		{
+			stream.Write(request.GetRawRequest());
+			Response response(stream.Read());
+			responses.push_back(response);
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+			responses.push_back(IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Failed to write!"));
+		}
         stream.Close();
 	}
 	return responses;
