@@ -46,7 +46,7 @@ bool Valve::PollToThermostat() {
         NetworkStream stream = client.GetStream();
         stream.Write(IotDCP().CreateRequest(
             Utils::RequestType::GET,
-            "/ping",
+            "/check_alive",
             m_valve_address.GetIPAddress(),
             m_valve_address.GetPort()
         ).GetRawRequest());

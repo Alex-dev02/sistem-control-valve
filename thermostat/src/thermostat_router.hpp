@@ -22,5 +22,5 @@ private:
     Response AddValve(Request request);
     Response SetTarget(Request request);
     Response RemoveValve(Request request);
-    Response Ping(Request request);
+    Response CheckAlive(Request request);
 };

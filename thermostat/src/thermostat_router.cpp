@@ -13,7 +13,7 @@ m_thermostat_address(thermostat_address)
     AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
     AddPath("/set_target", std::bind(&ThermostatRouter::SetTarget, this, std::placeholders::_1));
     AddPath("/remove_valve", std::bind(&ThermostatRouter::RemoveValve, this, std::placeholders::_1));
-    AddPath("/ping", std::bind(&ThermostatRouter::Ping, this, std::placeholders::_1));
+    AddPath("/check_alive", std::bind(&ThermostatRouter::CheckAlive, this, std::placeholders::_1));
 }
 
 Response ThermostatRouter::Root(Request request) {
@@ -113,6 +113,6 @@ Response ThermostatRouter::RemoveValve(Request request) {
         : http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve.");
 }
 
-Response ThermostatRouter::Ping(Request request) {
+Response ThermostatRouter::CheckAlive(Request request) {
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
