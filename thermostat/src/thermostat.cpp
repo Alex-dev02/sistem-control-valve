@@ -25,6 +25,12 @@ bool Thermostat::RemoveValve(const Endpoint& valve_address) {
 }
 
 bool Thermostat::DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
+	// checking if the Endpoint of the valve_address isn't the same as thermostat_address
+
+	if (valve_address == thermostat_address)
+		return false;
+
+
 	TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 	NetworkStream stream = client.GetStream();
 	try

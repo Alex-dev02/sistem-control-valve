@@ -61,8 +61,8 @@
 Thermostat
     - Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
     - [x] typo 'successfuly' -> 'successfully'
-    - Ce se intampla daca vreau sa adaug/sterg o valva folosind server_name si port de la thermostat?
-    - /remove_valve returneaza doar 'failed to write'  daca valva pe care incerc sa o sterg nu a fost conectata anterior.
+    - [x] Ce se intampla daca vreau sa adaug/sterg o valva folosind server_name si port de la thermostat?
+    - [x] /remove_valve returneaza doar 'failed to write'  daca valva pe care incerc sa o sterg nu a fost conectata anterior.
       Poate un mesaj cu 'unable to disconnect. Valve not found' ar fi mai util
     - Ping-ul ar trebui sa fie pentru verificarea conexiunii cu valvele sau ...?
 
