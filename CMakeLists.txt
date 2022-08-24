@@ -13,6 +13,8 @@ add_subdirectory(tests)
 
 add_executable(sa_thermostat thermostat/src/main.cpp)
 add_executable(sa_valve valve/src/main.cpp)
+add_executable(thermostat_conf thermostat.conf)
+add_executable(valve_conf valve.conf)
 
 target_link_libraries(sa_thermostat libNetworking)
 target_link_libraries(sa_thermostat libThermostat)
