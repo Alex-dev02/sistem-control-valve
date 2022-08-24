@@ -9,6 +9,13 @@
 #include <algorithm>
 
 std::string System::ExecuteCommand(const char* command) {
+    //checking if the command is valid
+    std::string str_command = command;
+    if (str_command.find(" ") != str_command.length() && !ValidCommand(str_command.substr(0, str_command.find(" "))))
+        throw std::invalid_argument("Access denied for executing: " + str_command.substr(0, str_command.find(" ")));
+    if (str_command.find(" ") == str_command.length() && !ValidCommand(str_command))
+        throw std::invalid_argument("Access denied for executing " + str_command.substr(0, str_command.find(" ")));
+
     std::array<char, 256> buffer;
     std::string result;
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command, "r"), pclose);
@@ -85,3 +92,10 @@ Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
     }
     return Endpoint(ip, port);
 }
+
+bool System::ValidCommand(std::string command) {
+    return
+        std::find(valid_commands.begin(), valid_commands.end(), command) != valid_commands.end();
+}
+
+const std::vector<std::string> System::valid_commands = {"ifconfig", "cat"};

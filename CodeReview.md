@@ -59,7 +59,7 @@
 - [ ] Testele tale în general verifică doar situațiile favorabile - dar ar trebui să creeze și să verifice comportamentul mai ales în situațiile în care informațiile sunt greșite sau la limită
 
 Thermostat
-    - Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
+    - [x] Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
     - [x] typo 'successfuly' -> 'successfully'
     - [x] Ce se intampla daca vreau sa adaug/sterg o valva folosind server_name si port de la thermostat?
     - [x] /remove_valve returneaza doar 'failed to write'  daca valva pe care incerc sa o sterg nu a fost conectata anterior.
@@ -67,12 +67,12 @@ Thermostat
     - [x] Ping-ul ar trebui sa fie pentru verificarea conexiunii cu valvele sau ...?
 
 Valve
-    - Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
+    - [x] Posibilitatea sa imi aleg eu on interfata, nu doar eth0?
     - /set_target nu functioneaza cum trebuie
     - /connect si /disconnect imi dau exceptii
 
 System
-    - poate ar trebui sa avem doar o lista cu comenzile pe care le folosim si sa nu dam posibilitatea sa poata fi folosite comenzi nedorite?
+    - [x] poate ar trebui sa avem doar o lista cu comenzile pe care le folosim si sa nu dam posibilitatea sa poata fi folosite comenzi nedorite?
 
 Test
     - 2 teste care imi dau fail
