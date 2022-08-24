@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <string>
 #include <array>
+#include <algorithm>
 
 std::string System::ExecuteCommand(const char* command) {
     std::array<char, 256> buffer;
@@ -20,24 +21,26 @@ std::string System::ExecuteCommand(const char* command) {
     return result;
 }
 
-std::string System::EthPortIP() {
-    std::string eth0_data = "";
+std::string System::InterfaceIP(std::string interface) {
+    std::string interface_data = "";
+    if (interface == "lo")
+        return "127.0.0.1";
     try
     {
-        eth0_data = System::ExecuteCommand("ifconfig eth0");
+        interface_data = System::ExecuteCommand((std::string("ifconfig ") + interface).c_str());
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
 
-    if (eth0_data.empty())
-        throw std::runtime_error("Could not find eth0, connecting to localhost..\n");
+    if (interface_data.empty())
+        throw std::runtime_error("Could not find " + interface + ", connecting to localhost...\n");
 
-    eth0_data = eth0_data.substr(
-        eth0_data.find("broadcast") + std::string("broadcast").length() + 1
+    interface_data = interface_data.substr(
+        interface_data.find("broadcast") + std::string("broadcast").length() + 1
     );
-    return eth0_data.substr(0, eth0_data.find("\n"));
+    return interface_data.substr(0, interface_data.find("\n"));
 }
 
 System::CommandLineParameters System::GetCmdLineParameters(int argc, char *argv[]) {
@@ -51,24 +54,34 @@ System::CommandLineParameters System::GetCmdLineParameters(int argc, char *argv[
 }
 
 Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
-    std::string ip = "127.0.0.1";
-    uint16_t port;
-    try
-    {
-        ip = System::EthPortIP();
+    std::string ip = "127.0.0.1"; // default
+    uint16_t port = 4000; // default
+
+    std::vector<std::string>::iterator interface_pos =
+        std::find(cmd_params.parameters.begin(), cmd_params.parameters.end(), "-i");
+    if (interface_pos != cmd_params.parameters.end() && cmd_params.parameters.size() >= interface_pos - cmd_params.parameters.begin()) {
+        try
+        {
+            ip = InterfaceIP(*(interface_pos + 1));
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    try
-    {
-        port = cmd_params.parameters.size() >= 2 ? std::stoi(cmd_params.parameters[1]) : 4000;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        throw std::invalid_argument("Invalid arguments!");
+
+    std::vector<std::string>::iterator port_pos = 
+        std::find(cmd_params.parameters.begin(), cmd_params.parameters.end(), "-port");
+    if (port_pos != cmd_params.parameters.end() && cmd_params.parameters.size() >= port_pos - cmd_params.parameters.begin()) {
+        try
+        {
+            port = std::stoi(*(port_pos + 1));
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+            throw std::invalid_argument("Invalid parameters passed to the executable!");
+        }
     }
     return Endpoint(ip, port);
 }

@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(SisCtrlValve)
 
-set(CMAKE_CXX_FLAGS "--coverage")
-set(CMAKE_EXE_LINKER_FLAGS "--coverage")
+#set(CMAKE_CXX_FLAGS "--coverage")
+#set(CMAKE_EXE_LINKER_FLAGS "--coverage")
 
 add_subdirectory(system)
 add_subdirectory(networking)

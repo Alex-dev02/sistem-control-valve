@@ -77,3 +77,11 @@ System
 Test
     - 2 teste care imi dau fail
     - de adaugat teste cu conexiuni intre valve si thermostate (diferite scenarii)
+
+
+### Review scenarii
+
+- [ ] valoarea predefinita trebuie folosita la pronirea independenta de termostat si atat, chiar daca termostatul se deconecteaza
+- [ ] fisier de configurare pentru valva si termostat, in care sa stocam valoarea predefinita + valvele/termostatul asociat(e)
+- [ ] friendly name pentru valve + afisarea numelor valvelor care nu au putut fi actualizate
+- [ ] simualre camera care se raceste singura, odata ajunsa la 1-2 grade sub pragul tinta incepem incalzirea
