@@ -95,7 +95,7 @@ Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
 
 bool System::ValidCommand(std::string command) {
     return
-        std::find(valid_commands.begin(), valid_commands.end(), command) != valid_commands.end();
+        std::find(m_valid_commands.begin(), m_valid_commands.end(), command) != m_valid_commands.end();
 }
 
-const std::vector<std::string> System::valid_commands = {"ifconfig", "cat"};
+const std::vector<std::string> System::m_valid_commands = {"ifconfig", "cat", "pwd"};

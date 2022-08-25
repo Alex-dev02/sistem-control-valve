@@ -5,16 +5,21 @@ project(SisCtrlValve)
 #set(CMAKE_CXX_FLAGS "--coverage")
 #set(CMAKE_EXE_LINKER_FLAGS "--coverage")
 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# DE FACUT UN BRANCH CU BUILD SEPARAT FARA GTEST CA SA NU CRASHUIASCA LA YOCTO
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 add_subdirectory(system)
 add_subdirectory(networking)
 add_subdirectory(thermostat)
 add_subdirectory(valve)
 add_subdirectory(tests)
 
-add_executable(sa_thermostat thermostat/src/main.cpp)
-add_executable(sa_valve valve/src/main.cpp)
-#add_executable(thermostat_conf thermostat.conf)
-#add_executable(valve_conf valve.conf)
+add_executable(sa_thermostat thermostat/src/main.cpp thermostat.conf)
+add_executable(sa_valve valve/src/main.cpp valve.conf)
 
 target_link_libraries(sa_thermostat libNetworking)
 target_link_libraries(sa_thermostat libThermostat)
@@ -27,4 +32,5 @@ include(CTest)
 
 set_property(TARGET libNetworking libThermostat libValve sa_thermostat sa_valve PROPERTY CXX_STANDARD 17)
 
+install(FILES thermostat.conf valve.conf DESTINATION bin COMPONENT config)
 install(TARGETS sa_thermostat sa_valve DESTINATION bin)

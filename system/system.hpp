@@ -16,5 +16,5 @@ public:
 private:
     static bool ValidCommand(std::string command);
 
-    static const std::vector<std::string> valid_commands;
+    static const std::vector<std::string> m_valid_commands;
 };

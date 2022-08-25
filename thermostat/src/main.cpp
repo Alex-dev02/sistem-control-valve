@@ -2,13 +2,13 @@
 #include <system/system.hpp>
 #include <networking/server.hpp>
 #include <system/system.hpp>
+#include <system/config_parser.hpp>
 
 #include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
     System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
     Endpoint thermostat_address;
-
     try
     {
         thermostat_address = System::GetEndpointToBind(cmd_params); 

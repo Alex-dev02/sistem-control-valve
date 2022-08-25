@@ -26,6 +26,7 @@ router_test.cpp
 tcp_client_test.cpp
 endpoint_test.cpp
 system_test.cpp
+config_parser_test.cpp
 main.cpp)
 
 target_link_libraries(Tests

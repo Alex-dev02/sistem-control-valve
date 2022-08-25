@@ -1,13 +1,68 @@
+#include <iostream>
 #include "config_parser.hpp"
+#include "system.hpp"
 
-float ConfigParser::GetDefaultValveTarget() {
-    return 0;    
+std::string ConfigParser::m_valve_conf = System::ExecuteCommand("cat /usr/local/bin/valve.conf");
+std::string ConfigParser::m_thermostat_conf = System::ExecuteCommand("cat /usr/local/bin/thermostat.conf");
+
+
+float ConfigParser::GetDefaultTarget() {
+    return m_default_target;
 }
 
 float ConfigParser::GetValveTemperatureDifferenceTolerance() {
-    return 0;
+    return m_valve_temperature_diff_tolerance;
 }
 
-Endpoint ConfigParser::GetThermostatEndpoint() {
+float ConfigParser::SetDefaultTarget() {
+    int default_target_pos = m_valve_conf.find("default_target:");
+    if (default_target_pos == std::string::npos)
+        throw std::runtime_error("No default_target found in valve.conf!");
+
+    default_target_pos += std::string("default_target:").length();
+    std::string default_target = "";
+
+    while (m_valve_conf[default_target_pos] != '\n') {
+        default_target += m_valve_conf[default_target_pos];
+        default_target_pos++;
+    }
+
+    try
+    {
+        return std::stof(default_target);
+    }
+    catch(const std::exception& e)
+    {
+        throw std::runtime_error("Invalid default_target in valve.conf!");
+    }
+}
+
+float ConfigParser::SetValveTemperatureDifferenceTolerance() {
+    int temp_diff_tolerance_pos = m_valve_conf.find("temp_diff_tolerance:");
+    if (temp_diff_tolerance_pos == std::string::npos)
+        throw std::runtime_error("No temp_diff_tolerance found in valve.conf!");
+
+    temp_diff_tolerance_pos += std::string("temp_diff_tolerance:").length();
+    std::string temp_diff_tolerance = "";
+
+    while (m_valve_conf[temp_diff_tolerance_pos] != '\n') {
+        temp_diff_tolerance += m_valve_conf[temp_diff_tolerance_pos];
+        temp_diff_tolerance_pos++;
+    }
+
+    try
+    {
+        return std::stof(temp_diff_tolerance);
+    }
+    catch(const std::exception& e)
+    {
+        throw std::runtime_error("Invalid temp_diff_tolerance in valve.conf!");
+    }
+}
+
+Endpoint ConfigParser::SetThermostatEndpoint() {
     return Endpoint();
 }
+
+float ConfigParser::m_default_target = ConfigParser::SetDefaultTarget();
+float ConfigParser::m_valve_temperature_diff_tolerance = ConfigParser::GetValveTemperatureDifferenceTolerance();
