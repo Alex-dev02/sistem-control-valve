@@ -11,6 +11,16 @@ int main(int argc, char *argv[]) {
     Endpoint thermostat_address;
     try
     {
+        std::cout << ConfigParser::GetDefaultTarget() << "\n";
+        std::cout << float(ConfigParser::GetValveTemperatureDifferenceTolerance()) << "\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n' << "Could not find config file\n";
+    }
+
+    try
+    {
         thermostat_address = System::GetEndpointToBind(cmd_params); 
     }
     catch(const std::exception& e)
