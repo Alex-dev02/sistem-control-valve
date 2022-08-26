@@ -63,7 +63,7 @@ Endpoint ConfigParser::SetThermostatEndpoint() {
     return Endpoint();
 }
 
-std::vector<std::string> ConfigParser::GetValveAddresses() {
+std::vector<Endpoint> ConfigParser::GetValveAddresses() {
     return m_valve_addresses;
 }
 
@@ -74,25 +74,62 @@ void rec(std::vector<std::string> valve_addreses, std::string str) {
     rec(valve_addreses, str.substr(str.find(' '), str.length()));
 }
 
-std::vector<std::string> ConfigParser::SetValveAddresses() {
+std::vector<Endpoint> ConfigParser::SetValveAddresses() {
     std::cout << m_thermostat_conf << "\n";
-    int valve_addresses_pos = m_thermostat_conf.find("valve_addresses:") + std::string("valve_addresses").length() + 1;
-    int stop = 0, it = valve_addresses_pos;
-    while (m_thermostat_conf[it] != '\n')
-        it++;
-    stop = it;
-    std::cout << "it " << m_thermostat_conf[it] << " it\n"; 
-    std::string str = m_thermostat_conf.substr(
-        valve_addresses_pos, stop
+    int addresses_start = m_thermostat_conf.find("valves_addresses:") + std::string("valves_addresses").length() + 1;
+    int addresses_stop = addresses_start;
+    while (addresses_stop <= m_thermostat_conf.length() &&  m_thermostat_conf[addresses_stop] != '\n'){
+        addresses_stop++;
+    }
+    std::string addresses = m_thermostat_conf.substr(
+        m_thermostat_conf[addresses_start] == ' ' ? addresses_start + 1 : addresses_start,
+        addresses_stop
     );
-    std::vector<std::string> vec;
-    std::cout << "aici\n";
-    rec(vec, str);
-    std::cout << "aici nu \n";
-    return vec;
 
+    std::vector<std::string> addresses_array;
+    std::string address = "";
+
+    for (int it = 0; it < addresses.length(); it++) {
+        if (addresses[it] == ' ') {
+            addresses_array.push_back(address);
+            address = "";
+        }
+        else
+            address += addresses[it];
+    }
+
+    addresses_array.push_back(address);
+    std::vector<Endpoint> addresses_as_endpoints;
+
+    for (auto it = addresses_array.begin(); it != addresses_array.end(); it++) {
+        try
+        {
+            addresses_as_endpoints.push_back(StringToEndpoint(*it));
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+    return addresses_as_endpoints;
 }
+
+Endpoint ConfigParser::StringToEndpoint(std::string address) {
+    try
+    {
+        return Endpoint(
+            address.substr(0, address.find(':')),
+            std::stoi(address.substr(address.find(':') + 1, address.length()))
+        );
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        throw std::invalid_argument("Bad port!");
+    }
+}
+
 
 float ConfigParser::m_default_target = ConfigParser::SetDefaultTarget();
 float ConfigParser::m_valve_temperature_diff_tolerance = ConfigParser::SetValveTemperatureDifferenceTolerance();
-std::vector<std::string> ConfigParser::m_valve_addresses = ConfigParser::SetValveAddresses();
+std::vector<Endpoint> ConfigParser::m_valve_addresses = ConfigParser::SetValveAddresses();

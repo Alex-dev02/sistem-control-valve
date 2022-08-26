@@ -9,15 +9,6 @@
 int main(int argc, char *argv[]) {
     System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
     Endpoint thermostat_address;
-    try
-    {
-        std::cout << ConfigParser::GetDefaultTarget() << "\n";
-        std::cout << float(ConfigParser::GetValveTemperatureDifferenceTolerance()) << "\n";
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n' << "Could not find config file\n";
-    }
 
     try
     {
