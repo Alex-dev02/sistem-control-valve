@@ -2,12 +2,24 @@
 #include <networking/network_stream.hpp>
 #include <networking/iot_dcp.hpp>
 #include <networking/http.hpp>
+#include <system/config_parser.hpp>
 
 #include <iostream>
 
 ThermostatRouter::ThermostatRouter(const Endpoint& thermostat_address):
 m_thermostat_address(thermostat_address)
 {
+    std::vector<Endpoint> previous_connected_valves = ConfigParser::GetValveAddresses();
+
+    for (auto it = previous_connected_valves.begin(); it != previous_connected_valves.end(); it++){
+        bool connected_successfully = m_thermostat.ConnectValve(
+            *it,
+            m_thermostat_address
+        );
+        if (connected_successfully) {
+            m_thermostat.AddValve(*it);
+        }
+    }
     // add new paths here
     AddPath("/", std::bind(&ThermostatRouter::Root, this, std::placeholders::_1));
     AddPath("/add_valve", std::bind(&ThermostatRouter::AddValve, this, std::placeholders::_1));
@@ -35,13 +47,17 @@ Response ThermostatRouter::AddValve(Request request) {
         std::cerr << e.what() << '\n';
         return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, "Not enough parameters provided");
     }
+    Endpoint valve_address(valve_ip_address, valve_port);
+
     // checking if the valve exists with a ping
     bool connected_successfully = m_thermostat.ConnectValve(
-        Endpoint(valve_ip_address, valve_port),
+        valve_address,
         m_thermostat_address
     );
     if (connected_successfully) {
-        m_thermostat.AddValve(Endpoint(valve_ip_address, valve_port));
+        if(!ConfigParser::IsValveAlreadyInConfig(valve_address))
+            ConfigParser::AddValveToConfig(valve_address);
+        m_thermostat.AddValve(valve_address);
         return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve successfully added!");
     }
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve!");

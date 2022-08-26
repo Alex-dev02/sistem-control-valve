@@ -6,10 +6,11 @@
 #include <mutex>
 #include <networking/tcp_client.hpp>
 #include <networking/iot_dcp.hpp>
+#include <system/config_parser.hpp>
 
 Valve::Valve(const Endpoint& valve_address):
-    m_current_target(18),
-    m_temperature(18),
+    m_current_target(ConfigParser::GetDefaultTarget()),
+    m_temperature(ConfigParser::GetDefaultTarget()),
     m_valve_address(valve_address)
 {
     auto update_temp_thread = std::thread(&Valve::UpdateValve, this);
@@ -79,8 +80,6 @@ void Valve::UpdateValve() {
     while (true) {
         DisplayTemperature();
         UpdateTemperature();
-        if(!PollToThermostat())
-            SetCurrentTarget(18);
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
 }

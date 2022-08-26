@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "config_parser.hpp"
 #include "system.hpp"
 
@@ -12,6 +13,23 @@ float ConfigParser::GetDefaultTarget() {
 
 float ConfigParser::GetValveTemperatureDifferenceTolerance() {
     return m_valve_temperature_diff_tolerance;
+}
+
+bool ConfigParser::IsValveAlreadyInConfig(const Endpoint& vavlve_address) {
+    return false;
+}
+
+void ConfigParser::AddValveToConfig(const Endpoint& valve_address) {
+    int addresses_start = m_thermostat_conf.find("valves_addresses:") + std::string("valves_addresses").length() + 1;
+    int addresses_stop = addresses_start;
+    while (addresses_stop <= m_thermostat_conf.length() &&  m_thermostat_conf[addresses_stop] != '\n'){
+        addresses_stop++;
+    }
+    std::ofstream fout("/home/alex/Desktop/sistem-control-valve/thermostat.conf");
+    fout.seekp(addresses_stop);
+    std::cout << addresses_stop << "\n";
+    std::string str = valve_address.GetIPAddress() + ":" + std::to_string(valve_address.GetPort()) + " ";
+    fout << str.c_str(), str.length();
 }
 
 float ConfigParser::SetDefaultTarget() {
@@ -96,6 +114,8 @@ std::vector<Endpoint> ConfigParser::SetValveAddresses() {
         }
         else
             address += addresses[it];
+        if (address == " ")
+            address = "";
     }
 
     addresses_array.push_back(address);

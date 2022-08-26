@@ -81,7 +81,7 @@ Test
 
 ### Review scenarii
 
-- [ ] valoarea predefinita trebuie folosita la pornirea independenta de termostat si atat, chiar daca termostatul se deconecteaza
-- [ ] fisier de configurare pentru valva si termostat, in care sa stocam valoarea predefinita + valvele/termostatul asociat(e)
+- [x] valoarea predefinita trebuie folosita la pornirea independenta de termostat si atat, chiar daca termostatul se deconecteaza
+- [x] fisier de configurare pentru valva si termostat, in care sa stocam valoarea predefinita + valvele/termostatul asociat(e)
 - [ ] friendly name pentru valve + afisarea numelor valvelor care nu au putut fi actualizate
 - [ ] simualre camera care se raceste singura, odata ajunsa la 1-2 grade sub pragul tinta incepem incalzirea

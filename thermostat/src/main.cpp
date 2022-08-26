@@ -3,13 +3,12 @@
 #include <networking/server.hpp>
 #include <system/system.hpp>
 #include <system/config_parser.hpp>
-
 #include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
     System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
     Endpoint thermostat_address;
-
+    ConfigParser::AddValveToConfig(Endpoint("128.312.3.3.1", 5003));
     try
     {
         thermostat_address = System::GetEndpointToBind(cmd_params); 

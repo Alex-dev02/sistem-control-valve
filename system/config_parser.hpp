@@ -8,9 +8,9 @@ class ConfigParser {
 public:
     static float GetDefaultTarget();
     static float GetValveTemperatureDifferenceTolerance();
-    static Endpoint GetThermostatEndpoint();
     static std::vector<Endpoint> GetValveAddresses();
-
+    static bool IsValveAlreadyInConfig(const Endpoint& vavlve_address);
+    static void AddValveToConfig(const Endpoint& valve_address);
 private:
     static float SetDefaultTarget();
     static float SetValveTemperatureDifferenceTolerance();
