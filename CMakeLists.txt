@@ -16,7 +16,7 @@ add_subdirectory(system)
 add_subdirectory(networking)
 add_subdirectory(thermostat)
 add_subdirectory(valve)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
 add_executable(sa_thermostat thermostat/src/main.cpp thermostat.conf)
 add_executable(sa_valve valve/src/main.cpp valve.conf)
@@ -26,7 +26,7 @@ target_link_libraries(sa_thermostat libThermostat)
 target_link_libraries(sa_valve libNetworking)
 target_link_libraries(sa_valve libValve)
 
-include(CTest)
+#include(CTest)
 
 #find_package(GTest REQUIRED CONFIG)
 
