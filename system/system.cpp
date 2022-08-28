@@ -34,20 +34,16 @@ std::string System::InterfaceIP(std::string interface) {
         return "127.0.0.1";
     try
     {
-        interface_data = System::ExecuteCommand((std::string("ifconfig ") + interface).c_str());
+        std::string ip = System::ExecuteCommand(std::string("ifconfig " + interface + " | grep 'inet '| cut -d: -f2 | awk '{print $2}'").c_str());
+        if (ip.empty())
+            throw std::runtime_error("Could not find " + interface + ", connecting to localhost...\n");
+
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
-
-    if (interface_data.empty())
-        throw std::runtime_error("Could not find " + interface + ", connecting to localhost...\n");
-
-    interface_data = interface_data.substr(
-        interface_data.find("broadcast") + std::string("broadcast").length() + 1
-    );
-    return interface_data.substr(0, interface_data.find("\n"));
+    return "127.0.0.1";
 }
 
 System::CommandLineParameters System::GetCmdLineParameters(int argc, char *argv[]) {
