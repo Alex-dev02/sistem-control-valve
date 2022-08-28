@@ -37,7 +37,7 @@ std::string System::InterfaceIP(std::string interface) {
         std::string ip = System::ExecuteCommand(std::string("ifconfig " + interface + " | grep 'inet '| cut -d: -f2 | awk '{print $2}'").c_str());
         if (ip.empty())
             throw std::runtime_error("Could not find " + interface + ", connecting to localhost...\n");
-
+        return ip;
     }
     catch(const std::exception& e)
     {
