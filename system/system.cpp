@@ -34,10 +34,13 @@ std::string System::InterfaceIP(std::string interface) {
         return "127.0.0.1";
     try
     {
-        std::string ip = System::ExecuteCommand(std::string("ifconfig " + interface + " | grep 'inet '| cut -d: -f2 | awk '{print $2}'").c_str());
-        if (ip.empty())
+        std::string ip_inet_addr = System::ExecuteCommand(std::string("ifconfig " + interface + " | grep 'inet addr'| cut -d: -f2 | awk '{print $2}'").c_str());
+        if (!ip_inet_addr.empty())
+            return ip_inet_addr;
+        std::string ip_inet = System::ExecuteCommand(std::string("ifconfig " + interface + " | grep 'inet '| cut -d: -f2 | awk '{print $2}'").c_str());
+        if (ip_inet.empty())
             throw std::runtime_error("Could not find " + interface + ", connecting to localhost...\n");
-        return ip;
+        return ip_inet;
     }
     catch(const std::exception& e)
     {

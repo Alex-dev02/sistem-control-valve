@@ -32,5 +32,5 @@ target_link_libraries(sa_valve libValve)
 
 set_property(TARGET libNetworking libThermostat libValve sa_thermostat sa_valve PROPERTY CXX_STANDARD 17)
 
-install(FILES thermostat.conf valve.conf DESTINATION bin COMPONENT config)
+install(FILES thermostat.conf valve.conf DESTINATION /home/root COMPONENT config)
 install(TARGETS sa_thermostat sa_valve DESTINATION bin)

@@ -8,7 +8,8 @@
 int main(int argc, char *argv[]) {
     System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
     Endpoint thermostat_address;
-    //ConfigParser::AddValveToConfig(Endpoint("128.312.3.3.1", 5003));
+    ConfigParser::AddValveToConfig(Endpoint("128.312.3.3.1", 5003));
+        
     try
     {
         thermostat_address = System::GetEndpointToBind(cmd_params); 
@@ -18,8 +19,8 @@ int main(int argc, char *argv[]) {
         std::cerr << e.what() << '\n';
         return 0;
     }
-    std::cout << "ip:" << thermostat_address.GetIPAddress() << "\n";
     Server<ThermostatRouter> server;
+    ConfigParser::AddValveToConfig(Endpoint("128.312.3.3.1", 5003));
     server.Listen(thermostat_address);
     
     return 0;

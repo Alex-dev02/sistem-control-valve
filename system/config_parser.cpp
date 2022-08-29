@@ -3,8 +3,8 @@
 #include "config_parser.hpp"
 #include "system.hpp"
 
-std::string ConfigParser::m_valve_conf = System::ExecuteCommand("cat /usr/local/bin/valve.conf");
-std::string ConfigParser::m_thermostat_conf = System::ExecuteCommand("cat /usr/local/bin/thermostat.conf");
+std::string ConfigParser::m_valve_conf = System::ExecuteCommand("cat ~/valve.conf");
+std::string ConfigParser::m_thermostat_conf = System::ExecuteCommand("cat ~/thermostat.conf");
 
 
 float ConfigParser::GetDefaultTarget() {
@@ -25,11 +25,11 @@ void ConfigParser::AddValveToConfig(const Endpoint& valve_address) {
     while (addresses_stop <= m_thermostat_conf.length() &&  m_thermostat_conf[addresses_stop] != '\n'){
         addresses_stop++;
     }
-    std::ofstream fout("/home/alex/Desktop/sistem-control-valve/thermostat.conf");
-    fout.seekp(addresses_stop);
-    std::cout << addresses_stop << "\n";
-    std::string str = valve_address.GetIPAddress() + ":" + std::to_string(valve_address.GetPort()) + " ";
-    fout << str.c_str(), str.length();
+    std::ofstream fout("/home/root/thermostat.conf");
+    if (!fout)
+        std::cout << "Failed to open file\n";
+    std::string new_addr = " " + valve_address.GetIPAddress() + ":" + std::to_string(valve_address.GetPort());
+    fout << m_thermostat_conf.substr(0, addresses_stop) + new_addr + m_thermostat_conf.substr(addresses_stop, m_thermostat_conf.length());
 }
 
 float ConfigParser::SetDefaultTarget() {
