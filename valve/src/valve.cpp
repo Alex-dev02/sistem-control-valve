@@ -92,7 +92,9 @@ void Valve::IncrementTemperature() {
 void Valve::UpdateValve() {
     while (true) {
         DisplayTemperature();
-        UpdateTemperature();
+        if (m_heating_on) {
+            UpdateTemperature();
+        }
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
 }
