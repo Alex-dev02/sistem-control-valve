@@ -19,7 +19,7 @@ private:
     Response SetCurrentTargetRoute(Request request);
     Response Disconnect(Request request);
     Response SwitchHeatingOn(Request request);
-    Response SwithHeatingOff(Request request);
+    Response SwitchHeatingOff(Request request);
     Response GetTemperature(Request request);
     Response GetTarget(Request request);
 };

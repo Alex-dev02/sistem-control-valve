@@ -10,6 +10,11 @@ ValveRouter::ValveRouter(const Endpoint& valve_address):
     AddPath("/set_target", std::bind(&ValveRouter::SetCurrentTargetRoute, this, std::placeholders::_1));
     AddPath("/connect", std::bind(&ValveRouter::Connect, this, std::placeholders::_1));
     AddPath("/disconnect", std::bind(&ValveRouter::Disconnect, this, std::placeholders::_1));
+    AddPath("/switch_on", std::bind(&ValveRouter::SwitchHeatingOn, this, std::placeholders::_1));
+    AddPath("/switch_off", std::bind(&ValveRouter::SwitchHeatingOff, this, std::placeholders::_1));
+    AddPath("/get_temperature", std::bind(&ValveRouter::GetTemperature, this, std::placeholders::_1));
+    AddPath("/get_target", std::bind(&ValveRouter::GetTarget, this, std::placeholders::_1));
+
 }
 
 Response ValveRouter::Connect(Request request) {
@@ -62,17 +67,19 @@ Response ValveRouter::Disconnect(Request request) {
 }
 
 Response ValveRouter::SwitchHeatingOn(Request request) {
-
+    m_valve.SwitchOn();
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
-Response ValveRouter::SwithHeatingOff(Request request) {
-
+Response ValveRouter::SwitchHeatingOff(Request request) {
+    m_valve.SwitchOff();
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }
 
 Response ValveRouter::GetTemperature(Request request){
-
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK, std::to_string(m_valve.GetTemperature()));
 }
 
 Response ValveRouter::GetTarget(Request request){
-
+    return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK, std::to_string(m_valve.GetCurrentTarget()));
 }
