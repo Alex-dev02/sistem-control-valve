@@ -4,29 +4,27 @@ project(SisCtrlValve)
 
 #set(CMAKE_CXX_FLAGS "--coverage")
 #set(CMAKE_EXE_LINKER_FLAGS "--coverage")
+set(JSON_BuildTests OFF CACHE INTERNAL "")
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-# DE FACUT UN BRANCH CU BUILD SEPARAT FARA GTEST CA SA NU CRASHUIASCA LA YOCTO
-
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
+add_subdirectory(nlohmann_json)
 add_subdirectory(system)
 add_subdirectory(networking)
 add_subdirectory(thermostat)
 add_subdirectory(valve)
-#add_subdirectory(tests)
+add_subdirectory(tests)
+
+target_link_libraries(libSystem nlohmann_json::nlohmann_json)
 
 add_executable(sa_thermostat thermostat/src/main.cpp thermostat.conf)
 add_executable(sa_valve valve/src/main.cpp valve.conf)
 
+target_link_libraries(sa_thermostat libSystem)
 target_link_libraries(sa_thermostat libNetworking)
 target_link_libraries(sa_thermostat libThermostat)
 target_link_libraries(sa_valve libNetworking)
 target_link_libraries(sa_valve libValve)
 
-#include(CTest)
+include(CTest)
 
 #find_package(GTest REQUIRED CONFIG)
 
