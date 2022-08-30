@@ -21,6 +21,7 @@ add_executable(sa_valve valve/src/main.cpp valve.conf)
 target_link_libraries(sa_thermostat libSystem)
 target_link_libraries(sa_thermostat libNetworking)
 target_link_libraries(sa_thermostat libThermostat)
+target_link_libraries(sa_valve libSystem)
 target_link_libraries(sa_valve libNetworking)
 target_link_libraries(sa_valve libValve)
 

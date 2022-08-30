@@ -7,19 +7,16 @@
 
 int main(int argc, char *argv[]) {
     System::InitParams(argc, argv);
-    Endpoint thermostat_address;
     try
     {
-        std::cout << "incercam\n\n";
-        ConfigParser::m_path_to_config_files = System::GetConfigPath();
-        std::cout << "am si reusit\n\n";
+        ConfigParser::InitConfig();
     }
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
         return 0;
     }
-            
+    Endpoint thermostat_address;
     try
     {
         thermostat_address = System::GetEndpointToBind(); 

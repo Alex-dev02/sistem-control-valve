@@ -1,14 +1,14 @@
 #include <iostream>
 #include <networking/server.hpp>
 #include <system/system.hpp>
-#include <system/system.hpp>
+#include <system/config_parser.hpp>
 
 #include "valve_router.hpp"
 
 int main(int argc, char *argv[]) {
     System::InitParams(argc, argv);
+    ConfigParser::InitConfig();
     Endpoint valve_address;
-    std::cout << "\n" << valve_address.GetIPAddress() << " " << valve_address.GetPort() << "\n";
     try
     {
         valve_address = System::GetEndpointToBind(); 

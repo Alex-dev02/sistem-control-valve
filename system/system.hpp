@@ -12,6 +12,7 @@ public:
     static std::string ExecuteCommand(const char* command);
     struct CommandLineParameters {
         static std::unordered_map<std::string, std::string> parameters;
+        static bool initialized;
     };
     static std::string GetConfigPath();
     static Endpoint GetEndpointToBind();
@@ -19,7 +20,7 @@ public:
     static bool CreateFile(std::string file_name, std::string content = "");
 private:
     static bool ValidCommand(std::string command);
-    static std::unordered_map<std::string, std::string> GetCmdLineParameters(int argc, char *argv[]);
 
+    static std::unordered_map<std::string, std::string> GetCmdLineParameters(int argc, char *argv[]);
     static const std::vector<std::string> m_valid_commands;
 };

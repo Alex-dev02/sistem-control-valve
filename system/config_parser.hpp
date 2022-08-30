@@ -7,6 +7,7 @@
 
 class ConfigParser {
 public:
+    static void InitConfig();
     static float GetDefaultTarget();
     static std::vector<Endpoint> GetValveAddresses();
     static bool IsValveAlreadyInConfig(const Endpoint& valve_address);
@@ -15,7 +16,8 @@ public:
 private:
     static nlohmann::json GetValveConfigContent();
     static nlohmann::json GetThermostatConfigContent();
-
+    static nlohmann::json GetDefaultValveConfig();
+    static nlohmann::json GetDefaultThermostatConfig();
     // static float m_default_target;
     // static float m_valve_temperature_diff_tolerance;
     // static std::vector<Endpoint> m_valve_addresses;

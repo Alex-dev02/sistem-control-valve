@@ -10,8 +10,10 @@
 #include <algorithm>
 
 std::unordered_map<std::string, std::string> System::CommandLineParameters::parameters = {};
+bool System::CommandLineParameters::initialized = false;
 
 void System::InitParams(int argc, char *argv[]) {
+    System::CommandLineParameters::initialized = true;
     System::CommandLineParameters::parameters = GetCmdLineParameters(argc, argv);
 }
 
@@ -57,6 +59,8 @@ std::string System::InterfaceIP(std::string interface) {
 }
 
 std::string System::GetConfigPath() {
+    if (!System::CommandLineParameters::initialized)
+        return "";
     auto config_path = System::CommandLineParameters::parameters.find("-conf");
     if (config_path == System::CommandLineParameters::parameters.end())
         throw std::runtime_error("No configuration path provided!");
@@ -65,7 +69,6 @@ std::string System::GetConfigPath() {
 
 std::unordered_map<std::string, std::string> System::GetCmdLineParameters(int argc, char *argv[]) {
     std::unordered_map<std::string, std::string> cmd_params;
-
     for (int it = 1; it < argc - 1; it++) {
         cmd_params.emplace(argv[it], argv[it+1]);
     }
