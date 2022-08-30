@@ -9,11 +9,13 @@ public:
 
     float GetCurrentTarget() const;
     float GetTemperature() const;
-    bool On();
+    bool IsOn();
     const Endpoint& GetThermostatAddress() const;
 
     void SetCurrentTarget(float current_targer);
     void SetThermostat(const Endpoint& thermostat_address);
+    void SwitchOn();
+    void SwitchOff();
 private:
     bool m_heating_on;
     float m_current_target;

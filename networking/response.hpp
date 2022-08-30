@@ -12,6 +12,7 @@ public:
     std::string GetRawResponse() const;
     Utils::Protocol GetProtocol() const;
     int GetReponseCode() const;
+    std::string GetContent();
 
     bool Successful() const;
 private:

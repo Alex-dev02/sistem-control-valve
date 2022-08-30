@@ -60,3 +60,19 @@ Response ValveRouter::Disconnect(Request request) {
     m_valve.SetThermostat(Endpoint("", 0));
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK, "Disconnected the valve!");
 }
+
+Response ValveRouter::SwitchHeatingOn(Request request) {
+
+}
+
+Response ValveRouter::SwithHeatingOff(Request request) {
+
+}
+
+Response ValveRouter::GetTemperature(Request request){
+
+}
+
+Response ValveRouter::GetTarget(Request request){
+
+}

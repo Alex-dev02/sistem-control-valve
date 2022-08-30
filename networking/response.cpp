@@ -38,6 +38,15 @@ int Response::GetReponseCode() const{
 
 }
 
+std::string Response::GetContent() {
+    int content_length_pos = m_raw_response.find("Length");
+    std::string lenght_content_substr = m_raw_response.substr(content_length_pos, m_raw_response.length());
+    return lenght_content_substr.substr(
+        lenght_content_substr.find("\n") + 1,
+        lenght_content_substr.length()
+    );
+}
+
 bool Response::Successful() const{
     if (m_protocol == Utils::HTTP)
         return

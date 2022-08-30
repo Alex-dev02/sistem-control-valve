@@ -26,7 +26,7 @@ float Valve::GetTemperature() const{
     return m_temperature;
 }
 
-bool Valve::On() {
+bool Valve::IsOn() {
     return m_heating_on;
 }
 
@@ -40,6 +40,14 @@ void Valve::SetCurrentTarget(float target) {
 
 void Valve::SetThermostat(const Endpoint& thermostat_address) {
     m_thermostat_address = thermostat_address;
+}
+
+void Valve::SwitchOn() {
+    m_heating_on = true;
+}
+
+void Valve::SwitchOff() {
+    m_heating_on = false;
 }
 
 bool Valve::PollToThermostat() {
