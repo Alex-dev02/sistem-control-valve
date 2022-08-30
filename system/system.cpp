@@ -2,11 +2,18 @@
 
 #include <cstdio>
 #include <iostream>
+#include <fstream>
 #include <memory>
 #include <stdexcept>
 #include <string>
 #include <array>
 #include <algorithm>
+
+std::unordered_map<std::string, std::string> System::CommandLineParameters::parameters = {};
+
+void System::InitParams(int argc, char *argv[]) {
+    System::CommandLineParameters::parameters = GetCmdLineParameters(argc, argv);
+}
 
 std::string System::ExecuteCommand(const char* command) {
     //checking if the command is valid
@@ -49,26 +56,32 @@ std::string System::InterfaceIP(std::string interface) {
     return "127.0.0.1";
 }
 
-System::CommandLineParameters System::GetCmdLineParameters(int argc, char *argv[]) {
-    System::CommandLineParameters cmd_params;
+std::string System::GetConfigPath() {
+    auto config_path = System::CommandLineParameters::parameters.find("-conf");
+    if (config_path == System::CommandLineParameters::parameters.end())
+        throw std::runtime_error("No configuration path provided!");
+    return config_path->second;
+}
 
-    for (int it = 0; it < argc; it++) {
-        cmd_params.parameters.push_back(argv[it]);
+std::unordered_map<std::string, std::string> System::GetCmdLineParameters(int argc, char *argv[]) {
+    std::unordered_map<std::string, std::string> cmd_params;
+
+    for (int it = 1; it < argc - 1; it++) {
+        cmd_params.emplace(argv[it], argv[it+1]);
     }
 
     return cmd_params;
 }
 
-Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
+Endpoint System::GetEndpointToBind() {
     std::string ip = "127.0.0.1"; // default
     uint16_t port = 4000; // default
 
-    std::vector<std::string>::iterator interface_pos =
-        std::find(cmd_params.parameters.begin(), cmd_params.parameters.end(), "-i");
-    if (interface_pos != cmd_params.parameters.end() && cmd_params.parameters.size() >= interface_pos - cmd_params.parameters.begin()) {
+    auto interface = System::CommandLineParameters::parameters.find("-i");
+    if (interface != System::CommandLineParameters::parameters.end()) {
         try
         {
-            ip = InterfaceIP(*(interface_pos + 1));
+            ip = InterfaceIP(interface->second);
         }
         catch(const std::exception& e)
         {
@@ -76,12 +89,11 @@ Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
         }
     }
 
-    std::vector<std::string>::iterator port_pos = 
-        std::find(cmd_params.parameters.begin(), cmd_params.parameters.end(), "-port");
-    if (port_pos != cmd_params.parameters.end() && cmd_params.parameters.size() >= port_pos - cmd_params.parameters.begin()) {
+    auto param_port = System::CommandLineParameters::parameters.find("-port");
+    if (param_port != System::CommandLineParameters::parameters.end()) {
         try
         {
-            port = std::stoi(*(port_pos + 1));
+            port = std::stoi(param_port->second);
         }
         catch(const std::exception& e)
         {
@@ -90,6 +102,17 @@ Endpoint System::GetEndpointToBind(CommandLineParameters cmd_params) {
         }
     }
     return Endpoint(ip, port);
+}
+
+bool System::FileExists(std::string file_name) {
+    std::ifstream fin(file_name);
+    return fin.good();
+}
+
+bool System::CreateFile(std::string file_name, std::string contet) {
+    std::ofstream fout(file_name);
+    fout << contet;
+    return !fout;
 }
 
 bool System::ValidCommand(std::string command) {

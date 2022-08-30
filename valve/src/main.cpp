@@ -6,12 +6,12 @@
 #include "valve_router.hpp"
 
 int main(int argc, char *argv[]) {
-    System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
+    System::InitParams(argc, argv);
     Endpoint valve_address;
     std::cout << "\n" << valve_address.GetIPAddress() << " " << valve_address.GetPort() << "\n";
     try
     {
-        valve_address = System::GetEndpointToBind(cmd_params); 
+        valve_address = System::GetEndpointToBind(); 
     }
     catch(const std::exception& e)
     {

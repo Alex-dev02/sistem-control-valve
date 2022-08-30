@@ -6,13 +6,23 @@
 #include "thermostat_router.hpp"
 
 int main(int argc, char *argv[]) {
-    System::CommandLineParameters cmd_params = System::GetCmdLineParameters(argc, argv);
+    System::InitParams(argc, argv);
     Endpoint thermostat_address;
-    ConfigParser::AddValveToConfig(Endpoint("128.312.3.3.1", 5003));
-        
     try
     {
-        thermostat_address = System::GetEndpointToBind(cmd_params); 
+        std::cout << "incercam\n\n";
+        ConfigParser::m_path_to_config_files = System::GetConfigPath();
+        std::cout << "am si reusit\n\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+        return 0;
+    }
+            
+    try
+    {
+        thermostat_address = System::GetEndpointToBind(); 
     }
     catch(const std::exception& e)
     {
@@ -20,7 +30,6 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     Server<ThermostatRouter> server;
-    ConfigParser::AddValveToConfig(Endpoint("128.312.3.3.1", 5003));
     server.Listen(thermostat_address);
     
     return 0;
