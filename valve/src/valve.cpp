@@ -11,7 +11,8 @@
 Valve::Valve(const Endpoint& valve_address):
     m_current_target(ConfigParser::GetDefaultTarget()),
     m_temperature(ConfigParser::GetDefaultTarget()),
-    m_valve_address(valve_address)
+    m_valve_address(valve_address),
+    m_heating_on(false)
 {
     auto update_temp_thread = std::thread(&Valve::UpdateValve, this);
     update_temp_thread.detach();
@@ -23,6 +24,10 @@ float Valve::GetCurrentTarget() const{
 
 float Valve::GetTemperature() const{
     return m_temperature;
+}
+
+bool Valve::On() {
+    return m_heating_on;
 }
 
 const Endpoint& Valve::GetThermostatAddress() const {
