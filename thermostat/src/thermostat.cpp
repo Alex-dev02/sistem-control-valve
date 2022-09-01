@@ -115,8 +115,21 @@ void Thermostat::UpdateValvesState() {
 	float valve_target = 0;
 	float valve_temperature = 0;
 	for (auto valve = m_valves.begin(); valve != m_valves.end(); valve++) {
-			valve_target = WriteToValve(
-				IotDCP().CreateRequest(Utils::RequestType::GET, "/get_target", );
-			);
+		try
+		{
+			valve_target = std::stof(WriteToValve(
+				IotDCP().CreateRequest(Utils::RequestType::GET, "/get_target", m_address.GetIPAddress(), m_address.GetPort()),
+				valve->second
+			).GetContent());
+
+			valve_temperature = std::stof(WriteToValve(
+				IotDCP().CreateRequest(Utils::RequestType::GET, "/get_temperature", m_address.GetIPAddress(), m_address.GetPort()),
+				valve->second
+			).GetContent());
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
 	}
 }
