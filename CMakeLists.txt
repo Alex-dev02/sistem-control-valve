@@ -6,7 +6,7 @@ project(SisCtrlValve)
 #set(CMAKE_EXE_LINKER_FLAGS "--coverage")
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 
-add_subdirectory(nlohmann_json)
+add_subdirectory(json)
 add_subdirectory(system)
 add_subdirectory(networking)
 add_subdirectory(thermostat)
