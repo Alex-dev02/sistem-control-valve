@@ -73,7 +73,24 @@ std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	return responses;
 }
 
-bool Thermostat::ConnectValve(const Endpoint valve_address, const Endpoint thermostat_address) {
+Response Thermostat::WriteToValve(const Request& request, const Endpoint& valve_address) {
+	TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
+	NetworkStream stream = client.GetStream();
+	try
+	{
+		stream.Write(request.GetRawRequest());
+		Response response(stream.Read());
+		return response;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	stream.Close();
+	return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Failed to write!");
+}
+
+bool Thermostat::ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
 	try {
 		TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 		NetworkStream stream  = client.GetStream();
@@ -88,4 +105,18 @@ bool Thermostat::ConnectValve(const Endpoint valve_address, const Endpoint therm
 		return false;
 	}
 	return true;
+}
+
+void Thermostat::SetAddress(const Endpoint& thermostat_address) {
+	m_address = thermostat_address;
+}
+
+void Thermostat::UpdateValvesState() {
+	float valve_target = 0;
+	float valve_temperature = 0;
+	for (auto valve = m_valves.begin(); valve != m_valves.end(); valve++) {
+			valve_target = WriteToValve(
+				IotDCP().CreateRequest(Utils::RequestType::GET, "/get_target", );
+			);
+	}
 }

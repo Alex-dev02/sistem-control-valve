@@ -16,8 +16,11 @@ public:
 	bool RemoveValve(const Endpoint& valve_address);
 	bool DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address);
 	std::vector<Response> WriteToValves(const Request& request);
-    bool ConnectValve(const Endpoint valve_address, const Endpoint thermostat_address);
-
+    Response WriteToValve(const Request& request, const Endpoint& valve_address);
+	bool ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address);
+	void SetAddress(const Endpoint& thermostat_address);
 private:
+	void UpdateValvesState();
+	Endpoint m_address;
     std::unordered_map<std::string, Endpoint> m_valves;
 };

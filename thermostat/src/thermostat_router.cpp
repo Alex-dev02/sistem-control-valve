@@ -9,6 +9,7 @@
 ThermostatRouter::ThermostatRouter(const Endpoint& thermostat_address):
 m_thermostat_address(thermostat_address)
 {
+    m_thermostat.SetAddress(thermostat_address);
     std::vector<Endpoint> previous_connected_valves = ConfigParser::GetValveAddresses();
 
     for (auto it = previous_connected_valves.begin(); it != previous_connected_valves.end(); it++){
