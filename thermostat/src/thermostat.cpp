@@ -157,7 +157,7 @@ void Thermostat::UpdateValvesState() {
 			);
 		}
 
-		if (valve_target - valve_temperature <= 0 && heating_on) {
+		if (float(valve_target - valve_temperature) <= temp_diff_tolerance && heating_on) {
 			WriteToValve(
 				IotDCP().CreateRequest(Utils::RequestType::PUT, "/switch_off", m_address.GetIPAddress(), m_address.GetPort()),
 				valve->second
