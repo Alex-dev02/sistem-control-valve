@@ -25,8 +25,8 @@ private:
 
     bool PollToThermostat();
     void SetTemperature(float temperature);
-    void IncrementTemperature();
+    void IncrementTemperature(float temp_diff_tolerance);
     void UpdateValve();
     void DisplayTemperature();
-    void UpdateTemperature();
+    void UpdateTemperature(float temp_diff_tolerance);
 };

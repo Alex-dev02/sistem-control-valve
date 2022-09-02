@@ -150,14 +150,14 @@ void Thermostat::UpdateValvesState() {
 			std::cerr << e.what() << '\n';
 		}
 
-		if (valve_target - valve_temperature >= temp_diff_tolerance && !heating_on) {
+		if (float(valve_target - valve_temperature) >= temp_diff_tolerance && !heating_on) {
 			WriteToValve(
 				IotDCP().CreateRequest(Utils::RequestType::PUT, "/switch_on", m_address.GetIPAddress(), m_address.GetPort()),
 				valve->second
 			);
 		}
 
-		if (float(valve_target - valve_temperature) <= temp_diff_tolerance && heating_on) {
+		if (float(valve_target - valve_temperature) <= -temp_diff_tolerance && heating_on) {
 			WriteToValve(
 				IotDCP().CreateRequest(Utils::RequestType::PUT, "/switch_off", m_address.GetIPAddress(), m_address.GetPort()),
 				valve->second
