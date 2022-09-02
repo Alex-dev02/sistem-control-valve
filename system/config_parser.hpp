@@ -19,9 +19,6 @@ private:
     static nlohmann::json GetThermostatConfigContent();
     static nlohmann::json GetDefaultValveConfig();
     static nlohmann::json GetDefaultThermostatConfig();
-    // static float m_default_target;
-    // static float m_valve_temperature_diff_tolerance;
-    // static std::vector<Endpoint> m_valve_addresses;
     static nlohmann::json m_valve_conf;
     static nlohmann::json m_thermostat_conf;
 };

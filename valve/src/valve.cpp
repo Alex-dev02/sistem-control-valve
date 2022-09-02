@@ -16,6 +16,9 @@ Valve::Valve(const Endpoint& valve_address):
 {
     auto update_temp_thread = std::thread(&Valve::UpdateValve, this);
     update_temp_thread.detach();
+
+    auto cool_room = std::thread(&Valve::CoolRoom, this);
+    cool_room.detach();
 }
 
 float Valve::GetCurrentTarget() const{
@@ -104,4 +107,15 @@ void Valve::UpdateTemperature(float temp_diff_tolerance) {
     std::lock_guard<std::mutex> lock(guard);
     IncrementTemperature(temp_diff_tolerance);
     guard.unlock();
+}
+
+void Valve::CoolRoom() {
+    std::mutex guard;
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::seconds(60));
+        std::lock_guard<std::mutex> lock(guard);
+        m_temperature -= 0.5;
+        guard.unlock();
+    }
+    
 }

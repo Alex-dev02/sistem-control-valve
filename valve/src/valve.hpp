@@ -29,4 +29,5 @@ private:
     void UpdateValve();
     void DisplayTemperature();
     void UpdateTemperature(float temp_diff_tolerance);
+    void CoolRoom();
 };
