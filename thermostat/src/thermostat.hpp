@@ -20,6 +20,7 @@ public:
 	bool ConnectValve(const Endpoint& valve_address);
 	void SetAddress(const Endpoint& thermostat_address);
 private:
+	void UpateValvesStateLoop();
 	void UpdateValvesState();
 	Endpoint m_address;
     std::unordered_map<std::string, Endpoint> m_valves;

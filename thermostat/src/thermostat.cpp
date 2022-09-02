@@ -6,8 +6,12 @@
 #include <networking/network_stream.hpp>
 #include <networking/iot_dcp.hpp>
 #include <system/config_parser.hpp>
+#include <thread>
 
-Thermostat::Thermostat() {}
+Thermostat::Thermostat() {
+	auto update_valves_state = std::thread(&Thermostat::UpateValvesStateLoop, this);
+	update_valves_state.detach();
+}
 
 void Thermostat::AddValve(const Endpoint& valve_address) {
   	m_valves.emplace(
@@ -110,6 +114,13 @@ bool Thermostat::ConnectValve(const Endpoint& valve_address) {
 
 void Thermostat::SetAddress(const Endpoint& thermostat_address) {
 	m_address = thermostat_address;
+}
+
+void Thermostat::UpateValvesStateLoop() {
+	while(true) {
+		UpdateValvesState();
+		std::this_thread::sleep_for(std::chrono::seconds(10));
+	}
 }
 
 void Thermostat::UpdateValvesState() {
