@@ -15,11 +15,12 @@ private:
     Valve m_valve;
     Endpoint m_valve_address;
 
-    Response Connect(Request request);
-    Response SetCurrentTargetRoute(Request request);
-    Response Disconnect(Request request);
-    Response SwitchHeatingOn(Request request);
-    Response SwitchHeatingOff(Request request);
-    Response GetTemperature(Request request);
-    Response GetTarget(Request request);
+    Response Connect(const Request& request);
+    Response SetCurrentTargetRoute(const Request& request);
+    Response Disconnect(const Request& request);
+    Response SwitchHeatingOn(const Request& request);
+    Response SwitchHeatingOff(const Request& request);
+    Response IsHeatingOn(const Request& request);
+    Response GetTemperature(const Request& request);
+    Response GetTarget(const Request& request);
 };

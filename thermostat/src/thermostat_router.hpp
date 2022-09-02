@@ -18,9 +18,9 @@ private:
 
     Endpoint m_thermostat_address;
 
-    Response Root(Request request);
-    Response AddValve(Request request);
-    Response SetTarget(Request request);
-    Response RemoveValve(Request request);
-    Response CheckAlive(Request request);
+    Response Root(const Request& request);
+    Response AddValve(const Request& request);
+    Response SetTarget(const Request& request);
+    Response RemoveValve(const Request& request);
+    Response CheckAlive(const Request& request);
 };

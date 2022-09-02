@@ -13,10 +13,7 @@ m_thermostat_address(thermostat_address)
     std::vector<Endpoint> previous_connected_valves = ConfigParser::GetValveAddresses();
 
     for (auto it = previous_connected_valves.begin(); it != previous_connected_valves.end(); it++){
-        bool connected_successfully = m_thermostat.ConnectValve(
-            *it,
-            m_thermostat_address
-        );
+        bool connected_successfully = m_thermostat.ConnectValve(*it);
         if (connected_successfully) {
             m_thermostat.AddValve(*it);
         }
@@ -29,12 +26,12 @@ m_thermostat_address(thermostat_address)
     AddPath("/check_alive", std::bind(&ThermostatRouter::CheckAlive, this, std::placeholders::_1));
 }
 
-Response ThermostatRouter::Root(Request request) {
+Response ThermostatRouter::Root(const Request& request) {
     HTTP http;
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Home");
 }
 
-Response ThermostatRouter::AddValve(Request request) {
+Response ThermostatRouter::AddValve(const Request& request) {
     HTTP http;
     std::string valve_ip_address;
     uint16_t valve_port;
@@ -51,10 +48,7 @@ Response ThermostatRouter::AddValve(Request request) {
     Endpoint valve_address(valve_ip_address, valve_port);
 
     // checking if the valve exists with a ping
-    bool connected_successfully = m_thermostat.ConnectValve(
-        valve_address,
-        m_thermostat_address
-    );
+    bool connected_successfully = m_thermostat.ConnectValve(valve_address);
     if (connected_successfully) {
         if(!ConfigParser::IsValveAlreadyInConfig(valve_address))
             ConfigParser::AddValveToConfig(valve_address);
@@ -64,7 +58,7 @@ Response ThermostatRouter::AddValve(Request request) {
     return http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve!");
 }
 
-Response ThermostatRouter::SetTarget(Request request) {
+Response ThermostatRouter::SetTarget(const Request& request) {
     HTTP http;
     // temperature limit 15 and 28
     float target = 0;
@@ -105,7 +99,7 @@ Response ThermostatRouter::SetTarget(Request request) {
     );
 }
 
-Response ThermostatRouter::RemoveValve(Request request) {
+Response ThermostatRouter::RemoveValve(const Request& request) {
     HTTP http;
     bool successfully_deleted = true;
     bool successfully_disconnected = true;
@@ -113,10 +107,7 @@ Response ThermostatRouter::RemoveValve(Request request) {
     {
         std::string server_name = request.GetPathVar("server_name");
         uint16_t port = std::stoi(request.GetPathVar("port"));
-        successfully_disconnected = m_thermostat.DisconnectValve(
-            Endpoint(server_name, port),
-            m_thermostat_address
-        );
+        successfully_disconnected = m_thermostat.DisconnectValve(Endpoint(server_name, port));
         successfully_deleted = m_thermostat.RemoveValve(Endpoint(server_name, port));
     }
     catch(const std::exception& e)
@@ -130,6 +121,6 @@ Response ThermostatRouter::RemoveValve(Request request) {
         : http.CreateResponse(Utils::HTTPResponseCode::H_OK, "Could not find the valve.");
 }
 
-Response ThermostatRouter::CheckAlive(Request request) {
+Response ThermostatRouter::CheckAlive(const Request& request) {
     return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_OK);
 }

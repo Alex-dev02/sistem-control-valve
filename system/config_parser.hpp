@@ -9,6 +9,7 @@ class ConfigParser {
 public:
     static void InitConfig();
     static float GetDefaultTarget();
+    static float GetDefaultTempDiffTolerance();
     static std::vector<Endpoint> GetValveAddresses();
     static bool IsValveAlreadyInConfig(const Endpoint& valve_address);
     static void AddValveToConfig(const Endpoint& valve_address);

@@ -17,6 +17,10 @@ float ConfigParser::GetDefaultTarget() {
     return m_valve_conf["default_target"].get<uint16_t>();
 }
 
+float ConfigParser::GetDefaultTempDiffTolerance() {
+    return m_valve_conf["temp_diff_tolerance"].get<float>();
+}
+
 std::vector<Endpoint> ConfigParser::GetValveAddresses() {
     return std::vector<Endpoint>();
 }

@@ -5,6 +5,7 @@
 #include <networking/tcp_client.hpp>
 #include <networking/network_stream.hpp>
 #include <networking/iot_dcp.hpp>
+#include <system/config_parser.hpp>
 
 Thermostat::Thermostat() {}
 
@@ -24,10 +25,10 @@ bool Thermostat::RemoveValve(const Endpoint& valve_address) {
 	return false;
 }
 
-bool Thermostat::DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
+bool Thermostat::DisconnectValve(const Endpoint& valve_address) {
 	// checking if the Endpoint of the valve_address isn't the same as thermostat_address
 
-	if (valve_address == thermostat_address)
+	if (valve_address == m_address)
 		return false;
 
 
@@ -39,8 +40,8 @@ bool Thermostat::DisconnectValve(const Endpoint& valve_address, const Endpoint& 
 			(IotDCP().CreateRequest(
 				Utils::RequestType::GET,
 				"/disconnect",
-				thermostat_address.GetIPAddress(),
-				thermostat_address.GetPort()
+				m_address.GetIPAddress(),
+				m_address.GetPort()
 			).GetRawRequest())
 		);
 	}
@@ -90,13 +91,13 @@ Response Thermostat::WriteToValve(const Request& request, const Endpoint& valve_
 	return IotDCP().CreateResponse(Utils::IotDCPResponseCode::I_ServErr, "Failed to write!");
 }
 
-bool Thermostat::ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address) {
+bool Thermostat::ConnectValve(const Endpoint& valve_address) {
 	try {
 		TcpClient client(valve_address.GetIPAddress(), valve_address.GetPort());
 		NetworkStream stream  = client.GetStream();
 		stream.Write(
 			IotDCP().CreateRequest(Utils::RequestType::GET, "/connect",
-			thermostat_address.GetIPAddress(), thermostat_address.GetPort()
+			m_address.GetIPAddress(), m_address.GetPort()
         ).GetRawRequest());
 		Response response(stream.Read());
 		stream.Close();
@@ -114,6 +115,8 @@ void Thermostat::SetAddress(const Endpoint& thermostat_address) {
 void Thermostat::UpdateValvesState() {
 	float valve_target = 0;
 	float valve_temperature = 0;
+	float temp_diff_tolerance = ConfigParser::GetDefaultTempDiffTolerance();
+	bool heating_on = false;
 	for (auto valve = m_valves.begin(); valve != m_valves.end(); valve++) {
 		try
 		{
@@ -126,10 +129,28 @@ void Thermostat::UpdateValvesState() {
 				IotDCP().CreateRequest(Utils::RequestType::GET, "/get_temperature", m_address.GetIPAddress(), m_address.GetPort()),
 				valve->second
 			).GetContent());
+			heating_on = std::stoi(WriteToValve(
+				IotDCP().CreateRequest(Utils::RequestType::GET, "/is_heating_on", m_address.GetIPAddress(), m_address.GetPort()),
+				valve->second
+			).GetContent());
 		}
 		catch(const std::exception& e)
 		{
 			std::cerr << e.what() << '\n';
+		}
+
+		if (valve_target - valve_temperature >= temp_diff_tolerance && !heating_on) {
+			WriteToValve(
+				IotDCP().CreateRequest(Utils::RequestType::PUT, "/switch_on", m_address.GetIPAddress(), m_address.GetPort()),
+				valve->second
+			);
+		}
+
+		if (valve_target - valve_temperature <= 0 && heating_on) {
+			WriteToValve(
+				IotDCP().CreateRequest(Utils::RequestType::PUT, "/switch_off", m_address.GetIPAddress(), m_address.GetPort()),
+				valve->second
+			);
 		}
 	}
 }

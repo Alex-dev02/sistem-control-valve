@@ -14,10 +14,10 @@ public:
 	
 	void AddValve(const Endpoint& valve_address);
 	bool RemoveValve(const Endpoint& valve_address);
-	bool DisconnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address);
+	bool DisconnectValve(const Endpoint& valve_address);
 	std::vector<Response> WriteToValves(const Request& request);
     Response WriteToValve(const Request& request, const Endpoint& valve_address);
-	bool ConnectValve(const Endpoint& valve_address, const Endpoint& thermostat_address);
+	bool ConnectValve(const Endpoint& valve_address);
 	void SetAddress(const Endpoint& thermostat_address);
 private:
 	void UpdateValvesState();
