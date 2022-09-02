@@ -116,6 +116,5 @@ void Valve::CoolRoom() {
         std::lock_guard<std::mutex> lock(guard);
         m_temperature -= 0.5;
         guard.unlock();
-    }
-    
+    }   
 }

@@ -57,6 +57,11 @@ bool Thermostat::DisconnectValve(const Endpoint& valve_address) {
 	return Response(stream.Read()).Successful();
 }
 
+bool Thermostat::IsValveAlreadyRegistred(const Endpoint& valve_address) {
+	return
+		m_valves.find(valve_address.GetIPAddress() + std::to_string(valve_address.GetPort())) != m_valves.end();
+}
+
 std::vector<Response> Thermostat::WriteToValves(const Request& request) {
 	std::vector<Response> responses;
 	for (auto it = m_valves.begin(); it != m_valves.end(); it++) {

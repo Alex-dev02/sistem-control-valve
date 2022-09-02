@@ -46,6 +46,9 @@ Response ThermostatRouter::AddValve(const Request& request) {
         return http.CreateResponse(Utils::HTTPResponseCode::H_ServErr, "Not enough parameters provided");
     }
     Endpoint valve_address(valve_ip_address, valve_port);
+    // check if valve is already registred
+    if (m_thermostat.IsValveAlreadyRegistred(valve_address))
+        return HTTP().CreateResponse(Utils::HTTPResponseCode::H_OK, "Valve already registred");
 
     // checking if the valve exists with a ping
     bool connected_successfully = m_thermostat.ConnectValve(valve_address);
