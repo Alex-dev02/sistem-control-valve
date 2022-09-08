@@ -11,7 +11,7 @@ add_subdirectory(system)
 add_subdirectory(networking)
 add_subdirectory(thermostat)
 add_subdirectory(valve)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
 target_link_libraries(libSystem nlohmann_json::nlohmann_json)
 
@@ -25,7 +25,7 @@ target_link_libraries(sa_valve libSystem)
 target_link_libraries(sa_valve libNetworking)
 target_link_libraries(sa_valve libValve)
 
-include(CTest)
+#include(CTest)
 
 #find_package(GTest REQUIRED CONFIG)
 

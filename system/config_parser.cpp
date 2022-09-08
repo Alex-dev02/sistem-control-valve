@@ -26,7 +26,9 @@ std::vector<Endpoint> ConfigParser::GetValveAddresses() {
 }
 
 bool ConfigParser::IsValveAlreadyInConfig(const Endpoint& valve_address) {
-    return false;
+    for(auto it = m_thermostat_conf["valve_addresses"].begin(); it < m_thermostat_conf["valve_addresses"].end(); it++) {
+        std::cout << it.key() << " ";
+    }
 }
 
 void ConfigParser::AddValveToConfig(const Endpoint& valve_address) {
@@ -62,6 +64,9 @@ nlohmann::json ConfigParser::GetDefaultValveConfig() {
 
 nlohmann::json ConfigParser::GetDefaultThermostatConfig() {
     return {
-        "valves_addresses", { }
+        "valve_addresses", {
+            "127.0.0.1:4000",
+            "127.0.0.2:5000"
+        }
     };
 }
